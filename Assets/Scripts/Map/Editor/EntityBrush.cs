@@ -77,7 +77,7 @@ namespace Gfen.Game.Map
     }
 
     [CustomEditor(typeof(EntityBrush))]
-	public class PrefabBrushEditor : GridBrushEditorBase
+	public class PrefabBrushEditor : UnityEditor.Tilemaps.GridBrushEditorBase
 	{
 		private EntityBrush entityBrush { get { return target as EntityBrush; } }
 
