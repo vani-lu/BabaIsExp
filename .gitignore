@@ -36,6 +36,7 @@ sysinfo.txt
 # VSCode settings
 .vscode/
 
-# Unity warnings
+# To enable Unity warnings
 NuGet/
 omnisharp.json
+.editorconfig
