@@ -6,9 +6,8 @@ using Gfen.Game.UI;
 using UnityEngine;
 using UnityStandardAssets.CrossPlatformInput;
 
-namespace Gfen.Game
-{
-    public class GameManager : MonoBehaviour
+namespace Gfen.Game {
+    public class GameManager : MonoBehaviour 
     {
         public GameConfig gameConfig;
 
@@ -130,7 +129,7 @@ namespace Gfen.Game
             }
         }
 
-        private OperationType GetLogicOperation()
+        private OperationType GetLogicOperation() 
         {
             var horizontal = CrossPlatformInputManager.GetAxis("Horizontal");
             var vertical = CrossPlatformInputManager.GetAxis("Vertical");

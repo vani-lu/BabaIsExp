@@ -6,9 +6,8 @@ namespace Gfen.Game.Logic
     public enum KeyWordCategory
     {
         Is = 0,
-
         Has,
-
         And,
     }
+    
 }
