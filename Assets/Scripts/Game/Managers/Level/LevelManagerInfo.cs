@@ -1,8 +1,8 @@
 using System;
 using Gfen.Game.Common;
 
-namespace Gfen.Game.Manager
-{
+namespace Gfen.Game.Manager{
+    
     [Serializable]
     public class LevelManagerInfo
     {
