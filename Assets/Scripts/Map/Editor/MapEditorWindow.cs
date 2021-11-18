@@ -46,7 +46,7 @@ namespace Gfen.Game.Map
         {
             GUILayout.BeginHorizontal();
             m_mapDirectory = EditorGUILayout.TextField(m_mapDirectory);
-            if (GUILayout.Button("保存路径", GUILayout.Width(100)))
+            if (GUILayout.Button("Saving Directory", GUILayout.Width(100)))
             {
                 EditorPrefs.SetString(mapDirectoryKey, m_mapDirectory);
             }
@@ -54,7 +54,7 @@ namespace Gfen.Game.Map
 
             GUILayout.BeginHorizontal();
             m_configPath = EditorGUILayout.TextField(m_configPath);
-            if (GUILayout.Button("加载配置", GUILayout.Width(100)))
+            if (GUILayout.Button("Config Path", GUILayout.Width(100)))
             {
                 m_config = AssetDatabase.LoadAssetAtPath<GameConfig>(m_configPath);
                 EditorPrefs.SetString(configPathKey, m_configPath);
@@ -66,7 +66,7 @@ namespace Gfen.Game.Map
             GUI.enabled = m_config != null;
 
             m_mapName = EditorGUILayout.TextField(m_mapName);
-            if (GUILayout.Button("创建新地图"))
+            if (GUILayout.Button("Create a New Map"))
             {
                 CreateNewMap();
             }
@@ -79,14 +79,14 @@ namespace Gfen.Game.Map
 
             GUI.enabled = m_map != null && m_config != null;
 
-            if (GUILayout.Button("导入地图"))
+            if (GUILayout.Button("Import Map"))
             {
                 ImportMap();
             }
 
             GUI.enabled = m_map != null;
             
-            if (GUILayout.Button("导出地图"))
+            if (GUILayout.Button("Export Map"))
             {
                 ExportMap();
             }
@@ -95,7 +95,7 @@ namespace Gfen.Game.Map
 
             EditorGUILayout.Separator();
 
-            if (GUILayout.Button("生成MapBlockIdentifier"))
+            if (GUILayout.Button("Generate MapBlockIdentifier"))
             {
                 AttachMapBlockIdentifier();
             }

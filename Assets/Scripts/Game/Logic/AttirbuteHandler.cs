@@ -250,6 +250,7 @@ namespace Gfen.Game.Logic
                     }
                 }
             }
+            
             for (var position = positiveEndPosition - displacement; position != negativeEndPosition + displacement; position -= displacement)
             {
                 var hasStop = false;
