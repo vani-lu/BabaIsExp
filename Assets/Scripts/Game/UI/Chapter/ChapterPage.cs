@@ -20,11 +20,16 @@ namespace Gfen.Game.UI
             m_gameManager.LevelManager.SetStayChapterIndex(-1);
 
             var chapterConfigs = m_gameManager.gameConfig.chapterConfigs;
+
+            // Save chapters into a list
             while (m_chapterCells.Count < chapterConfigs.Length)
             {
                 var levelCell = UIUtils.InstantiateUICell(chapterListRootTransform, templateChapterCell);
                 m_chapterCells.Add(levelCell);
             }
+
+            // Show and set button content
+            // Limited number of buttons per page
             for (var i = 0; i < chapterConfigs.Length; i++)
             {
                 m_chapterCells[i].Show(m_gameManager);

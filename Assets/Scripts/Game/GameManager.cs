@@ -37,7 +37,7 @@ namespace Gfen.Game {
         {
             gameConfig.Init();
 
-            /* Initialize level, UI managers with current Game Manager */
+            /* Initialize level and UI managers with the current Game Manager */
             m_levelManager = new LevelManager();
             m_levelManager.Init(this); 
 
@@ -71,6 +71,13 @@ namespace Gfen.Game {
 
         private void HandleInput()
         {
+            /* Handle cross-platform inputs:
+            r   -   Restart
+            esc -   Pause
+            z   -   Undo
+            y   -   Redo
+            Key Bindings can be modified in Project settings */
+
             var restart = CrossPlatformInputManager.GetButton("Restart");
             if (restart)
             {
@@ -88,6 +95,8 @@ namespace Gfen.Game {
             if (pause)
             {
                 m_lastInputTime = 0f;
+                Debug.Log("Unscale time: " + Time.unscaledTime);
+                Debug.Log("Last Input time: " + m_lastInputTime);
                 PauseGame();
                 return;
             }
@@ -116,12 +125,14 @@ namespace Gfen.Game {
             }
             else
             {
+                // Handle movements
                 var operationType = GetLogicOperation();
 
                 if (operationType != OperationType.None)
                 {
                     if (isTimeToInputDelay)
                     {
+                        // Record Movement Input
                         m_lastInputTime = Time.unscaledTime;
                         m_logicGameManager.Tick(operationType);
                         m_presentationGameManager.RefreshPresentation();
@@ -129,7 +140,7 @@ namespace Gfen.Game {
                 }
                 else
                 {
-                    m_lastInputTime = 0f;
+                    m_lastInputTime = 0f; 
                 }
             }
         }

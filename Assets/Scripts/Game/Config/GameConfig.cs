@@ -13,6 +13,9 @@ namespace Gfen.Game.Config
 
         public EntityCategoryConfig[] entityCategoryConfigs;
 
+        /* List of chapters: 
+        - Each chapter has a list of levels
+        - Each level corresponds to a map */
         public ChapterConfig[] chapterConfigs;
 
         public GameObject backgroundPrefab;
