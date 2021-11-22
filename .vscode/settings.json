@@ -42,5 +42,6 @@
         "ProjectSettings/":true,
         "temp/":true,
         "Temp/":true
-    }
+    },
+    "omnisharp.useGlobalMono": "always"
 }

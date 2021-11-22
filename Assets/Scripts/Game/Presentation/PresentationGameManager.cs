@@ -7,9 +7,9 @@ namespace Gfen.Game.Presentation
 {
     public class PresentationGameManager
     {
-        private GameManager m_gameManager;
+        private readonly GameManager m_gameManager;
 
-        private LogicGameManager m_logicGameManager;
+        private readonly LogicGameManager m_logicGameManager;
 
         private Vector3 m_origin;
 
@@ -43,6 +43,7 @@ namespace Gfen.Game.Presentation
             backgroundRoot.SetParent(m_mapRoot, false);
             backgroundRoot.Reset();
 
+            // Present Current Map
             for (var i = 0; i < mapXLength; i++)
             {
                 for (var j = 0; j < mapYLength; j++)
@@ -55,6 +56,7 @@ namespace Gfen.Game.Presentation
                 }
             }
 
+            // Adapt to display size
             var screenRatio = ((float)Screen.width)*0.77f/Screen.height;
             var mapRatio = ((float)mapXLength)/mapYLength;
             if (screenRatio > mapRatio)
@@ -85,6 +87,7 @@ namespace Gfen.Game.Presentation
 
         private void CreateBackground(Transform backgroundRoot, int x, int y)
         {
+            // Instantiate backgroud prefab
             var backgroundGameObject = Object.Instantiate(m_gameManager.gameConfig.backgroundPrefab);
 
             backgroundGameObject.transform.SetParent(backgroundRoot, false);
@@ -93,9 +96,11 @@ namespace Gfen.Game.Presentation
 
         private void CreatePresentationBlock(Transform blockRoot, Block block)
         {
-            var presentationBlock = new PresentationBlock();
-            presentationBlock.block = block;
-            
+            var presentationBlock = new PresentationBlock
+            {
+                block = block
+            };
+
             var entityConfig = m_gameManager.gameConfig.GetEntityConfig(block.entityType);
             var blockGameObject = Object.Instantiate(entityConfig.prefab);
             presentationBlock.blockGameObject = blockGameObject;
@@ -103,11 +108,13 @@ namespace Gfen.Game.Presentation
 
             presentationBlock.blockTransform.SetParent(blockRoot, false);
             presentationBlock.blockTransform.localPosition = new Vector3(block.position.x, block.position.y, 0) + m_origin;
-            if (entityConfig.category != EntityCategory.Rule)
-            {
-                var displacement = DirectionUtils.DirectionToDisplacement(presentationBlock.block.direction);
-                presentationBlock.blockTransform.localRotation = Quaternion.LookRotation(Vector3.forward, new Vector3(displacement.x, displacement.y, 0f));
-            }
+            
+            // Toggle Rotation of Sprites
+            // if (entityConfig.category != EntityCategory.Rule)
+            // {
+            //     var displacement = DirectionUtils.DirectionToDisplacement(presentationBlock.block.direction);
+            //     presentationBlock.blockTransform.localRotation = Quaternion.LookRotation(Vector3.forward, new Vector3(displacement.x, displacement.y, 0f));
+            // }
 
             m_blockDict[block] = presentationBlock;
         }

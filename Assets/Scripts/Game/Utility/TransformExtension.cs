@@ -1,3 +1,5 @@
+// Sets Transform to a default value.
+
 using UnityEngine;
 
 namespace Gfen.Game.Utility
