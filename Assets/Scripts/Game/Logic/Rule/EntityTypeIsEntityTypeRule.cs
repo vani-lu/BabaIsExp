@@ -30,7 +30,7 @@ namespace Gfen.Game.Logic
                 {
                     foreach (var block in map[i, j])
                     {
-                        ConverseTargetBlock(block, tickCommands);
+                        ConvertTargetBlock(block, tickCommands);
                     }
                 }
             }
@@ -47,7 +47,7 @@ namespace Gfen.Game.Logic
             return m_originalEntityType == otherEntityTypeIsEntityTypeRule.m_originalEntityType && m_targetEntityType == otherEntityTypeIsEntityTypeRule.m_targetEntityType;
         }
 
-        private void ConverseTargetBlock(Block block, Stack<Command> tickCommands)
+        private void ConvertTargetBlock(Block block, Stack<Command> tickCommands)
         {
             if (m_originalEntityType == block.entityType)
             {

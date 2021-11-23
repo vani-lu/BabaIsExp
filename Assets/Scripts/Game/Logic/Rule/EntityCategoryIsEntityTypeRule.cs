@@ -30,7 +30,7 @@ namespace Gfen.Game.Logic
                 {
                     foreach (var block in map[i, j])
                     {
-                        ConverseTargetBlock(block, tickCommands);
+                        ConvertTargetBlock(block, tickCommands);
                     }
                 }
             }
@@ -47,7 +47,7 @@ namespace Gfen.Game.Logic
             return m_originalEntityCategory == otherEntityCategoryIsEntityTypeRule.m_originalEntityCategory && m_targetEntityType == otherEntityCategoryIsEntityTypeRule.m_targetEntityType;
         }
 
-        private void ConverseTargetBlock(Block block, Stack<Command> tickCommands)
+        private void ConvertTargetBlock(Block block, Stack<Command> tickCommands)
         {
             var blockEntityCategory = m_logicGameManager.GameManager.gameConfig.GetEntityConfig(block.entityType).category;
             if (m_originalEntityCategory == blockEntityCategory)

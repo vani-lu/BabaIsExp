@@ -155,7 +155,7 @@ namespace Gfen.Game.Logic
 
             var tickCommands = new Stack<Command>();
 
-            m_attributeHandler.HandleAttributeYou(operationType, tickCommands);
+            m_attributeHandler.HandleAttributeYou(operationType, tickCommands);// Also handles Push and Pull, Open and Shut
             m_attributeHandler.HandleAttributeMove(tickCommands);
 
             m_attributeHandler.HandleAttributeDefeat(tickCommands);

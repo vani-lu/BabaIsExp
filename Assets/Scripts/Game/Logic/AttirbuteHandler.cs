@@ -95,10 +95,12 @@ namespace Gfen.Game.Logic
         {
             Clear();
 
+            // Inherent Rule, Base Rules, Default Rules 
             foreach (var entityCategoryConfig in m_logicGameManager.GameManager.gameConfig.entityCategoryConfigs)
             {
                 foreach (var attributeCategory in entityCategoryConfig.inherentAttributeCategories)
                 {
+                    // Text Is Push, Rule Entity is Push
                     SetAttributeForEntityCategory(entityCategoryConfig.entityCategory, attributeCategory);
                 }
             }
@@ -206,7 +208,7 @@ namespace Gfen.Game.Logic
                 }
                 if (hasYou)
                 {
-                    // Scans for Pull, opposite the Move Direction
+                    // Scan for Pull, opposite the Move Direction
                     for (var pullPosition = position - displacement; m_logicGameManager.InMap(pullPosition); pullPosition -= displacement)
                     {
                         var blocks = m_logicGameManager.Map[pullPosition.x, pullPosition.y];
@@ -221,10 +223,11 @@ namespace Gfen.Game.Logic
                         }
                         if (!hasPull)
                         {
+                            // If the nearest block does not have attribute Pull, terminate scan
                             break;
                         }
                     }
-                    // Scans for push, along the Move Direction
+                    // Scan for Push, along the Move Direction
                     for (var pushPosition = position + displacement; m_logicGameManager.InMap(pushPosition); pushPosition += displacement)
                     {
                         var blocks = m_logicGameManager.Map[pushPosition.x, pushPosition.y];
@@ -239,6 +242,7 @@ namespace Gfen.Game.Logic
                         }
                         if (!hasPush)
                         {
+                            // If the nearest block does not have attribute Push, terminate scan
                             break;
                         }
                     }
@@ -248,13 +252,15 @@ namespace Gfen.Game.Logic
             HandlePreMove(impactBlocks, displacement, tickCommands);
 
             {
+                // Entities cannot move outside of border 
+                // Push or Pull should not take effect
                 var stopPosition = positiveEndPosition - displacement;
                 {
                     var blocks = m_logicGameManager.Map[stopPosition.x, stopPosition.y];
                     foreach (var block in blocks)
                     {
-                        var impact = 0;
-                        if (impactBlocks.TryGetValue(block, out impact))
+                        // var impact = 0;
+                        if (impactBlocks.TryGetValue(block, out int impact))
                         {
                             impactBlocks[block] = 0;
                         }
@@ -262,6 +268,7 @@ namespace Gfen.Game.Logic
                 }
             }
             
+            // Scan opposite the Move Direction, for Stop entity
             for (var position = positiveEndPosition - displacement; position != negativeEndPosition + displacement; position -= displacement)
             {
                 var hasStop = false;
@@ -269,6 +276,7 @@ namespace Gfen.Game.Logic
                     var blocks = m_logicGameManager.Map[position.x, position.y];
                     foreach (var block in blocks)
                     {
+                        // Pull and Push implies Stop when Pull or Push does not take effect
                         if (HasAttribute(block, AttributeCategory.Stop) || HasAttribute(block, AttributeCategory.Pull) || HasAttribute(block, AttributeCategory.Push))
                         {
                             if (impactBlocks.GetOrDefault(block, 0) == 0)
@@ -281,13 +289,14 @@ namespace Gfen.Game.Logic
                 }
                 if (hasStop)
                 {
+                    // Entity at the back of Stop entity cannot move onto it
                     var stopPosition = position - displacement;
                     {
                         var blocks = m_logicGameManager.Map[stopPosition.x, stopPosition.y];
                         foreach (var block in blocks)
                         {
-                            var impact = 0;
-                            if (impactBlocks.TryGetValue(block, out impact))
+                            // var impact = 0;
+                            if (impactBlocks.TryGetValue(block, out int impact))
                             {
                                 impactBlocks[block] = 0;
                             }
@@ -303,6 +312,7 @@ namespace Gfen.Game.Logic
 
                 if (impact == 1)
                 {
+                    // Entity You moves with Push and Pull taking effect
                     PerformMoveBlockCommand(block, moveDirection, 1, tickCommands);
                 }
             }
@@ -535,6 +545,7 @@ namespace Gfen.Game.Logic
 
         private void HandlePreMove(Dictionary<Block, int> impactBlocks, Vector2Int scanDisplacement, Stack<Command> tickCommands)
         {
+            // Handle Open an Shut before moving blocks
             HandleAttributeOpenAndShut(impactBlocks, scanDisplacement, tickCommands);
         }
 
@@ -630,6 +641,7 @@ namespace Gfen.Game.Logic
 
         private void HandleAttributeOpenAndShut(Dictionary<Block, int> impactBlocks, Vector2Int scanDisplacement, Stack<Command> tickCommands)
         {
+            // Destroy if Shut entity and Open entity move onto each other
             var toDestroyBlocks = HashSetPool<Block>.Get();
 
             foreach (var impactBlockPair in impactBlocks)
@@ -643,7 +655,8 @@ namespace Gfen.Game.Logic
                 {
                     continue;
                 }
-
+                // If impact block is Open or Shut
+                // Check the attribute of the grid it will move into
                 var preMovePosition = impact == 1 ? block.position + scanDisplacement : block.position - scanDisplacement;
                 var preMovePositionBlocks = m_logicGameManager.Map[preMovePosition.x, preMovePosition.y];
                 foreach (var preMovePositionBlock in preMovePositionBlocks)
@@ -652,7 +665,8 @@ namespace Gfen.Game.Logic
                     {
                         continue;
                     }
-
+                    //When Open entity moves onto Shut entity, OR Shut moves onto Open 
+                    // Both entities are destroyed
                     if ((isOpen && HasAttribute(preMovePositionBlock, AttributeCategory.Shut)) || (isShut && HasAttribute(preMovePositionBlock, AttributeCategory.Open)))
                     {
                         toDestroyBlocks.Add(block);

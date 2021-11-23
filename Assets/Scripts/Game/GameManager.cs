@@ -37,7 +37,7 @@ namespace Gfen.Game {
         {
             gameConfig.Init();
 
-            /* Initialize level and UI managers with the current Game Manager */
+            // Initialize level and UI managers with the current Game Manager 
             m_levelManager = new LevelManager();
             m_levelManager.Init(this); 
 
@@ -46,13 +46,13 @@ namespace Gfen.Game {
             m_logicGameManager = new LogicGameManager(this);
             m_presentationGameManager = new PresentationGameManager(this, m_logicGameManager);
 
-            /* Initialize indicator variables */
+            // Initialize indicator variables 
             m_isInGame = false;
             m_isPause = false;
 
             var stayChapterIndex = m_levelManager.GetStayChapterIndex();
 
-            /* Show Chapter Selection Page */
+            // Show Chapter Selection Page 
             uiManager.ShowPage<ChapterPage>();
             if (stayChapterIndex >= 0)
             {
@@ -95,6 +95,7 @@ namespace Gfen.Game {
             if (pause)
             {
                 m_lastInputTime = 0f;
+                //DebugLog
                 Debug.Log("Unscale time: " + Time.unscaledTime);
                 Debug.Log("Last Input time: " + m_lastInputTime);
                 PauseGame();
