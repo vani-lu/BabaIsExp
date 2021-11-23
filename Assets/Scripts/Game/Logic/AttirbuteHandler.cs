@@ -142,6 +142,7 @@ namespace Gfen.Game.Logic
             var mapXLength = m_logicGameManager.Map.GetLength(0);
             var mapYLength = m_logicGameManager.Map.GetLength(1);
 
+            // Moving vertically
             var scanDirection = Direction.Up;
             if (DirectionUtils.IsParallel(scanDirection, moveDirection))
             {
@@ -149,15 +150,18 @@ namespace Gfen.Game.Logic
                 {
                     if (moveDirection == scanDirection)
                     {
+                        // Up
                         HandleDirectionYou(moveDirection, new Vector2Int(i, -1), new Vector2Int(i, mapYLength), tickCommands);
                     }
                     else
                     {
+                        // Down
                         HandleDirectionYou(moveDirection, new Vector2Int(i, mapYLength), new Vector2Int(i, -1), tickCommands);
                     }
                 }
             }
             
+            // Moving horizontally
             scanDirection = Direction.Right;
             if (DirectionUtils.IsParallel(scanDirection, moveDirection))
             {
@@ -165,10 +169,12 @@ namespace Gfen.Game.Logic
                 {
                     if (moveDirection == scanDirection)
                     {
+                        // Right
                         HandleDirectionYou(moveDirection, new Vector2Int(-1, j), new Vector2Int(mapXLength, j), tickCommands);
                     }
                     else
                     {
+                        // Left
                         HandleDirectionYou(moveDirection, new Vector2Int(mapXLength, j), new Vector2Int(-1, j), tickCommands);
                     }
                 }
@@ -177,12 +183,15 @@ namespace Gfen.Game.Logic
 
         private void HandleDirectionYou(Direction moveDirection, Vector2Int negativeEndPosition, Vector2Int positiveEndPosition, Stack<Command> tickCommands)
         {
+            // Scan the map grid from Negative End to Positive End (a column or row) along the Move Direction
+
             var displacement = DirectionUtils.DirectionToDisplacement(moveDirection);
 
-             var impactBlocks = DictionaryPool<Block, int>.Get();
+            var impactBlocks = DictionaryPool<Block, int>.Get(); // get from the dictionary pool
 
             for (var position = negativeEndPosition + displacement; position != positiveEndPosition; position += displacement)
             {
+                // Scans for You
                 var hasYou = false;
                 {
                     var blocks = m_logicGameManager.Map[position.x, position.y];
@@ -197,6 +206,7 @@ namespace Gfen.Game.Logic
                 }
                 if (hasYou)
                 {
+                    // Scans for Pull, opposite the Move Direction
                     for (var pullPosition = position - displacement; m_logicGameManager.InMap(pullPosition); pullPosition -= displacement)
                     {
                         var blocks = m_logicGameManager.Map[pullPosition.x, pullPosition.y];
@@ -214,6 +224,7 @@ namespace Gfen.Game.Logic
                             break;
                         }
                     }
+                    // Scans for push, along the Move Direction
                     for (var pushPosition = position + displacement; m_logicGameManager.InMap(pushPosition); pushPosition += displacement)
                     {
                         var blocks = m_logicGameManager.Map[pushPosition.x, pushPosition.y];

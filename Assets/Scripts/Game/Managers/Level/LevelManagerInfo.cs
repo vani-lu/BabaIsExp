@@ -11,12 +11,17 @@ namespace Gfen.Game.Manager{
         public SerializableDictionaryOfIntAndChapterInfo chapterInfoDict = new SerializableDictionaryOfIntAndChapterInfo();
     }
 
+    // Key: Chapter Index
+    // Value: Level Information
     [Serializable]
     public class SerializableDictionaryOfIntAndChapterInfo : SerializableDictionary<int, ChapterInfo> { }
+
 
     [Serializable]
     public class ChapterInfo
     {
+        // Key: Level Index
+        // Value: Level Passed
         public SerializableDictionaryOfIntAndInt levelInfoDict = new SerializableDictionaryOfIntAndInt();
     }
 }
