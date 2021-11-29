@@ -70,11 +70,21 @@ namespace Gfen.Game {
         {
             if (m_isInGame)
             {
-                HandleInput(out GameControlType g, out OperationType o, out int n);
-                FrameData newFrameData = new FrameData(Time.unscaledTime, (int)g, (int)o, n);
+                HandleInput(out GameControlType gameControlInput,
+                            out OperationType operationInput,
+                            out int numCommandsOutput);
+                FrameData newFrameData = new FrameData(Time.unscaledTime,
+                                                       m_currentChapterIndex,
+                                                       m_currentLevelIndex,
+                                                       (int)gameControlInput,
+                                                       (int)operationInput,
+                                                       numCommandsOutput);
                 // DebugLog
-                Debug.Log("Chapter " + m_currentChapterIndex + ", Level " + m_currentLevelIndex);
-                Debug.Log("Game Control " + newFrameData.gameControl + ", Operation " + newFrameData.operation);
+                if (gameControlInput != GameControlType.None || operationInput != OperationType.None){
+                    Debug.Log("Chapter " + newFrameData.chapter + ", Level " + newFrameData.level);
+                    Debug.Log("Game Control " + gameControlInput + ", Operation " + newFrameData.operation);
+                }
+                
             }
         }
 
@@ -101,46 +111,42 @@ namespace Gfen.Game {
                 return;
             }
 
-            if (m_isPause)
-            {
+            // Wait for key press time
+            var isTimeToInputDelay = (Time.unscaledTime - m_lastInputTime) >= gameConfig.inputRepeatDelay;
+
+            if (!isTimeToInputDelay) {
                 return;
             }
 
             var pause = CrossPlatformInputManager.GetButton("Pause");
             if (pause)
             {
-                m_lastInputTime = 0f;
-                //DebugLog
-                Debug.Log("Unscale time: " + Time.unscaledTime);
-                Debug.Log("Last Input time: " + m_lastInputTime);
+                m_lastInputTime = Time.unscaledTime;
                 PauseGame();
                 gameControlType = GameControlType.Pause;
                 return;
             }
 
-            var isTimeToInputDelay = (Time.unscaledTime - m_lastInputTime) >= gameConfig.inputRepeatDelay;
+            if (m_isPause)
+            {
+                return;
+            }
 
             var undo = CrossPlatformInputManager.GetButton("Undo");
             var redo = CrossPlatformInputManager.GetButton("Redo");
             if (undo)
             {
-                if (isTimeToInputDelay)
-                {
-                    m_lastInputTime = Time.unscaledTime;
-                    numOfCommands = m_logicGameManager.Undo();
-                    m_presentationGameManager.RefreshPresentation();
-                    gameControlType = GameControlType.Undo;
-                }
+                m_lastInputTime = Time.unscaledTime;
+                numOfCommands = m_logicGameManager.Undo();
+                m_presentationGameManager.RefreshPresentation();
+                gameControlType = GameControlType.Undo;
             }
             else if (redo)
             {
-                if (isTimeToInputDelay)
-                {
-                    m_lastInputTime = Time.unscaledTime;
-                    numOfCommands = m_logicGameManager.Redo();
-                    m_presentationGameManager.RefreshPresentation();
-                    gameControlType = GameControlType.Redo;
-                }
+                m_lastInputTime = Time.unscaledTime;
+                numOfCommands = m_logicGameManager.Redo();
+                m_presentationGameManager.RefreshPresentation();
+                gameControlType = GameControlType.Redo;
             }
             else
             {
@@ -149,17 +155,10 @@ namespace Gfen.Game {
 
                 if (operationType != OperationType.None)
                 {
-                    if (isTimeToInputDelay)
-                    {
-                        // Record Movement Input
-                        m_lastInputTime = Time.unscaledTime;
-                        numOfCommands = m_logicGameManager.Tick(operationType);
-                        m_presentationGameManager.RefreshPresentation();
-                    }
-                }
-                else
-                {
-                    m_lastInputTime = 0f; 
+                    // Record Movement Input
+                    m_lastInputTime = Time.unscaledTime;
+                    numOfCommands = m_logicGameManager.Tick(operationType);
+                    m_presentationGameManager.RefreshPresentation();
                 }
             }
         }
