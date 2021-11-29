@@ -99,17 +99,20 @@ namespace Gfen.Game.Logic
             m_ruleAnalyzer.Clear();
         }
 
-        public void Undo()
+        public int Undo()
         {
             if (m_tickCommandsStack.Count <= 0)
             {
-                return;
+                return 0;
             }
 
             var redoCommands = new Stack<Command>();
 
             var lastTickCommands = m_tickCommandsStack.Pop();
-            while (lastTickCommands.Count > 0)
+
+            int numCommands = lastTickCommands.Count;
+
+            while ( lastTickCommands.Count > 0)
             {
                 var command = lastTickCommands.Pop();
                 command.Undo();
@@ -118,23 +121,26 @@ namespace Gfen.Game.Logic
             }
 
             m_redoCommandsStack.Push(redoCommands);
-
             m_attributeHandler.RefreshAttributes();
-
             m_ruleAnalyzer.Refresh();
+
+            return numCommands;
         }
 
-        public void Redo()
+        public int Redo()
         {
             if (m_redoCommandsStack.Count <= 0)
             {
-                return;
+                return 0;
             }
 
             var tickCommands = new Stack<Command>();
 
             var redoCommands = m_redoCommandsStack.Pop();
-            while (redoCommands.Count > 0)
+
+            int numCommands = redoCommands.Count;
+
+            while ( redoCommands.Count > 0)
             {
                 var command = redoCommands.Pop();
                 command.Perform();
@@ -147,9 +153,11 @@ namespace Gfen.Game.Logic
             m_attributeHandler.RefreshAttributes();
 
             m_ruleAnalyzer.Refresh();
+
+            return numCommands;
         }
 
-        public void Tick(OperationType operationType)
+        public int Tick(OperationType operationType)
         {
             m_redoCommandsStack.Clear();
 
@@ -166,12 +174,16 @@ namespace Gfen.Game.Logic
 
             m_ruleAnalyzer.Apply(tickCommands);
 
+            int numCommands = tickCommands.Count;
+
             if (tickCommands.Count > 0)
             {
                 m_tickCommandsStack.Push(tickCommands);
             }
 
             CheckGameResult();
+
+            return numCommands;
         }
 
         private void CheckGameResult()
@@ -179,10 +191,7 @@ namespace Gfen.Game.Logic
             var gameResult = GetGameResult();
             if (gameResult == GameResult.Success)
             {
-                if (GameEnd != null)
-                {
-                    GameEnd(true);
-                }
+                GameEnd?.Invoke(true);
             }
         }
 

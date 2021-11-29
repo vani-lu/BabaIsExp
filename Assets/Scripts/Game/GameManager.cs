@@ -3,8 +3,10 @@ using Gfen.Game.Logic;
 using Gfen.Game.Manager;
 using Gfen.Game.Presentation;
 using Gfen.Game.UI;
+using Vani.Data;
 using UnityEngine;
 using UnityStandardAssets.CrossPlatformInput;
+using System.Collections.Generic;
 
 namespace Gfen.Game {
     public class GameManager : MonoBehaviour 
@@ -32,6 +34,9 @@ namespace Gfen.Game {
         private int m_currentLevelIndex;
 
         private float m_lastInputTime;
+
+        // Record frame data in a list
+        private List<FrameData> m_data = new List<FrameData>();
 
         private void Start() 
         {
@@ -65,11 +70,15 @@ namespace Gfen.Game {
         {
             if (m_isInGame)
             {
-                HandleInput();
+                HandleInput(out GameControlType g, out OperationType o, out int n);
+                FrameData newFrameData = new FrameData(Time.unscaledTime, (int)g, (int)o, n);
+                // DebugLog
+                Debug.Log("Chapter " + m_currentChapterIndex + ", Level " + m_currentLevelIndex);
+                Debug.Log("Game Control " + newFrameData.gameControl + ", Operation " + newFrameData.operation);
             }
         }
 
-        private void HandleInput()
+        private void HandleInput(out GameControlType gameControlType, out OperationType operationType, out int numOfCommands)
         {
             /* Handle cross-platform inputs:
             r   -   Restart
@@ -78,11 +87,17 @@ namespace Gfen.Game {
             y   -   Redo
             Key Bindings can be modified in Project settings */
 
+            // Default output
+            gameControlType = GameControlType.None;
+            operationType = OperationType.None;
+            numOfCommands = -1;
+
             var restart = CrossPlatformInputManager.GetButton("Restart");
             if (restart)
             {
                 m_lastInputTime = 0f;
                 RestartGame();
+                gameControlType = GameControlType.Restart;
                 return;
             }
 
@@ -99,6 +114,7 @@ namespace Gfen.Game {
                 Debug.Log("Unscale time: " + Time.unscaledTime);
                 Debug.Log("Last Input time: " + m_lastInputTime);
                 PauseGame();
+                gameControlType = GameControlType.Pause;
                 return;
             }
 
@@ -111,8 +127,9 @@ namespace Gfen.Game {
                 if (isTimeToInputDelay)
                 {
                     m_lastInputTime = Time.unscaledTime;
-                    m_logicGameManager.Undo();
+                    numOfCommands = m_logicGameManager.Undo();
                     m_presentationGameManager.RefreshPresentation();
+                    gameControlType = GameControlType.Undo;
                 }
             }
             else if (redo)
@@ -120,14 +137,15 @@ namespace Gfen.Game {
                 if (isTimeToInputDelay)
                 {
                     m_lastInputTime = Time.unscaledTime;
-                    m_logicGameManager.Redo();
+                    numOfCommands = m_logicGameManager.Redo();
                     m_presentationGameManager.RefreshPresentation();
+                    gameControlType = GameControlType.Redo;
                 }
             }
             else
             {
                 // Handle movements
-                var operationType = GetLogicOperation();
+                operationType = GetLogicOperation();
 
                 if (operationType != OperationType.None)
                 {
@@ -135,7 +153,7 @@ namespace Gfen.Game {
                     {
                         // Record Movement Input
                         m_lastInputTime = Time.unscaledTime;
-                        m_logicGameManager.Tick(operationType);
+                        numOfCommands = m_logicGameManager.Tick(operationType);
                         m_presentationGameManager.RefreshPresentation();
                     }
                 }

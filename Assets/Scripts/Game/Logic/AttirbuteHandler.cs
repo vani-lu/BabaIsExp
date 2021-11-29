@@ -249,11 +249,12 @@ namespace Gfen.Game.Logic
                 }
             }
 
+            // Handle Hot and Melt
             HandlePreMove(impactBlocks, displacement, tickCommands);
 
             {
                 // Entities cannot move outside of border 
-                // Push or Pull should not take effect
+                // Push or Pull should not take effect in impact blocks
                 var stopPosition = positiveEndPosition - displacement;
                 {
                     var blocks = m_logicGameManager.Map[stopPosition.x, stopPosition.y];
@@ -262,7 +263,7 @@ namespace Gfen.Game.Logic
                         // var impact = 0;
                         if (impactBlocks.TryGetValue(block, out int impact))
                         {
-                            impactBlocks[block] = 0;
+                            impactBlocks[block] = 0; // disable impact
                         }
                     }
                 }
