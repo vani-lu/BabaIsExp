@@ -26,8 +26,10 @@ namespace Gfen.Game {
         private PresentationGameManager m_presentationGameManager;
 
         private bool m_isInGame;
+        private bool m_isPreviouslyInGame;
 
         private bool m_isPause;
+        private bool m_isPreviouslyInPause;
 
         private int m_currentChapterIndex;
 
@@ -53,7 +55,9 @@ namespace Gfen.Game {
 
             // Initialize indicator variables 
             m_isInGame = false;
+            m_isPreviouslyInGame = false;
             m_isPause = false;
+            m_isPreviouslyInPause = false;
 
             var stayChapterIndex = m_levelManager.GetStayChapterIndex();
 
@@ -68,6 +72,7 @@ namespace Gfen.Game {
 
         private void Update() 
         {
+            // Listen to inputs when in gameplay
             if (m_isInGame)
             {
                 HandleInput(out GameControlType gameControlInput,
@@ -81,11 +86,11 @@ namespace Gfen.Game {
                                                        numCommandsOutput);
                 // DebugLog
                 if (gameControlInput != GameControlType.None || operationInput != OperationType.None){
-                    Debug.Log("Chapter " + newFrameData.chapter + ", Level " + newFrameData.level);
-                    Debug.Log("Game Control " + gameControlInput + ", Operation " + newFrameData.operation);
+                    Debug.Log("Chapter " + newFrameData.chapter + ", Level " + newFrameData.level + "; Game Control " + gameControlInput + ", Operation " + newFrameData.operation);
                 }
                 
             }
+            UpdateGameStatus();
         }
 
         private void HandleInput(out GameControlType gameControlType, out OperationType operationType, out int numOfCommands)
@@ -102,22 +107,42 @@ namespace Gfen.Game {
             operationType = OperationType.None;
             numOfCommands = -1;
 
+            // Detect switch in game state: Start
+            if (!m_isPreviouslyInGame) {
+                gameControlType = GameControlType.Start;
+                m_lastInputTime = Time.unscaledTime;
+                return;
+            }
+
+            // Wait for key press time
+            var isWithinInputDelay = (Time.unscaledTime - m_lastInputTime) < gameConfig.inputRepeatDelay;
+
+            if (isWithinInputDelay) {
+                return;
+            }
+
+            // Keypress Restart
             var restart = CrossPlatformInputManager.GetButton("Restart");
             if (restart)
             {
-                m_lastInputTime = 0f;
+                m_lastInputTime = Time.unscaledTime;
                 RestartGame();
                 gameControlType = GameControlType.Restart;
                 return;
             }
 
-            // Wait for key press time
-            var isTimeToInputDelay = (Time.unscaledTime - m_lastInputTime) >= gameConfig.inputRepeatDelay;
-
-            if (!isTimeToInputDelay) {
+            // Detect switch in game status: Pause
+            // Do not listen to inputs other than restart when in pause
+            if (m_isPause)
+            {
+                if (!m_isPreviouslyInPause) {
+                    gameControlType = GameControlType.Pause;
+                    m_lastInputTime = Time.unscaledTime;
+                }
                 return;
             }
 
+            // Keypress Pause
             var pause = CrossPlatformInputManager.GetButton("Pause");
             if (pause)
             {
@@ -127,11 +152,7 @@ namespace Gfen.Game {
                 return;
             }
 
-            if (m_isPause)
-            {
-                return;
-            }
-
+            // Keypress Undo or Redo
             var undo = CrossPlatformInputManager.GetButton("Undo");
             var redo = CrossPlatformInputManager.GetButton("Redo");
             if (undo)
@@ -163,6 +184,11 @@ namespace Gfen.Game {
             }
         }
 
+        private void UpdateGameStatus()
+        {
+            m_isPreviouslyInPause = m_isPause;
+            m_isPreviouslyInGame = m_isInGame;
+        }
         private OperationType GetLogicOperation() 
         {
             var horizontal = CrossPlatformInputManager.GetAxis("Horizontal");
@@ -200,6 +226,8 @@ namespace Gfen.Game {
 
             m_logicGameManager.StartGame(gameConfig.chapterConfigs[chapterIndex].levelConfigs[levelIndex].map);
             m_presentationGameManager.StartPresent();
+            m_isPreviouslyInGame = m_isInGame;
+            m_isPreviouslyInPause = m_isPause;
             m_isInGame = true;
             m_isPause = false;
             m_currentChapterIndex = chapterIndex;
@@ -216,6 +244,8 @@ namespace Gfen.Game {
 
             m_presentationGameManager.StopPresent();
             m_logicGameManager.StopGame();
+            m_isPreviouslyInGame = m_isInGame;
+            m_isPreviouslyInPause = m_isPause;
             m_isInGame = false;
             m_isPause = false;
 
@@ -232,6 +262,7 @@ namespace Gfen.Game {
 
             m_logicGameManager.RestartGame();
             m_presentationGameManager.RefreshPresentation();
+            m_isPreviouslyInPause = m_isPause;
             m_isPause = false;
 
             uiManager.ShowPage<GamePlayPage>();
@@ -239,12 +270,14 @@ namespace Gfen.Game {
 
         public void PauseGame()
         {
+            m_isPreviouslyInPause = m_isPause;
             m_isPause = true;
             uiManager.ShowPage<InGameSettingsPage>();
         }
 
         public void ResumeGame()
         {
+            m_isPreviouslyInPause = m_isPause;
             m_isPause = false;
             uiManager.HidePage();
         }
@@ -253,6 +286,7 @@ namespace Gfen.Game {
         {
             if (success)
             {
+                m_isPreviouslyInGame = m_isInGame;
                 m_isInGame = false;
                 m_levelManager.PassLevel(m_currentChapterIndex, m_currentLevelIndex);
 

@@ -4,12 +4,18 @@ namespace Gfen.Game.Logic
     {
         None = 0,
 
+        Start,
+
         Restart,
 
         Pause,
 
         Undo,
 
-        Redo
+        Redo,
+        
+        Stop,
+
+        End
     }
 }
