@@ -31,6 +31,11 @@ namespace Gfen.Game {
         private bool m_isPause;
         private bool m_isPreviouslyInPause;
 
+        private bool m_isRestart;
+        private bool m_isResume;
+
+        private bool m_isSuccess;
+
         private int m_currentChapterIndex;
 
         private int m_currentLevelIndex;
@@ -55,9 +60,12 @@ namespace Gfen.Game {
 
             // Initialize indicator variables 
             m_isInGame = false;
-            m_isPreviouslyInGame = false;
             m_isPause = false;
+            m_isPreviouslyInGame = false;
             m_isPreviouslyInPause = false;
+            m_isRestart = false;
+            m_isResume = false;
+            m_isSuccess = false;
 
             var stayChapterIndex = m_levelManager.GetStayChapterIndex();
 
@@ -72,23 +80,37 @@ namespace Gfen.Game {
 
         private void Update() 
         {
+            float FrameTime = Time.unscaledTime;
+            GameControlType gameControlInput = GameControlType.None;
+            OperationType operationInput = OperationType.None;
+            int numCommandsOutput = -1;
+
             // Listen to inputs when in gameplay
             if (m_isInGame)
             {
-                HandleInput(out GameControlType gameControlInput,
-                            out OperationType operationInput,
-                            out int numCommandsOutput);
-                FrameData newFrameData = new FrameData(Time.unscaledTime,
-                                                       m_currentChapterIndex,
-                                                       m_currentLevelIndex,
-                                                       (int)gameControlInput,
-                                                       (int)operationInput,
-                                                       numCommandsOutput);
-                // DebugLog
-                if (gameControlInput != GameControlType.None || operationInput != OperationType.None){
-                    Debug.Log("Chapter " + newFrameData.chapter + ", Level " + newFrameData.level + "; Game Control " + gameControlInput + ", Operation " + newFrameData.operation);
+                HandleInput(out gameControlInput,
+                            out operationInput,
+                            out numCommandsOutput);     
+            }
+            else {
+                if (m_isSuccess) {
+                    gameControlInput = GameControlType.Success;
+                    m_isSuccess = false;
                 }
-                
+                else if (m_isPreviouslyInGame) {
+                    gameControlInput = GameControlType.Stop;
+                }
+            }
+            // DebugLog
+            if (gameControlInput != GameControlType.None || operationInput != OperationType.None)
+            {
+                FrameData newFrameData = new FrameData(FrameTime,
+                                                        m_currentChapterIndex,
+                                                        m_currentLevelIndex,
+                                                        (int)gameControlInput,
+                                                        (int)operationInput,
+                                                        numCommandsOutput);
+                Debug.Log("Chapter " + newFrameData.chapter + ", Level " + newFrameData.level + "; Game Control " + gameControlInput + ", Operation " + newFrameData.operation);
             }
             UpdateGameStatus();
         }
@@ -107,7 +129,8 @@ namespace Gfen.Game {
             operationType = OperationType.None;
             numOfCommands = -1;
 
-            // Detect switch in game state: Start
+            // Detect switch in game state
+            // Start a new level
             if (!m_isPreviouslyInGame) {
                 gameControlType = GameControlType.Start;
                 m_lastInputTime = Time.unscaledTime;
@@ -128,18 +151,36 @@ namespace Gfen.Game {
                 m_lastInputTime = Time.unscaledTime;
                 RestartGame();
                 gameControlType = GameControlType.Restart;
+                m_isRestart = false;
                 return;
             }
 
-            // Detect switch in game status: Pause
             // Do not listen to inputs other than restart when in pause
             if (m_isPause)
             {
+                // Detect Pause from Pause UI
                 if (!m_isPreviouslyInPause) {
                     gameControlType = GameControlType.Pause;
                     m_lastInputTime = Time.unscaledTime;
                 }
                 return;
+            }
+            else {
+                if (m_isPreviouslyInPause) {
+                    if (m_isRestart) {
+                        // Detect Restart from Pause UI
+                        gameControlType = GameControlType.Restart;
+                        m_lastInputTime = Time.unscaledTime;
+                        m_isRestart = false;
+                    }
+                    else if (m_isResume) {
+                        // Detect Resume from Pause UI
+                        gameControlType = GameControlType.Resume;
+                        m_lastInputTime = Time.unscaledTime;
+                        m_isResume = false;
+                    }
+                    return;
+                }
             }
 
             // Keypress Pause
@@ -264,6 +305,7 @@ namespace Gfen.Game {
             m_presentationGameManager.RefreshPresentation();
             m_isPreviouslyInPause = m_isPause;
             m_isPause = false;
+            m_isRestart = true;
 
             uiManager.ShowPage<GamePlayPage>();
         }
@@ -279,6 +321,7 @@ namespace Gfen.Game {
         {
             m_isPreviouslyInPause = m_isPause;
             m_isPause = false;
+            m_isResume = true;
             uiManager.HidePage();
         }
 
@@ -288,6 +331,7 @@ namespace Gfen.Game {
             {
                 m_isPreviouslyInGame = m_isInGame;
                 m_isInGame = false;
+                m_isSuccess = true;
                 m_levelManager.PassLevel(m_currentChapterIndex, m_currentLevelIndex);
 
                 uiManager.ShowPage<GameSuccessPage>();

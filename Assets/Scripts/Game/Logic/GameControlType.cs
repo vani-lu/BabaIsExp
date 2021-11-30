@@ -8,6 +8,8 @@ namespace Gfen.Game.Logic
 
         Restart,
 
+        Resume,
+
         Pause,
 
         Undo,
@@ -16,6 +18,6 @@ namespace Gfen.Game.Logic
         
         Stop,
 
-        End
+        Success
     }
 }
