@@ -1,3 +1,4 @@
+using Gfen.Game.Logic;
 namespace Vani.Data
 {
     // records data for a single frame update
@@ -6,11 +7,11 @@ namespace Vani.Data
         public float frameTime;
         public int chapter;
         public int level;
-        public int gameControl;
-        public int operation;
+        public GameControlType gameControl;
+        public OperationType operation;
         public int numCommands;
 
-        public FrameData(float t, int chp, int lvl, int gc, int ot, int nc){
+        public FrameData(float t, int chp, int lvl, GameControlType gc, OperationType ot, int nc){
             // set values upon instantiation
             frameTime = t;
             chapter = chp;

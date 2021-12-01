@@ -7,6 +7,7 @@ using Vani.Data;
 using UnityEngine;
 using UnityStandardAssets.CrossPlatformInput;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace Gfen.Game {
     public class GameManager : MonoBehaviour 
@@ -104,13 +105,16 @@ namespace Gfen.Game {
             // DebugLog
             if (gameControlInput != GameControlType.None || operationInput != OperationType.None)
             {
-                FrameData newFrameData = new FrameData(FrameTime,
-                                                        m_currentChapterIndex,
-                                                        m_currentLevelIndex,
-                                                        (int)gameControlInput,
-                                                        (int)operationInput,
-                                                        numCommandsOutput);
-                Debug.Log("Chapter " + newFrameData.chapter + ", Level " + newFrameData.level + "; Game Control " + gameControlInput + ", Operation " + newFrameData.operation);
+                FrameData fData = new FrameData(FrameTime,
+                                                m_currentChapterIndex,
+                                                m_currentLevelIndex,
+                                                gameControlInput,
+                                                operationInput,
+                                                numCommandsOutput);
+                Debug.Log(string.Format("{0},{1:d},{2:d},{3:g},{4:g},{5:d}", fData.frameTime, fData.chapter, fData.level, fData.gameControl, fData.operation, fData.numCommands));
+                //var writeTask =  RecordFrameData.AppendOneFrameAsync(fData);
+                m_data.Add(fData);
+                //await writeTask;
             }
             UpdateGameStatus();
         }
@@ -230,6 +234,7 @@ namespace Gfen.Game {
             m_isPreviouslyInPause = m_isPause;
             m_isPreviouslyInGame = m_isInGame;
         }
+
         private OperationType GetLogicOperation() 
         {
             var horizontal = CrossPlatformInputManager.GetAxis("Horizontal");
