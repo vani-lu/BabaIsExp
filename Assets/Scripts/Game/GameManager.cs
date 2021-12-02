@@ -1,4 +1,6 @@
-﻿using Gfen.Game.Config;
+﻿using System;
+using System.Collections.Generic;
+using Gfen.Game.Config;
 using Gfen.Game.Logic;
 using Gfen.Game.Manager;
 using Gfen.Game.Presentation;
@@ -6,8 +8,6 @@ using Gfen.Game.UI;
 using Vani.Data;
 using UnityEngine;
 using UnityStandardAssets.CrossPlatformInput;
-using System.Collections.Generic;
-using System.Threading.Tasks;
 
 namespace Gfen.Game {
     public class GameManager : MonoBehaviour 
@@ -19,7 +19,6 @@ namespace Gfen.Game {
         public UIManager uiManager;
 
         private LevelManager m_levelManager;
-
         public LevelManager LevelManager { get { return m_levelManager; } }
 
         private LogicGameManager m_logicGameManager;
@@ -38,17 +37,29 @@ namespace Gfen.Game {
         private bool m_isSuccess;
 
         private int m_currentChapterIndex;
-
         private int m_currentLevelIndex;
 
         private float m_lastInputTime;
 
         // Record frame data in a list
-        private List<FrameData> m_data = new List<FrameData>();
+        private DateTime m_dateNow;
+        private List<FrameData> m_data;
+        private string m_dataPath;
+        private string m_dataFile;
 
-        private void Start() 
+        private async void Start() 
         {
             gameConfig.Init();
+
+            // Set data path
+            m_data = new List<FrameData>();
+            m_dateNow = DateTime.Now;
+            m_dataPath = Application.persistentDataPath;
+            m_dataFile = "/data_" + m_dateNow.ToString("yyyyMMdd_HHmm") + ".csv";
+            Debug.Log(m_dataPath + m_dataFile);
+
+            // Create data path and initialize the file
+            var createTask = RecordFrameData.SetColNamesAsync(m_dataPath + m_dataFile);
 
             // Initialize level and UI managers with the current Game Manager 
             m_levelManager = new LevelManager();
@@ -77,9 +88,12 @@ namespace Gfen.Game {
                 var levelPage = uiManager.ShowPage<LevelPage>();
                 levelPage.SetContent(stayChapterIndex);
             }
+
+            // Complete data file initialzation
+            await createTask;
         }
 
-        private void Update() 
+        private async void Update() 
         {
             float FrameTime = Time.unscaledTime;
             GameControlType gameControlInput = GameControlType.None;
@@ -111,10 +125,10 @@ namespace Gfen.Game {
                                                 gameControlInput,
                                                 operationInput,
                                                 numCommandsOutput);
-                Debug.Log(string.Format("{0},{1:d},{2:d},{3:g},{4:g},{5:d}", fData.frameTime, fData.chapter, fData.level, fData.gameControl, fData.operation, fData.numCommands));
-                //var writeTask =  RecordFrameData.AppendOneFrameAsync(fData);
+                //Debug.Log(string.Format("{0},{1:d},{2:d},{3:g},{4:g},{5:d}", fData.frameTime, fData.chapter, fData.level, fData.gameControl, fData.operation, fData.numCommands));
+                var writeTask =  RecordFrameData.AppendOneFrameAsync(m_dataPath + m_dataFile, fData);
                 m_data.Add(fData);
-                //await writeTask;
+                await writeTask;
             }
             UpdateGameStatus();
         }
