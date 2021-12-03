@@ -46,7 +46,7 @@ namespace Gfen.Game.Map
         {
             GUILayout.BeginHorizontal();
             m_mapDirectory = EditorGUILayout.TextField(m_mapDirectory);
-            if (GUILayout.Button("Saving Directory", GUILayout.Width(100)))
+            if (GUILayout.Button("Map Folder Directory", GUILayout.Width(150)))
             {
                 EditorPrefs.SetString(mapDirectoryKey, m_mapDirectory);
             }
@@ -54,7 +54,7 @@ namespace Gfen.Game.Map
 
             GUILayout.BeginHorizontal();
             m_configPath = EditorGUILayout.TextField(m_configPath);
-            if (GUILayout.Button("Config Path", GUILayout.Width(100)))
+            if (GUILayout.Button("GameConfig File Path", GUILayout.Width(150)))
             {
                 m_config = AssetDatabase.LoadAssetAtPath<GameConfig>(m_configPath);
                 EditorPrefs.SetString(configPathKey, m_configPath);
