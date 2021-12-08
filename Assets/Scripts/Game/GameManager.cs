@@ -35,6 +35,7 @@ namespace Gfen.Game {
         private bool m_isResume;
 
         private bool m_isSuccess;
+        private bool m_isDefeat;
 
         private int m_currentChapterIndex;
         private int m_currentLevelIndex;
@@ -78,6 +79,7 @@ namespace Gfen.Game {
             m_isRestart = false;
             m_isResume = false;
             m_isSuccess = false;
+            m_isDefeat = false;
 
             var stayChapterIndex = m_levelManager.GetStayChapterIndex();
 
@@ -355,6 +357,17 @@ namespace Gfen.Game {
 
                 uiManager.ShowPage<GameSuccessPage>();
             }
+            // else {
+            //     m_isPreviouslyInGame = m_isInGame;
+            //     m_isInGame = false;
+
+            //     m_isPreviouslyInPause = m_isPause;
+            //     m_isPause = true;
+
+            //     m_isDefeat = true;
+
+            //     uiManager.ShowPage<GameDefeatPage>();
+            // }
         }
     }
 }

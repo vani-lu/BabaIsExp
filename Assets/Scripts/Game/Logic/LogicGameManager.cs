@@ -193,6 +193,10 @@ namespace Gfen.Game.Logic
             {
                 GameEnd?.Invoke(true);
             }
+            // else if (gameResult == GameResult.Failure)
+            // {
+            //     GameEnd?.Invoke(false);
+            // }
         }
 
         private GameResult GetGameResult()
@@ -207,10 +211,12 @@ namespace Gfen.Game.Logic
                         gameResult = GameResult.Success;
                         return false;
                     }
-                    if (HasAttribute(position, AttributeCategory.Defeat))
-                    {
-                        gameResult = GameResult.Failure;
-                    }
+                    // if (HasAttribute(position, AttributeCategory.Defeat))
+                    // {
+                    //     Debug.Log("Failure");
+                    //     gameResult = GameResult.Failure;
+                    //     return false;
+                    // }
                 }
 
                 return true;

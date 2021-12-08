@@ -18,6 +18,8 @@ namespace Gfen.Game.Logic
         
         Stop,
 
-        Success
+        Success,
+
+        Defeat
     }
 }
