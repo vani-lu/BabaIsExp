@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f7457eaeac03c3b448b89ec11bf014ac, type: 3}
-  m_Name: Map_1_1
+  m_Name: Map_1_0
   m_EditorClassIdentifier: 
   size: {x: 24, y: 18}
   blocks:
@@ -32,183 +32,186 @@ MonoBehaviour:
   - entityType: 30003
     position: {x: 14, y: 11}
     direction: 0
-  - entityType: 10018
-    position: {x: 11, y: 5}
+  - entityType: 11
+    position: {x: 9, y: 14}
     direction: 0
-  - entityType: 18
+  - entityType: 11
+    position: {x: 9, y: 11}
+    direction: 0
+  - entityType: 11
+    position: {x: 9, y: 12}
+    direction: 0
+  - entityType: 11
+    position: {x: 9, y: 13}
+    direction: 0
+  - entityType: 11
+    position: {x: 8, y: 11}
+    direction: 0
+  - entityType: 11
     position: {x: 9, y: 15}
     direction: 0
-  - entityType: 18
+  - entityType: 11
     position: {x: 10, y: 15}
     direction: 0
-  - entityType: 18
+  - entityType: 11
     position: {x: 11, y: 15}
     direction: 0
-  - entityType: 18
+  - entityType: 11
     position: {x: 12, y: 15}
     direction: 0
-  - entityType: 18
+  - entityType: 11
     position: {x: 13, y: 15}
     direction: 0
-  - entityType: 18
+  - entityType: 11
     position: {x: 14, y: 15}
     direction: 0
-  - entityType: 18
+  - entityType: 11
     position: {x: 15, y: 15}
     direction: 0
-  - entityType: 18
+  - entityType: 11
     position: {x: 16, y: 15}
     direction: 0
-  - entityType: 18
+  - entityType: 11
     position: {x: 16, y: 1}
     direction: 0
-  - entityType: 18
+  - entityType: 11
     position: {x: 16, y: 2}
     direction: 0
-  - entityType: 18
+  - entityType: 11
     position: {x: 16, y: 3}
     direction: 0
-  - entityType: 18
+  - entityType: 11
     position: {x: 16, y: 4}
     direction: 0
-  - entityType: 18
+  - entityType: 11
     position: {x: 16, y: 5}
     direction: 0
-  - entityType: 18
+  - entityType: 11
     position: {x: 16, y: 6}
     direction: 0
-  - entityType: 18
+  - entityType: 11
     position: {x: 16, y: 7}
     direction: 0
-  - entityType: 18
+  - entityType: 11
     position: {x: 16, y: 8}
     direction: 0
-  - entityType: 18
+  - entityType: 11
     position: {x: 16, y: 9}
     direction: 0
-  - entityType: 18
+  - entityType: 11
     position: {x: 16, y: 10}
     direction: 0
-  - entityType: 18
+  - entityType: 11
     position: {x: 16, y: 11}
     direction: 0
-  - entityType: 18
+  - entityType: 11
     position: {x: 16, y: 12}
     direction: 0
-  - entityType: 18
+  - entityType: 11
     position: {x: 16, y: 13}
     direction: 0
-  - entityType: 18
+  - entityType: 11
     position: {x: 16, y: 14}
     direction: 0
-  - entityType: 18
-    position: {x: 9, y: 1}
+  - entityType: 11
+    position: {x: 5, y: 11}
     direction: 0
-  - entityType: 18
-    position: {x: 9, y: 2}
+  - entityType: 11
+    position: {x: 6, y: 11}
     direction: 0
-  - entityType: 18
-    position: {x: 9, y: 3}
+  - entityType: 11
+    position: {x: 7, y: 11}
     direction: 0
-  - entityType: 18
-    position: {x: 9, y: 4}
-    direction: 0
-  - entityType: 18
-    position: {x: 9, y: 5}
-    direction: 0
-  - entityType: 18
-    position: {x: 9, y: 6}
-    direction: 0
-  - entityType: 18
-    position: {x: 10, y: 1}
-    direction: 0
-  - entityType: 18
-    position: {x: 11, y: 1}
-    direction: 0
-  - entityType: 18
-    position: {x: 12, y: 1}
-    direction: 0
-  - entityType: 18
-    position: {x: 13, y: 1}
-    direction: 0
-  - entityType: 18
-    position: {x: 14, y: 1}
-    direction: 0
-  - entityType: 18
-    position: {x: 15, y: 1}
-    direction: 0
-  - entityType: 18
+  - entityType: 11
     position: {x: 5, y: 7}
     direction: 0
-  - entityType: 18
+  - entityType: 11
     position: {x: 6, y: 7}
     direction: 0
-  - entityType: 18
+  - entityType: 11
     position: {x: 7, y: 7}
     direction: 0
-  - entityType: 18
+  - entityType: 11
     position: {x: 8, y: 7}
     direction: 0
-  - entityType: 18
+  - entityType: 11
     position: {x: 9, y: 7}
     direction: 0
-  - entityType: 18
+  - entityType: 11
     position: {x: 10, y: 7}
     direction: 0
-  - entityType: 18
+  - entityType: 11
+    position: {x: 12, y: 7}
+    direction: 0
+  - entityType: 11
+    position: {x: 13, y: 7}
+    direction: 0
+  - entityType: 11
+    position: {x: 14, y: 7}
+    direction: 0
+  - entityType: 11
+    position: {x: 15, y: 7}
+    direction: 0
+  - entityType: 11
+    position: {x: 5, y: 8}
+    direction: 0
+  - entityType: 11
+    position: {x: 5, y: 9}
+    direction: 0
+  - entityType: 11
+    position: {x: 5, y: 10}
+    direction: 0
+  - entityType: 11
+    position: {x: 9, y: 1}
+    direction: 0
+  - entityType: 11
+    position: {x: 9, y: 2}
+    direction: 0
+  - entityType: 11
+    position: {x: 9, y: 3}
+    direction: 0
+  - entityType: 11
+    position: {x: 9, y: 4}
+    direction: 0
+  - entityType: 11
+    position: {x: 9, y: 5}
+    direction: 0
+  - entityType: 11
+    position: {x: 9, y: 6}
+    direction: 0
+  - entityType: 11
+    position: {x: 10, y: 1}
+    direction: 0
+  - entityType: 11
+    position: {x: 11, y: 1}
+    direction: 0
+  - entityType: 11
+    position: {x: 12, y: 1}
+    direction: 0
+  - entityType: 11
+    position: {x: 13, y: 1}
+    direction: 0
+  - entityType: 11
+    position: {x: 14, y: 1}
+    direction: 0
+  - entityType: 11
+    position: {x: 15, y: 1}
+    direction: 0
+  - entityType: 10011
+    position: {x: 11, y: 5}
+    direction: 0
+  - entityType: 10012
+    position: {x: 6, y: 5}
+    direction: 0
+  - entityType: 12
+    position: {x: 14, y: 4}
+    direction: 0
+  - entityType: 11
     position: {x: 11, y: 7}
     direction: 0
   - entityType: 18
-    position: {x: 12, y: 7}
+    position: {x: 11, y: 9}
     direction: 0
-  - entityType: 18
-    position: {x: 13, y: 7}
-    direction: 0
-  - entityType: 18
-    position: {x: 14, y: 7}
-    direction: 0
-  - entityType: 18
-    position: {x: 15, y: 7}
-    direction: 0
-  - entityType: 18
-    position: {x: 5, y: 8}
-    direction: 0
-  - entityType: 18
-    position: {x: 5, y: 9}
-    direction: 0
-  - entityType: 18
-    position: {x: 5, y: 10}
-    direction: 0
-  - entityType: 18
-    position: {x: 5, y: 11}
-    direction: 0
-  - entityType: 18
-    position: {x: 9, y: 11}
-    direction: 0
-  - entityType: 18
-    position: {x: 9, y: 12}
-    direction: 0
-  - entityType: 18
-    position: {x: 9, y: 13}
-    direction: 0
-  - entityType: 18
-    position: {x: 9, y: 14}
-    direction: 0
-  - entityType: 18
-    position: {x: 6, y: 11}
-    direction: 0
-  - entityType: 18
-    position: {x: 7, y: 11}
-    direction: 0
-  - entityType: 18
-    position: {x: 8, y: 11}
-    direction: 0
-  - entityType: 10012
+  - entityType: 10018
     position: {x: 7, y: 9}
-    direction: 0
-  - entityType: 11
-    position: {x: 14, y: 4}
-    direction: 0
-  - entityType: 10011
-    position: {x: 6, y: 5}
     direction: 0

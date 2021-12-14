@@ -3,8 +3,9 @@
 --- !u!114 &11400000
 MonoBehaviour:
   m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
@@ -68,7 +69,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: c761b7331e3e990439f0c5bfb8cc0270, type: 2}
   chapterConfigs:
   - {fileID: 11400000, guid: 84f5bb5a682a5974d90165621d583699, type: 2}
-  - {fileID: 11400000, guid: 89e3c0ec6faf8c64a8ac818aeaac727b, type: 2}
+  - {fileID: 11400000, guid: d6fc29671010c94458785a6fcf5ddece, type: 2}
   backgroundPrefab: {fileID: 1798064068406830, guid: 81426acf110b12345a73a4c3088a969b,
-    type: 2}
+    type: 3}
   inputRepeatDelay: 0.25
