@@ -10,18 +10,19 @@ namespace Gfen.Game.UI
 
         private void Awake() 
         {
-            resumeWithUndoButton.onClick.AddListener(OnCloseButtonClicked);
             restartGameButton.onClick.AddListener(OnRestartGameButtonClicked);
+            resumeWithUndoButton.onClick.AddListener(OnResumeButtonClicked);
         }
         
-        private void OnCloseButtonClicked()
-        {
-            m_gameManager.ResumeGameWithUndo();
-        }
-
         private void OnRestartGameButtonClicked()
         {
             m_gameManager.RestartGame();
         }
+        
+        private void OnResumeButtonClicked()
+        {
+            m_gameManager.ResumeGameWithUndo();
+        }
+
     }
 }

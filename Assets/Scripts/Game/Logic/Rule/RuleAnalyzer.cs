@@ -138,9 +138,9 @@ namespace Gfen.Game.Logic
             foreach (var isKeyWordRuleBlock in isKeyWordRuleBlocks) // Is: Linking verb
             {
                 // Backward: Subject
-                FindConnectedRuleBlocks(isKeyWordRuleBlock.position, Vector2Int.zero - direction, m_subjectCategories, m_cachedSubjectRuleBlocks);
+                FindAdjacentRuleBlocks(isKeyWordRuleBlock.position, Vector2Int.zero - direction, m_subjectCategories, m_cachedSubjectRuleBlocks);
                 // Forward: Predicative complement
-                FindConnectedRuleBlocks(isKeyWordRuleBlock.position, direction, m_complementCategories, m_cachedComplementRuleBlocks);
+                FindAdjacentRuleBlocks(isKeyWordRuleBlock.position, direction, m_complementCategories, m_cachedComplementRuleBlocks);
 
                 foreach (var subjectRuleBlock in m_cachedSubjectRuleBlocks)
                 {
@@ -172,7 +172,7 @@ namespace Gfen.Game.Logic
             }
         }
 
-        private void FindConnectedRuleBlocks(Vector2Int originPosition, Vector2Int direction, RuleCategory[] targetRuleCategories, List<Block> resultBlocks)
+        private void FindAdjacentRuleBlocks(Vector2Int originPosition, Vector2Int direction, RuleCategory[] targetRuleCategories, List<Block> resultBlocks)
         {
             var position = originPosition + direction;
             while (m_logicGameManager.InMap(position))
@@ -210,23 +210,26 @@ namespace Gfen.Game.Logic
                     break;
                 }
 
-                mapBlocks = m_logicGameManager.Map[position.x, position.y];
+                // Disable keyword and
+                // {
+                //     mapBlocks = m_logicGameManager.Map[position.x, position.y];
 
-                var hasAndKeyWordRuleBlock = false;
-                foreach (var block in mapBlocks)
-                {
-                    if (IsTargetKeyWordRuleBlock(block, KeyWordCategory.And))
-                    {
-                        hasAndKeyWordRuleBlock = true;
-                    }
-                }
+                //     var hasAndKeyWordRuleBlock = false;
+                //     foreach (var block in mapBlocks)
+                //     {
+                //         if (IsTargetKeyWordRuleBlock(block, KeyWordCategory.And))
+                //         {
+                //             hasAndKeyWordRuleBlock = true;
+                //         }
+                //     }
 
-                if (!hasAndKeyWordRuleBlock)
-                {
-                    break;
-                }
+                //     if (!hasAndKeyWordRuleBlock)
+                //     {
+                //         break;
+                //     }
 
-                position += direction;
+                //     position += direction;
+                // }
             }
         }
     }

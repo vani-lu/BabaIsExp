@@ -3284,7 +3284,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   canvas: {fileID: 1290293982}
   restartGameButton: {fileID: 1548559139}
-  resumeWithUndoButton: {fileID: 0}
+  resumeWithUndoButton: {fileID: 100440044}
 --- !u!114 &1351971984
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4323,6 +4323,7 @@ MonoBehaviour:
   - {fileID: 1104222715}
   - {fileID: 1290293983}
   - {fileID: 2078653617}
+  - {fileID: 1351971983}
 --- !u!1 &1558820716
 GameObject:
   m_ObjectHideFlags: 0

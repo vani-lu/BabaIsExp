@@ -580,7 +580,7 @@ namespace Gfen.Game.Logic
                     ListPool<Block>.Release(toDestroyBlocks);
                 }
 
-                return true;
+                return false;
             });
         }
 
@@ -608,7 +608,7 @@ namespace Gfen.Game.Logic
                     ListPool<Block>.Release(toDestroyBlocks);
                 }
 
-                return true;
+                return false;
             });
         }
 
@@ -636,7 +636,7 @@ namespace Gfen.Game.Logic
                     ListPool<Block>.Release(toDestroyBlocks);
                 }
 
-                return true;
+                return false;
             });
         }
 

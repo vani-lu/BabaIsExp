@@ -193,39 +193,42 @@ namespace Gfen.Game.Logic
             {
                 GameEnd?.Invoke(true);
             }
-            // else if (gameResult == GameResult.Failure)
-            // {
-            //     GameEnd?.Invoke(false);
-            // }
+            else if (gameResult == GameResult.Defeat)
+            {
+                GameEnd?.Invoke(false);
+            }
         }
 
         private GameResult GetGameResult()
         {
-            var gameResult = GameResult.Uncertain;
-            ForeachMapPosition(position =>
+            // Check Success
+            if (ForeachMapPosition(position =>
             {
                 if (HasAttribute(position, AttributeCategory.You))
                 {
-                    if (HasAttribute(position, AttributeCategory.Win))
-                    {
-                        gameResult = GameResult.Success;
-                        return false;
-                    }
-                    // if (HasAttribute(position, AttributeCategory.Defeat))
-                    // {
-                    //     Debug.Log("Failure");
-                    //     gameResult = GameResult.Defeat;
-                    //     return false;
-                    // }
+                    return HasAttribute(position, AttributeCategory.Win);
                 }
+                return false;
+            })){
+                return GameResult.Success;
+            }
+            
 
-                return true;
+            // Check Defeat
+            bool youExist = ForeachMapPosition(position =>
+            {
+                return HasAttribute(position, AttributeCategory.You);
             });
+            if (!youExist){
+                return GameResult.Defeat;
+            }
 
-            return gameResult;
+            // If none of the conditions apply
+            return GameResult.Uncertain;
+            
         }
 
-        public void ForeachMapPosition(Func<Vector2Int, bool> positionHandler)
+        public bool ForeachMapPosition(Func<Vector2Int, bool> positionHandler)
         {
             var mapXLength = m_map.GetLength(0);
             var mapYLength = m_map.GetLength(1);
@@ -234,32 +237,14 @@ namespace Gfen.Game.Logic
             {
                 for (var j = 0; j < mapYLength; j++)
                 {
-                    if (!positionHandler(new Vector2Int(i, j)))
+                    if (positionHandler(new Vector2Int(i, j)))
                     {
-                        return;
+                        return true;
                     }
                 }
             }
-        }
 
-        public void ForeachMapBlock(Func<Block, bool> blockHandler)
-        {
-            var mapXLength = m_map.GetLength(0);
-            var mapYLength = m_map.GetLength(1);
-
-            for (var i = 0; i < mapXLength; i++)
-            {
-                for (var j = 0; j < mapYLength; j++)
-                {
-                    foreach (var block in m_map[i, j])
-                    {
-                        if (!blockHandler(block))
-                        {
-                            return;
-                        }
-                    }
-                }
-            }
+            return false;
         }
 
         public bool InMap(Vector2Int position)
@@ -309,36 +294,5 @@ namespace Gfen.Game.Logic
             return false;
         }
 
-        private void GetBlocksWithAttribute(AttributeCategory attributeCategory, List<Block> blocks)
-        {
-            var mapXLength = m_map.GetLength(0);
-            var mapYLength = m_map.GetLength(1);
-
-            for (var i = 0; i < mapXLength; i++)
-            {
-                for (var j = 0; j < mapYLength; j++)
-                {
-                    foreach (var block in m_map[i, j])
-                    {
-                        if (m_attributeHandler.HasAttribute(block, attributeCategory))
-                        {
-                            blocks.Add(block);
-                        }
-                    }
-                }
-            }
-        }
-
-        private void GetBlocksWithAttribute(Vector2Int position, AttributeCategory attributeCategory, List<Block> resultBlocks)
-        {
-            var blocks = m_map[position.x, position.y];
-            foreach (var block in blocks)
-            {
-                if (m_attributeHandler.HasAttribute(block, attributeCategory))
-                {
-                    resultBlocks.Add(block);
-                }
-            }
-        }
     }
 }
