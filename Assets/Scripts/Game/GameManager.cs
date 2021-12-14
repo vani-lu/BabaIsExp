@@ -33,6 +33,7 @@ namespace Gfen.Game {
 
         private bool m_isRestart;
         private bool m_isResume;
+        private bool m_isResumeWithUndo;
 
         private bool m_isSuccess;
         private bool m_isDefeat;
@@ -127,10 +128,10 @@ namespace Gfen.Game {
                                                 gameControlInput,
                                                 operationInput,
                                                 numCommandsOutput);
-                //Debug.Log(string.Format("{0},{1:d},{2:d},{3:g},{4:g},{5:d}", fData.frameTime, fData.chapter, fData.level, fData.gameControl, fData.operation, fData.numCommands));
-                var writeTask =  RecordFrameData.AppendOneFrameAsync(m_dataPath + m_dataFile, fData);
-                m_data.Add(fData);
-                await writeTask;
+                Debug.Log(string.Format("{0},{1:d},{2:d},{3:g},{4:g},{5:d}", fData.frameTime, fData.chapter, fData.level, fData.gameControl, fData.operation, fData.numCommands));
+                // var writeTask =  RecordFrameData.AppendOneFrameAsync(m_dataPath + m_dataFile, fData);
+                // m_data.Add(fData);
+                // await writeTask;
             }
             UpdateGameStatus();
         }
@@ -180,24 +181,32 @@ namespace Gfen.Game {
             {
                 // Detect Pause from Pause UI
                 if (!m_isPreviouslyInPause) {
-                    gameControlType = GameControlType.Pause;
+                    if ( m_isDefeat ) {
+                        gameControlType = GameControlType.Defeat;
+                    }
+                    else {
+                        gameControlType = GameControlType.Pause;
+                    }
                     m_lastInputTime = Time.unscaledTime;
                 }
                 return;
             }
             else {
                 if (m_isPreviouslyInPause) {
-                    if (m_isRestart) {
-                        // Detect Restart from Pause UI
+                    if (m_isRestart) { // Detect Restart from Pause UI
                         gameControlType = GameControlType.Restart;
                         m_lastInputTime = Time.unscaledTime;
                         m_isRestart = false;
                     }
-                    else if (m_isResume) {
-                        // Detect Resume from Pause UI
+                    else if (m_isResume) { // Detect Resume from Pause UI
                         gameControlType = GameControlType.Resume;
                         m_lastInputTime = Time.unscaledTime;
                         m_isResume = false;
+                    }
+                    else if (m_isResumeWithUndo) { // Detect Resume with Undo from UI, after Defeat
+                        gameControlType = GameControlType.Undo;
+                        m_lastInputTime = Time.unscaledTime;
+                        m_isResumeWithUndo = false;
                     }
                     return;
                 }
@@ -346,6 +355,17 @@ namespace Gfen.Game {
             uiManager.HidePage();
         }
 
+        public void ResumeGameWithUndo()
+        {
+            m_logicGameManager.Undo();
+            m_presentationGameManager.RefreshPresentation();
+
+            m_isPreviouslyInPause = m_isPause;
+            m_isPause = false;
+            m_isResumeWithUndo = true;
+            uiManager.HidePage();
+        }
+
         private void OnGameEnd(bool success)
         {
             if (success)
@@ -358,8 +378,6 @@ namespace Gfen.Game {
                 uiManager.ShowPage<GameSuccessPage>();
             }
             // else {
-            //     m_isPreviouslyInGame = m_isInGame;
-            //     m_isInGame = false;
 
             //     m_isPreviouslyInPause = m_isPause;
             //     m_isPause = true;

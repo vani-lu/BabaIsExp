@@ -214,7 +214,7 @@ namespace Gfen.Game.Logic
                     // if (HasAttribute(position, AttributeCategory.Defeat))
                     // {
                     //     Debug.Log("Failure");
-                    //     gameResult = GameResult.Failure;
+                    //     gameResult = GameResult.Defeat;
                     //     return false;
                     // }
                 }

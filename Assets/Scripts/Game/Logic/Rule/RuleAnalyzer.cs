@@ -7,17 +7,19 @@ namespace Gfen.Game.Logic
     {
         public LogicGameManager m_logicGameManager;
 
-        private readonly RuleCategory[] m_backwardRuleCategories = new RuleCategory[] { RuleCategory.EntityType, RuleCategory.EntityCategory };
-
-        private readonly RuleCategory[] m_forwardRuleCategories = new RuleCategory[] { RuleCategory.EntityType, RuleCategory.Attribute };
+        /*  Rule structure: SUBJECT IS COMPLEMENT
+            Legitimate subject words: entity type OR entity category
+            Legitimate predicative complements: attribute words */
+        private readonly RuleCategory[] m_subjectCategories = new RuleCategory[] { RuleCategory.EntityType, RuleCategory.EntityCategory };
+        private readonly RuleCategory[] m_complementCategories = new RuleCategory[] { RuleCategory.Attribute };
 
         private List<Rule> m_currentRules = new List<Rule>();
 
         private List<Rule> m_cachedRules = new List<Rule>();
 
-        private List<Block> m_cachedBackwardRuleBlocks = new List<Block>();
+        private List<Block> m_cachedSubjectRuleBlocks = new List<Block>();
 
-        private List<Block> m_cachedForwardRuleBlocks = new List<Block>();
+        private List<Block> m_cachedComplementRuleBlocks = new List<Block>();
 
         private List<Block> m_cachedIsKeyWordRuleBlocks = new List<Block>();
 
@@ -133,46 +135,40 @@ namespace Gfen.Game.Logic
         {
             var configSet = m_logicGameManager.GameManager.gameConfig;
 
-            foreach (var isKeyWordRuleBlock in isKeyWordRuleBlocks)
+            foreach (var isKeyWordRuleBlock in isKeyWordRuleBlocks) // Is: Linking verb
             {
-                FindConnectedRuleBlocks(isKeyWordRuleBlock.position, Vector2Int.zero - direction, m_backwardRuleCategories, m_cachedBackwardRuleBlocks);
-                FindConnectedRuleBlocks(isKeyWordRuleBlock.position, direction, m_forwardRuleCategories, m_cachedForwardRuleBlocks);
+                // Backward: Subject
+                FindConnectedRuleBlocks(isKeyWordRuleBlock.position, Vector2Int.zero - direction, m_subjectCategories, m_cachedSubjectRuleBlocks);
+                // Forward: Predicative complement
+                FindConnectedRuleBlocks(isKeyWordRuleBlock.position, direction, m_complementCategories, m_cachedComplementRuleBlocks);
 
-                foreach (var backwardRuleBlock in m_cachedBackwardRuleBlocks)
+                foreach (var subjectRuleBlock in m_cachedSubjectRuleBlocks)
                 {
-                    var backwardEntityConfig = configSet.GetEntityConfig(backwardRuleBlock.entityType);
+                    var subjectEntityConfig = configSet.GetEntityConfig(subjectRuleBlock.entityType);
 
-                    foreach (var forwardRuleBlock in m_cachedForwardRuleBlocks)
+                    foreach (var complementRuleBlock in m_cachedComplementRuleBlocks)
                     {
-                        var forwardEntityConfig = configSet.GetEntityConfig(forwardRuleBlock.entityType);
+                        var complementEntityConfig = configSet.GetEntityConfig(complementRuleBlock.entityType);
 
-                        if (backwardEntityConfig.ruleCategory == RuleCategory.EntityType)
+                        if (subjectEntityConfig.ruleCategory == RuleCategory.EntityType)
                         {
-                            if (forwardEntityConfig.ruleCategory == RuleCategory.EntityType)
+                            if (complementEntityConfig.ruleCategory == RuleCategory.Attribute)
                             {
-                                resultRules.Add(new EntityTypeIsEntityTypeRule(m_logicGameManager, backwardEntityConfig.entityTypeForRule, forwardEntityConfig.entityTypeForRule));
-                            }
-                            else if (forwardEntityConfig.ruleCategory == RuleCategory.Attribute)
-                            {
-                                resultRules.Add(new EntityTypeIsAttributeRule(m_logicGameManager, backwardEntityConfig.entityTypeForRule, forwardEntityConfig.attributeCategoryForRule));
+                                resultRules.Add(new EntityTypeIsAttributeRule(m_logicGameManager, subjectEntityConfig.entityTypeForRule, complementEntityConfig.attributeCategoryForRule));
                             }
                         }
-                        else if (backwardEntityConfig.ruleCategory == RuleCategory.EntityCategory)
+                        else if (subjectEntityConfig.ruleCategory == RuleCategory.EntityCategory)
                         {
-                            if (forwardEntityConfig.ruleCategory == RuleCategory.EntityType)
+                            if (complementEntityConfig.ruleCategory == RuleCategory.Attribute)
                             {
-                                resultRules.Add(new EntityCategoryIsEntityTypeRule(m_logicGameManager, backwardEntityConfig.entityCategoryForRule, forwardEntityConfig.entityTypeForRule));
-                            }
-                            else if (forwardEntityConfig.ruleCategory == RuleCategory.Attribute)
-                            {
-                                resultRules.Add(new EntityCategoryIsAttributeRule(m_logicGameManager, backwardEntityConfig.entityCategoryForRule, forwardEntityConfig.attributeCategoryForRule));
+                                resultRules.Add(new EntityCategoryIsAttributeRule(m_logicGameManager, subjectEntityConfig.entityCategoryForRule, complementEntityConfig.attributeCategoryForRule));
                             }
                         }
                     }
                 }
 
-                m_cachedBackwardRuleBlocks.Clear();
-                m_cachedForwardRuleBlocks.Clear();
+                m_cachedSubjectRuleBlocks.Clear();
+                m_cachedComplementRuleBlocks.Clear();
             }
         }
 
