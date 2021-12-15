@@ -30,8 +30,10 @@ namespace Gfen.Game.UI
 
         private void OnSelectButtonClicked()
         {
-            var levelPage = m_gameManager.uiManager.ShowPage<LevelPage>();
-            levelPage.SetContent(m_chapterIndex);
+            if (m_gameManager.LevelManager.IsChapterAvailable(m_chapterIndex)){
+                var levelPage = m_gameManager.uiManager.ShowPage<LevelPage>();
+                levelPage.SetContent(m_chapterIndex);
+            }
         }
     }
 }

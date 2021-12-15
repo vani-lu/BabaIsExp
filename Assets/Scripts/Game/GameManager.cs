@@ -336,8 +336,10 @@ namespace Gfen.Game {
 
             m_logicGameManager.RestartGame();
             m_presentationGameManager.RefreshPresentation();
+
             m_isPreviouslyInPause = m_isPause;
             m_isPause = false;
+            
             m_isRestart = true;
 
             uiManager.ShowPage<GamePlayPage>();
@@ -347,6 +349,7 @@ namespace Gfen.Game {
         {
             m_isPreviouslyInPause = m_isPause;
             m_isPause = true;
+
             uiManager.ShowPage<InGameSettingsPage>();
         }
 

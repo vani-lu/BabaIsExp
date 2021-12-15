@@ -34,7 +34,9 @@ namespace Gfen.Game.UI
 
         private void OnSelectButtonClicked()
         {
-            m_gameManager.StartGame(m_chapterIndex, m_levelIndex);
+            if (m_gameManager.LevelManager.IsLevelAvailable(m_chapterIndex, m_levelIndex)){
+                m_gameManager.StartGame(m_chapterIndex, m_levelIndex);
+            }
         }
     }
 }

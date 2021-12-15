@@ -50,6 +50,25 @@ namespace Gfen.Game.Manager
             return true;
         }
 
+        // A chapter is avaible when all the previous chapters are passed
+        public bool IsChapterAvailable(int chapterIndex)
+        {
+            // Passed chapters can be revisited
+            if (IsChapterPassed(chapterIndex)){
+                return true;
+            }
+
+            for (int i = chapterIndex - 1; i >= 0; i--){
+                if (!IsChapterPassed(i)){
+
+                    Debug.Log("Chapter" + i +  "Not Passed");
+                    return false;
+                }
+            }
+
+            return true;
+        }
+
         public bool IsLevelPassed(int chapterIndex, int levelIndex)
         {
             var chapterInfoDict = m_managerInfo.chapterInfoDict.GetOrDefault(chapterIndex, null);
@@ -59,6 +78,23 @@ namespace Gfen.Game.Manager
             }
 
             return chapterInfoDict.levelInfoDict.GetOrDefault(levelIndex, 0) > 0;
+        }
+
+        // A level is avaible when all the previous levels are passed
+        public bool IsLevelAvailable(int chapterIndex, int levelIndex)
+        {
+            // Passed levels can be revisited
+            if (IsLevelPassed(chapterIndex, levelIndex)){
+                return true;
+            }
+
+            for (int i = levelIndex - 1; i >= 0; i--){
+                if (!IsLevelPassed(chapterIndex, i)){
+                    return false;
+                }
+            }
+
+            return true;
         }
 
         public void SetStayChapterIndex(int chapterIndex)
