@@ -70,6 +70,7 @@ MonoBehaviour:
   chapterConfigs:
   - {fileID: 11400000, guid: 84f5bb5a682a5974d90165621d583699, type: 2}
   - {fileID: 11400000, guid: d6fc29671010c94458785a6fcf5ddece, type: 2}
+  - {fileID: 11400000, guid: 84f3bd6288fddc34795bab04682a5339, type: 2}
   backgroundPrefab: {fileID: 1798064068406830, guid: 81426acf110b12345a73a4c3088a969b,
     type: 3}
   inputRepeatDelay: 0.25
