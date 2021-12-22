@@ -311,12 +311,6 @@ MonoBehaviour:
   - entityType: 30008
     position: {x: 4, y: 13}
     direction: 0
-  - entityType: 10001
-    position: {x: 3, y: 15}
-    direction: 0
-  - entityType: 10001
-    position: {x: 3, y: 15}
-    direction: 0
   - entityType: 10003
     position: {x: 4, y: 15}
     direction: 0
@@ -331,4 +325,7 @@ MonoBehaviour:
     direction: 0
   - entityType: 10005
     position: {x: 0, y: 15}
+    direction: 0
+  - entityType: 10005
+    position: {x: 3, y: 15}
     direction: 0

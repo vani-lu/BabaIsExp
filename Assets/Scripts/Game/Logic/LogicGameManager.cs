@@ -166,12 +166,14 @@ namespace Gfen.Game.Logic
             m_attributeHandler.HandleAttributeYou(operationType, tickCommands);// Also handles Push and Pull, Open and Shut
             m_attributeHandler.HandleAttributeMove(tickCommands);
 
+            m_attributeHandler.RefreshAttributes();
+            m_ruleAnalyzer.Refresh();
+
             m_attributeHandler.HandleAttributeDefeat(tickCommands);
             m_attributeHandler.HandleAttributeSink(tickCommands);
             m_attributeHandler.HandleAttributeHotAndMelt(tickCommands);
 
             m_attributeHandler.RefreshAttributes();
-
             m_ruleAnalyzer.Apply(tickCommands);
 
             int numCommands = tickCommands.Count;
