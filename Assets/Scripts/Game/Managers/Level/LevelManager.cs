@@ -16,6 +16,7 @@ namespace Gfen.Game.Manager
             m_gameManager = gameManager;
 
             LoadInfo();
+            // SaveInfo();
         }
 
         private void LoadInfo()

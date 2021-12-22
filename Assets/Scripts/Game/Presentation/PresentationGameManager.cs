@@ -49,9 +49,12 @@ namespace Gfen.Game.Presentation
                 for (var j = 0; j < mapYLength; j++)
                 {
                     CreateBackground(backgroundRoot.transform, i, j);
+                    // Newly appended block float above old ones
+                    int sortByZ = 0;
                     foreach (var block in map[i, j])
                     {
-                        CreatePresentationBlock(blockRoot.transform, block);
+                        CreatePresentationBlock(blockRoot.transform, block, sortByZ);
+                        sortByZ--;
                     }
                 }
             }
@@ -94,7 +97,7 @@ namespace Gfen.Game.Presentation
             backgroundGameObject.transform.position = new Vector3(x, y, 0) + m_origin;
         }
 
-        private void CreatePresentationBlock(Transform blockRoot, Block block)
+        private void CreatePresentationBlock(Transform blockRoot, Block block, int z)
         {
             var presentationBlock = new PresentationBlock
             {
@@ -107,7 +110,7 @@ namespace Gfen.Game.Presentation
             presentationBlock.blockTransform = blockGameObject.transform;
 
             presentationBlock.blockTransform.SetParent(blockRoot, false);
-            presentationBlock.blockTransform.localPosition = new Vector3(block.position.x, block.position.y, 0) + m_origin;
+            presentationBlock.blockTransform.localPosition = new Vector3(block.position.x, block.position.y, z) + m_origin;
             
             // Toggle Rotation of Sprites
             // if (entityConfig.category != EntityCategory.Rule)
