@@ -14,10 +14,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   chapterName: "\u5E73\u884C\u4E16\u754C"
   levelConfigs:
+  - {fileID: 11400000, guid: 9f31ad8c4a6bff44b89adaa8493ef4f8, type: 2}
   - {fileID: 11400000, guid: ecb237af480158345b2983f8d797a7cc, type: 2}
   - {fileID: 11400000, guid: 6b25b777ab02ee845872d6f85ced3a03, type: 2}
   - {fileID: 11400000, guid: c9d59585b76e146409907dfe4722cafb, type: 2}
   - {fileID: 11400000, guid: 25c104750247e40a8bcb3af245093719, type: 2}
   - {fileID: 11400000, guid: b28125ac0c9854ac39e2592d49d5e839, type: 2}
-  - {fileID: 11400000, guid: 2e840871c6f3844c5ae8123582e23d1f, type: 2}
-  - {fileID: 11400000, guid: 9f31ad8c4a6bff44b89adaa8493ef4f8, type: 2}
+  - {fileID: 11400000, guid: a5ebb525f41644a40a391dc6b4ed999e, type: 2}

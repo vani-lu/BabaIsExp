@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f7457eaeac03c3b448b89ec11bf014ac, type: 3}
-  m_Name: Custom_7_Playground
+  m_Name: Custom_7_Mirror_Room
   m_EditorClassIdentifier: 
   size: {x: 24, y: 14}
   blocks:
@@ -31,21 +31,6 @@ MonoBehaviour:
     direction: 0
   - entityType: 30004
     position: {x: 23, y: 5}
-    direction: 0
-  - entityType: 9
-    position: {x: 6, y: 8}
-    direction: 0
-  - entityType: 9
-    position: {x: 10, y: 10}
-    direction: 0
-  - entityType: 9
-    position: {x: 6, y: 5}
-    direction: 0
-  - entityType: 9
-    position: {x: 7, y: 4}
-    direction: 0
-  - entityType: 9
-    position: {x: 10, y: 3}
     direction: 0
   - entityType: 9
     position: {x: 12, y: 6}

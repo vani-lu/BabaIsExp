@@ -59,8 +59,8 @@ namespace Gfen.Game.Presentation
                 }
             }
 
-            // Adapt to display size
-            var screenRatio = ((float)Screen.width)*0.77f/Screen.height;
+            // Camera: Adapt to display size
+            var screenRatio = Screen.width*0.77f/Screen.height;
             var mapRatio = ((float)mapXLength)/mapYLength;
             if (screenRatio > mapRatio)
             {

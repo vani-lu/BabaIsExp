@@ -309,12 +309,13 @@ namespace Gfen.Game {
 
             m_logicGameManager.GameEnd += OnGameEnd;
 
+            // Show in game UI
             uiManager.ShowPage<GamePlayPage>();
 
-            //Take Screenshot
-            string capturePath = m_dataPath + "/Chap" + chapterIndex + "_Level_" +  levelIndex + ".png";
-            ScreenCapture.CaptureScreenshot(capturePath, 0);
-            Debug.Log(capturePath);
+            // //Take Screenshot
+            // string capturePath = m_dataPath + "/Chap" + chapterIndex + "_Level_" +  levelIndex + ".png";
+            // ScreenCapture.CaptureScreenshot(capturePath, 0);
+            // Debug.Log(capturePath);
         }
 
         public void StopGame()
@@ -393,7 +394,6 @@ namespace Gfen.Game {
 
                 m_isPreviouslyInPause = m_isPause;
                 m_isPause = true;
-
                 m_isDefeat = true;
 
                 uiManager.ShowPage<GameDefeatPage>();
