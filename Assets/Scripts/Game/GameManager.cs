@@ -44,19 +44,25 @@ namespace Gfen.Game {
         private float m_lastInputTime;
 
         // Record frame data in a list
-        private DateTime m_dateNow;
+        private string m_user;
+        private string m_date;
 
         private string m_dataPath;
         private string m_dataFile;
+
+        private const string UserInfoKey = "UserName";
+
+        private const string DateInfoKey = "LoginDate";
 
         private async void Start() 
         {
             gameConfig.Init();
 
             // Set data path
-            m_dateNow = DateTime.Now;
+            m_user = PlayerPrefs.GetString(UserInfoKey, "");
+            m_date = PlayerPrefs.GetString(DateInfoKey, "");
             m_dataPath = Application.persistentDataPath;
-            m_dataFile = "/data_" + m_dateNow.ToString("yyyyMMdd_HHmm") + ".csv";
+            m_dataFile = "/data_" + m_date + "_" + m_user + ".csv";
             Debug.Log(m_dataPath + m_dataFile);
 
             // Create data path and initialize the file
