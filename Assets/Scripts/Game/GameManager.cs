@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using Gfen.Game.Config;
 using Gfen.Game.Logic;
 using Gfen.Game.Manager;
@@ -40,12 +39,13 @@ namespace Gfen.Game {
 
         private int m_currentChapterIndex;
         private int m_currentLevelIndex;
+        private MapConfig m_currentmapConfig;
 
         private float m_lastInputTime;
 
         // Record frame data in a list
         private DateTime m_dateNow;
-        private List<FrameData> m_data;
+
         private string m_dataPath;
         private string m_dataFile;
 
@@ -54,7 +54,6 @@ namespace Gfen.Game {
             gameConfig.Init();
 
             // Set data path
-            m_data = new List<FrameData>();
             m_dateNow = DateTime.Now;
             m_dataPath = Application.persistentDataPath;
             m_dataFile = "/data_" + m_dateNow.ToString("yyyyMMdd_HHmm") + ".csv";
@@ -132,7 +131,6 @@ namespace Gfen.Game {
                 //                         fData.frameTime, fData.chapter, fData.level, 
                 //                         fData.gameControl, fData.operation, fData.numCommands));
                 var writeTask =  RecordFrameData.AppendOneFrameAsync(m_dataPath + m_dataFile, fData);
-                m_data.Add(fData);
                 await writeTask;
             }
             UpdateGameStatus();
@@ -298,10 +296,10 @@ namespace Gfen.Game {
         {
             uiManager.HideAllPages();
 
-            m_logicGameManager.StartGame(gameConfig.chapterConfigs[chapterIndex].levelConfigs[levelIndex].map);
+            m_currentmapConfig = gameConfig.chapterConfigs[chapterIndex].levelConfigs[levelIndex].map;
+            m_logicGameManager.StartGame(m_currentmapConfig);
             m_presentationGameManager.StartPresent();
-            m_isPreviouslyInGame = m_isInGame;
-            m_isPreviouslyInPause = m_isPause;
+            UpdateGameStatus();
             m_isInGame = true;
             m_isPause = false;
             m_currentChapterIndex = chapterIndex;
@@ -324,8 +322,7 @@ namespace Gfen.Game {
 
             m_presentationGameManager.StopPresent();
             m_logicGameManager.StopGame();
-            m_isPreviouslyInGame = m_isInGame;
-            m_isPreviouslyInPause = m_isPause;
+            UpdateGameStatus();
             m_isInGame = false;
             m_isPause = false;
 
@@ -364,6 +361,7 @@ namespace Gfen.Game {
             m_isPreviouslyInPause = m_isPause;
             m_isPause = false;
             m_isResume = true;
+
             uiManager.HidePage();
         }
 
@@ -376,6 +374,7 @@ namespace Gfen.Game {
             m_isPause = false;
 
             m_isResumeWithUndo = true;
+            
             uiManager.HidePage();
         }
 

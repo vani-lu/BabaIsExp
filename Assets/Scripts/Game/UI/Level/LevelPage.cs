@@ -44,6 +44,7 @@ namespace Gfen.Game.UI
                 m_levelCells[i].Show(m_gameManager);
                 m_levelCells[i].SetContent(m_currentChapterIndex, i);
             }
+            // Hide excess instantiations of cells
             for (var i = levelConfigs.Length; i < m_levelCells.Count; i++)
             {
                 m_levelCells[i].Hide();
