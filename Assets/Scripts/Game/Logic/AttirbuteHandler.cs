@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using Gfen.Game.Common;
 using Gfen.Game.Utility;
@@ -12,6 +13,12 @@ namespace Gfen.Game.Logic
         private Dictionary<int, HashSet<AttributeCategory>> m_entityTypeAttributeDict = new Dictionary<int, HashSet<AttributeCategory>>();
 
         private Dictionary<EntityCategory, HashSet<AttributeCategory>> m_entityCategoryAttributeDict = new Dictionary<EntityCategory, HashSet<AttributeCategory>>();
+
+        public SerializableDictionaryOfIntAndAttribute EntityTypeAttributeDict {
+            get {
+                return (SerializableDictionaryOfIntAndAttribute)m_entityTypeAttributeDict;
+            }
+        }
 
         public AttirbuteHandler(LogicGameManager logicGameManager)
         {
@@ -689,4 +696,7 @@ namespace Gfen.Game.Logic
             HashSetPool<Block>.Release(toDestroyBlocks);
         }
     }
+
+    [Serializable]
+    public class SerializableDictionaryOfIntAndAttribute : SerializableDictionary<int, HashSet<AttributeCategory>> { }
 }

@@ -1,3 +1,4 @@
+using System.IO;
 using Gfen.Game.Utility;
 using UnityEngine;
 
@@ -7,28 +8,44 @@ namespace Gfen.Game.Manager
     {
         private const string InfoKey = "LevelManagerInfo";
 
+        private const string UserInfoKey = "UserName";
+
+        private const string DateInfoKey = "LoginDate";
+
         private GameManager m_gameManager;
 
         private LevelManagerInfo m_managerInfo = new LevelManagerInfo();
+
+        private string m_levelInfoPath;
 
         public void Init(GameManager gameManager)
         {
             m_gameManager = gameManager;
 
-            LoadInfo();
-            // SaveInfo();
+            string user = PlayerPrefs.GetString(UserInfoKey, "");
+            string date = PlayerPrefs.GetString(DateInfoKey, "");
+            m_levelInfoPath = m_gameManager.DataPath + "/" + InfoKey + "_" + date + "_" + user + ".json";
+
+            // Get 0r Set
+            if (File.Exists(m_levelInfoPath)){
+                LoadInfo();
+            }
+            else {
+                SaveInfo();
+            }
+
         }
 
         private void LoadInfo()
         {
-            var json = PlayerPrefs.GetString(InfoKey, "");
-            JsonUtility.FromJsonOverwrite(json, m_managerInfo);
+            var content = File.ReadAllText(m_levelInfoPath);
+            JsonUtility.FromJsonOverwrite(content, m_managerInfo);
         }
 
         private void SaveInfo()
         {
-            var json = JsonUtility.ToJson(m_managerInfo);
-            PlayerPrefs.SetString(InfoKey, json);
+            var content = JsonUtility.ToJson(m_managerInfo);
+            File.WriteAllText(m_levelInfoPath, content);
         }
 
         public bool IsChapterPassed(int chapterIndex)

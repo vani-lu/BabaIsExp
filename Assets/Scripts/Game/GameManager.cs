@@ -48,6 +48,7 @@ namespace Gfen.Game {
         private string m_date;
 
         private string m_dataPath;
+        public string DataPath { get { return m_dataPath; } }
         private string m_dataFile;
 
         private const string UserInfoKey = "UserName";
@@ -66,7 +67,7 @@ namespace Gfen.Game {
             Debug.Log(m_dataPath + m_dataFile);
 
             // Create data path and initialize the file
-            var createTask = RecordFrameData.SetColNamesAsync(m_dataPath + m_dataFile);
+            var createTask = FrameDataManager.SetColNamesAsync(m_dataPath + m_dataFile);
 
             // Initialize level and UI managers with the current Game Manager 
             m_levelManager = new LevelManager();
@@ -111,17 +112,28 @@ namespace Gfen.Game {
             // Listen to inputs when in gameplay
             if (m_isInGame)
             {
-                HandleInput(out gameControlInput,
-                            out operationInput,
-                            out numCommandsOutput);     
+                // Detect switch in game state
+                // Start a new level
+                if (!m_isPreviouslyInGame) {
+                    gameControlInput = GameControlType.Start;
+                    m_isPreviouslyInGame = true;
+                }
+                else
+                {
+                    HandleInput(out gameControlInput,
+                                out operationInput,
+                                out numCommandsOutput); 
+                }
             }
             else {
                 if (m_isSuccess) {
                     gameControlInput = GameControlType.Success;
                     m_isSuccess = false;
+                    m_isPreviouslyInGame = false;
                 }
                 else if (m_isPreviouslyInGame) {
                     gameControlInput = GameControlType.Stop;
+                    m_isPreviouslyInGame = false;
                 }
             }
             // DebugLog
@@ -133,13 +145,12 @@ namespace Gfen.Game {
                                                 gameControlInput,
                                                 operationInput,
                                                 numCommandsOutput);
-                // Debug.Log(string.Format("{0},{1:d},{2:d},{3:g},{4:g},{5:d}", 
-                //                         fData.frameTime, fData.chapter, fData.level, 
-                //                         fData.gameControl, fData.operation, fData.numCommands));
-                var writeTask =  RecordFrameData.AppendOneFrameAsync(m_dataPath + m_dataFile, fData);
+                Debug.Log(string.Format("{0},{1:d},{2:d},{3:g},{4:g},{5:d}", 
+                                        fData.frameTime, fData.chapter, fData.level, 
+                                        fData.gameControl, fData.operation, fData.numCommands));
+                var writeTask =  FrameDataManager.AppendOneFrameAsync(m_dataPath + m_dataFile, fData);
                 await writeTask;
             }
-            UpdateGameStatus();
         }
 
         private void HandleInput(out GameControlType gameControlType, out OperationType operationType, out int numOfCommands)
@@ -155,14 +166,6 @@ namespace Gfen.Game {
             gameControlType = GameControlType.None;
             operationType = OperationType.None;
             numOfCommands = -1;
-
-            // Detect switch in game state
-            // Start a new level
-            if (!m_isPreviouslyInGame) {
-                gameControlType = GameControlType.Start;
-                m_lastInputTime = Time.unscaledTime;
-                return;
-            }
 
             // Wait for key press time
             var isWithinInputDelay = (Time.unscaledTime - m_lastInputTime) < gameConfig.inputRepeatDelay;
@@ -182,10 +185,10 @@ namespace Gfen.Game {
                 return;
             }
 
-            // Do not listen to inputs other than restart when in pause
+         // Do not listen to inputs when in pause
             if (m_isPause)
             {
-                // Detect Pause from Pause UI
+                // Detect Pause Menu Onset
                 if (!m_isPreviouslyInPause) {
                     m_lastInputTime = Time.unscaledTime;
                     if ( m_isDefeat ) {
@@ -195,6 +198,7 @@ namespace Gfen.Game {
                     else {
                         gameControlType = GameControlType.Pause;
                     }
+                    m_isPreviouslyInPause = true;
                 }
                 return;
             }
@@ -215,17 +219,16 @@ namespace Gfen.Game {
                         gameControlType = GameControlType.Undo;
                         m_isResumeWithUndo = false;
                     }
+                    m_isPreviouslyInPause = false;
                     return;
                 }
-            }
+            }   
 
             // Keypress Pause
             var pause = CrossPlatformInputManager.GetButton("Pause");
             if (pause)
             {
-                m_lastInputTime = Time.unscaledTime;
                 PauseGame();
-                gameControlType = GameControlType.Pause;
                 return;
             }
 
@@ -292,7 +295,8 @@ namespace Gfen.Game {
             }
             else if (wait)
             {
-                operationType = OperationType.Wait;
+                // Disable Wait
+                // operationType = OperationType.Wait;
             }
 
             return operationType;
@@ -388,7 +392,6 @@ namespace Gfen.Game {
         {
             if (success)
             {
-                m_isPreviouslyInGame = m_isInGame;
                 m_isInGame = false;
                 m_isSuccess = true;
                 m_levelManager.PassLevel(m_currentChapterIndex, m_currentLevelIndex);
@@ -397,7 +400,6 @@ namespace Gfen.Game {
             }
             else {
 
-                m_isPreviouslyInPause = m_isPause;
                 m_isPause = true;
                 m_isDefeat = true;
 

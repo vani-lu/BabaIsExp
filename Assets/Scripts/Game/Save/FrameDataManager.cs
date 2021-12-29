@@ -1,11 +1,9 @@
-using System;
 using System.IO;
 using System.Threading.Tasks;
-using UnityEngine;
 
 namespace Vani.Data
 {
-    public class RecordFrameData 
+    public class FrameDataManager 
     {
 
         public static async Task AppendOneFrameAsync(string savePath, FrameData fData) 
@@ -16,11 +14,15 @@ namespace Vani.Data
 
         public static async Task SetColNamesAsync(string savePath)
         {
-            string[] lines =
-            {
-                "TimeFromStart,Chapter,Level,Control,Operation,NumOfCommands"
-            };
-            await Task.Run(() => File.WriteAllLines(savePath, lines));
+            // Set headers for a new file
+            if(!File.Exists(savePath)){
+                string[] lines =
+                {
+                    "TimeFromStart,Chapter,Level,Control,Operation,NumOfCommands"
+                };
+                await Task.Run(() => File.WriteAllLines(savePath, lines));
+            }
+
         }
 
     }

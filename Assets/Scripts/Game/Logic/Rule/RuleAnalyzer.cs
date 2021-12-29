@@ -175,11 +175,13 @@ namespace Gfen.Game.Logic
         private void FindAdjacentRuleBlocks(Vector2Int originPosition, Vector2Int direction, RuleCategory[] targetRuleCategories, List<Block> resultBlocks)
         {
             var position = originPosition + direction;
+            
             while (m_logicGameManager.InMap(position))
             {
                 var mapBlocks = m_logicGameManager.Map[position.x, position.y];
 
-                var hasTargetRuleBlock = false;
+                // Enable this assignment if loop for AND keyword
+                //var hasTargetRuleBlock = false;
                 foreach (var block in mapBlocks)
                 {
                     var hasTargetRuleCategory = false;
@@ -193,43 +195,47 @@ namespace Gfen.Game.Logic
                     }
                     if (hasTargetRuleCategory)
                     {
-                        hasTargetRuleBlock = true;
+                        //hasTargetRuleBlock = true;
                         resultBlocks.Add(block);
                     }
                 }
 
-                if (!hasTargetRuleBlock)
-                {
-                    break;
-                }
+                break; // stop the nearest position, delete this break if enable AND keyword
 
-                position += direction;
-
-                if (!m_logicGameManager.InMap(position))
-                {
-                    break;
-                }
-
-                // Disable keyword and
+                { // Loop for AND
+            
+                // if (!hasTargetRuleBlock)
                 // {
-                //     mapBlocks = m_logicGameManager.Map[position.x, position.y];
-
-                //     var hasAndKeyWordRuleBlock = false;
-                //     foreach (var block in mapBlocks)
-                //     {
-                //         if (IsTargetKeyWordRuleBlock(block, KeyWordCategory.And))
-                //         {
-                //             hasAndKeyWordRuleBlock = true;
-                //         }
-                //     }
-
-                //     if (!hasAndKeyWordRuleBlock)
-                //     {
-                //         break;
-                //     }
-
-                //     position += direction;
+                //     break;
                 // }
+
+                // position += direction;
+
+                // if (!m_logicGameManager.InMap(position))
+                // {
+                //     break;
+                // }
+
+
+                // mapBlocks = m_logicGameManager.Map[position.x, position.y];
+
+                // var hasAndKeyWordRuleBlock = false;
+                // foreach (var block in mapBlocks)
+                // {
+                //     if (IsTargetKeyWordRuleBlock(block, KeyWordCategory.And))
+                //     {
+                //         hasAndKeyWordRuleBlock = true;
+                //     }
+                // }
+
+                // if (!hasAndKeyWordRuleBlock)
+                // {
+                //     break;
+                // }
+
+                // position += direction;
+                }
+        
             }
         }
     }
