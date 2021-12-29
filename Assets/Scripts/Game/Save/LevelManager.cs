@@ -22,9 +22,7 @@ namespace Gfen.Game.Manager
         {
             m_gameManager = gameManager;
 
-            string user = PlayerPrefs.GetString(UserInfoKey, "");
-            string date = PlayerPrefs.GetString(DateInfoKey, "");
-            m_levelInfoPath = m_gameManager.DataPath + "/" + InfoKey + "_" + date + "_" + user + ".json";
+            m_levelInfoPath = m_gameManager.DataPath + "/" + InfoKey + "_" + m_gameManager.Date + "_" + m_gameManager.User + ".json";
 
             // Get 0r Set
             if (File.Exists(m_levelInfoPath)){
@@ -44,7 +42,7 @@ namespace Gfen.Game.Manager
 
         private void SaveInfo()
         {
-            var content = JsonUtility.ToJson(m_managerInfo);
+            var content = JsonUtility.ToJson(m_managerInfo, true);
             File.WriteAllText(m_levelInfoPath, content);
         }
 

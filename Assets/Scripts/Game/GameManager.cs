@@ -38,14 +38,18 @@ namespace Gfen.Game {
         private bool m_isDefeat;
 
         private int m_currentChapterIndex;
+        public int CurrentChapterIndex {get { return m_currentChapterIndex;}}
         private int m_currentLevelIndex;
+        public int CurrentLevelIndex {get { return m_currentLevelIndex;}}
         private MapConfig m_currentmapConfig;
 
         private float m_lastInputTime;
 
         // Record frame data in a list
         private string m_user;
+        public string User { get { return m_user; } }
         private string m_date;
+        public string Date { get { return m_date; } }
 
         private string m_dataPath;
         public string DataPath { get { return m_dataPath; } }
@@ -67,7 +71,7 @@ namespace Gfen.Game {
             Debug.Log(m_dataPath + m_dataFile);
 
             // Create data path and initialize the file
-            var createTask = FrameDataManager.SetColNamesAsync(m_dataPath + m_dataFile);
+            var createTask = FrameDataUtility.SetColNamesAsync(m_dataPath + m_dataFile);
 
             // Initialize level and UI managers with the current Game Manager 
             m_levelManager = new LevelManager();
@@ -148,7 +152,7 @@ namespace Gfen.Game {
                 Debug.Log(string.Format("{0},{1:d},{2:d},{3:g},{4:g},{5:d}", 
                                         fData.frameTime, fData.chapter, fData.level, 
                                         fData.gameControl, fData.operation, fData.numCommands));
-                var writeTask =  FrameDataManager.AppendOneFrameAsync(m_dataPath + m_dataFile, fData);
+                var writeTask =  FrameDataUtility.AppendOneFrameAsync(m_dataPath + m_dataFile, fData);
                 await writeTask;
             }
         }

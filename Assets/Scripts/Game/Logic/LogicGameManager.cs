@@ -1,8 +1,9 @@
 using System;
+using System.IO;
 using System.Collections.Generic;
-using Gfen.Game.Common;
+using System.Threading.Tasks;
 using Gfen.Game.Config;
-using Gfen.Game.Utility;
+using Vani.Data;
 using UnityEngine;
 
 namespace Gfen.Game.Logic
@@ -37,14 +38,28 @@ namespace Gfen.Game.Logic
 
         private Stack<Stack<Command>> m_redoCommandsStack = new Stack<Stack<Command>>();
 
+        // Save the custom rules on success
+        private string m_solutionInfoPath;
+        private const string SolutionKey = "SolutionInfo";
+        public List<SolutionData> solutionList = new List<SolutionData>();
+
         public LogicGameManager(GameManager gameManager)
         {
             m_gameManager = gameManager;
+            m_solutionInfoPath = m_gameManager.DataPath + "/" + SolutionKey + "_" + m_gameManager.Date + "_" + m_gameManager.User + ".json";
+            if (!File.Exists(m_solutionInfoPath)){
+                File.Create(m_solutionInfoPath);
+            }
+            else {
+                // var content = File.ReadAllText(m_solutionInfoPath);
+                // JsonUtility.FromJsonOverwrite(content, solutionList);
+            }
 
             m_ruleAnalyzer = new RuleAnalyzer(this);
             m_attributeHandler = new AttirbuteHandler(this);
-        }
 
+        }
+    
         public void StartGame(MapConfig mapConfig)
         {
             m_mapConfig = mapConfig;
@@ -188,12 +203,14 @@ namespace Gfen.Game.Logic
             return numCommands;
         }
 
-        private void CheckGameResult()
+        private async void CheckGameResult()
         {
             var gameResult = GetGameResult();
             if (gameResult == GameResult.Success)
             {
+                var saveTask = SaveSuccessRuleset();
                 GameEnd?.Invoke(true);
+                await saveTask;
             }
             else if (gameResult == GameResult.Defeat)
             {
@@ -228,6 +245,16 @@ namespace Gfen.Game.Logic
             // If none of the conditions apply
             return GameResult.Uncertain;
             
+        }
+
+        private async Task SaveSuccessRuleset() {
+            SolutionData sData = new SolutionData(  m_gameManager.CurrentChapterIndex, 
+                                                    m_gameManager.CurrentLevelIndex,
+                                                    m_attributeHandler.EntityTypeAttributeDict);
+            solutionList.Add(sData);
+            string content = JsonUtility.ToJson(sData);
+            using StreamWriter file = new StreamWriter(m_solutionInfoPath, append: true);
+            await file.WriteLineAsync(content);
         }
 
         public bool ForeachMapPosition(Func<Vector2Int, bool> positionHandler)

@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 
 namespace Vani.Data
 {
-    public class FrameDataManager 
+    public class FrameDataUtility 
     {
 
         public static async Task AppendOneFrameAsync(string savePath, FrameData fData) 
