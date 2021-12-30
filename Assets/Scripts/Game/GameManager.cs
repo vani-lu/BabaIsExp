@@ -20,6 +20,9 @@ namespace Gfen.Game {
         private LevelManager m_levelManager;
         public LevelManager LevelManager { get { return m_levelManager; } }
 
+        private SolutionDataManager m_solutionDataManager;
+        public SolutionDataManager SolutionDataManager { get { return m_solutionDataManager; } }
+
         private LogicGameManager m_logicGameManager;
 
         private PresentationGameManager m_presentationGameManager;
@@ -41,8 +44,6 @@ namespace Gfen.Game {
         public int CurrentChapterIndex {get { return m_currentChapterIndex;}}
         private int m_currentLevelIndex;
         public int CurrentLevelIndex {get { return m_currentLevelIndex;}}
-        private MapConfig m_currentmapConfig;
-
         private float m_lastInputTime;
 
         // Record frame data in a list
@@ -80,7 +81,11 @@ namespace Gfen.Game {
             uiManager.Init(this);
 
             m_logicGameManager = new LogicGameManager(this);
+
             m_presentationGameManager = new PresentationGameManager(this, m_logicGameManager);
+
+            m_solutionDataManager = new SolutionDataManager();
+            m_solutionDataManager.Init(this, m_logicGameManager);
 
             // Initialize indicator variables 
             m_isInGame = false;
@@ -189,7 +194,7 @@ namespace Gfen.Game {
                 return;
             }
 
-         // Do not listen to inputs when in pause
+            // Do not listen to inputs when in pause
             if (m_isPause)
             {
                 // Detect Pause Menu Onset
@@ -232,7 +237,10 @@ namespace Gfen.Game {
             var pause = CrossPlatformInputManager.GetButton("Pause");
             if (pause)
             {
+                m_lastInputTime = Time.unscaledTime;
+                gameControlType = GameControlType.Pause;
                 PauseGame();
+                UpdateGameStatus();
                 return;
             }
 
@@ -310,8 +318,7 @@ namespace Gfen.Game {
         {
             uiManager.HideAllPages();
 
-            m_currentmapConfig = gameConfig.chapterConfigs[chapterIndex].levelConfigs[levelIndex].map;
-            m_logicGameManager.StartGame(m_currentmapConfig);
+            m_logicGameManager.StartGame(gameConfig.chapterConfigs[chapterIndex].levelConfigs[levelIndex].map);
             m_presentationGameManager.StartPresent();
             UpdateGameStatus();
             m_isInGame = true;

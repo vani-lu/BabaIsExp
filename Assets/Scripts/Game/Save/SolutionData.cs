@@ -5,6 +5,15 @@ using Gfen.Game.Common;
 
 namespace Vani.Data
 {
+    [Serializable]
+    public class SolutionInfo {
+         public List<SolutionData> sList = new List<SolutionData>();
+
+         public void Append(SolutionData sData){
+             this.sList.Add(sData);
+         }
+    }
+
      [Serializable]
     public class SolutionData
     {
@@ -18,7 +27,7 @@ namespace Vani.Data
             chapterIndex = chapter;
             levelIndex = level;
             
-            foreach(var item in dict)
+            foreach(KeyValuePair<int, HashSet<AttributeCategory>> item in dict)
             {
                 HashSet<AttributeCategory> origin = item.Value;
                 List<int> result = new List<int>();

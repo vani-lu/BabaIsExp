@@ -101,6 +101,10 @@ namespace Gfen.Game.Manager
         {
             // Passed levels can be revisited
             if (IsLevelPassed(chapterIndex, levelIndex)){
+                // Challenge levels can only be visited once 
+                if (chapterIndex == 2){
+                    return false;
+                }
                 return true;
             }
 
