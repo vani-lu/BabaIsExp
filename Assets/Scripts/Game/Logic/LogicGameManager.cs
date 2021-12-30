@@ -73,15 +73,12 @@ namespace Gfen.Game.Logic
                 }
             }
 
-            foreach (var mapBlockConfig in m_mapConfig.blocks)
+            foreach (MapBlock mapBlockConfig in m_mapConfig.blocks)
             {
-                var block = new Block();
-                block.entityType = mapBlockConfig.entityType;
-                block.position = mapBlockConfig.position;
-                block.direction = mapBlockConfig.direction;
-
-                AddBlock(block);
+                AddBlock(new Block(mapBlockConfig.entityType, mapBlockConfig.position, mapBlockConfig.direction));
             }
+
+            m_gameManager.SolutionDataManager.HandleVolcanoMap();
 
             m_attributeHandler.RefreshAttributes();
 

@@ -316,6 +316,9 @@ namespace Gfen.Game {
 
         public void StartGame(int chapterIndex, int levelIndex)
         {
+            m_currentChapterIndex = chapterIndex;
+            m_currentLevelIndex = levelIndex;
+            
             uiManager.HideAllPages();
 
             m_logicGameManager.StartGame(gameConfig.chapterConfigs[chapterIndex].levelConfigs[levelIndex].map);
@@ -323,8 +326,6 @@ namespace Gfen.Game {
             UpdateGameStatus();
             m_isInGame = true;
             m_isPause = false;
-            m_currentChapterIndex = chapterIndex;
-            m_currentLevelIndex = levelIndex;
 
             m_logicGameManager.GameEnd += OnGameEnd;
 

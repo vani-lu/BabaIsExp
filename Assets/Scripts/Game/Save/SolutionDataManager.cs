@@ -1,6 +1,7 @@
 using System.IO;
 using System.Threading.Tasks;
 using Gfen.Game;
+using Gfen.Game.Utility;
 using Gfen.Game.Logic;
 using UnityEngine;
 
@@ -56,11 +57,9 @@ namespace Vani.Data
             int chapterIndex = m_gameManager.CurrentChapterIndex;
             int levelIndex = m_gameManager.CurrentLevelIndex;
 
-            int volcanoChapterIndex = 2;
+            Debug.Log("Chapter: " + chapterIndex);
 
-            bool isBagPush = false;
-            bool isHotMelt = false;
-            bool isPumpkinPush = false;
+            int volcanoChapterIndex = 2;
 
             // Skip other chapters
             if (chapterIndex != volcanoChapterIndex) {
@@ -70,14 +69,36 @@ namespace Vani.Data
                 return;
             }
 
-            foreach (SolutionData item in solutionInfo.sList){
-                if (item.chapterIndex != volcanoChapterIndex){
-                    continue;
-                }
-                if (item.levelIndex == 0 ){
-                    continue;
-                }
+            bool isBagPush = false; // Bag Is Push
+            bool isHotMelt = false; // Bag Is Melt
+            bool isPumpkinPush = false; // Pumpkin Is Push
 
+            foreach (SolutionData item in solutionInfo.sList){
+                if (item.chapterIndex == volcanoChapterIndex){
+                    Debug.Log("Check recorded rule set");
+                    isBagPush = item.ruleInfoDict.GetOrDefault(8,null).attributeList.Contains(4);
+                    isHotMelt = item.ruleInfoDict.GetOrDefault(8,null).attributeList.Contains(8);
+                    isPumpkinPush = item.ruleInfoDict.GetOrDefault(4,null).attributeList.Contains(4);
+                }
+            }
+
+            if (isBagPush){
+                Debug.Log("Bag is Push");
+                m_logicGameManager.AddBlock(new Block(4, new Vector2Int(6,8), Direction.Up));
+                m_logicGameManager.AddBlock(new Block(4, new Vector2Int(6,7), Direction.Up));
+                m_logicGameManager.AddBlock(new Block(4, new Vector2Int(7,7), Direction.Up));
+                m_logicGameManager.AddBlock(new Block(4, new Vector2Int(8,7), Direction.Up));
+                m_logicGameManager.AddBlock(new Block(4, new Vector2Int(8,8), Direction.Up));
+            }
+
+            if (isHotMelt){
+                Debug.Log("Bag is Melt");
+                m_logicGameManager.AddBlock(new Block(4, new Vector2Int(5,6), Direction.Up));
+            }
+
+            if (isPumpkinPush){
+                Debug.Log("Bag is Melt");
+                m_logicGameManager.AddBlock(new Block(4, new Vector2Int(0,16), Direction.Up));
             }
 
         }
