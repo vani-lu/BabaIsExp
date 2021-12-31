@@ -12,5 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6a4d8b05ac873f448881b5cabf0f0ef0, type: 3}
   m_Name: Level_Still_Out_of_Reach_custom
   m_EditorClassIdentifier: 
-  levelName: "\u4F9D\u7136\u591F\u4E0D\u7740"
+  levelName: "\u591F\u4E0D\u7740"
   map: {fileID: 11400000, guid: c929c8037d40c4bf39c493e0020900fe, type: 2}

@@ -332,10 +332,10 @@ namespace Gfen.Game {
             // Show in game UI
             uiManager.ShowPage<GamePlayPage>();
 
-            // //Take Screenshot
-            // string capturePath = m_dataPath + "/Chap" + chapterIndex + "_Level_" +  levelIndex + ".png";
-            // ScreenCapture.CaptureScreenshot(capturePath, 0);
-            // Debug.Log(capturePath);
+            //Take Screenshot
+            string capturePath = m_dataPath + "/Chap" + chapterIndex + "_Level_" +  levelIndex + ".png";
+            ScreenCapture.CaptureScreenshot(capturePath, 0);
+            Debug.Log(capturePath);
         }
 
         public void StopGame()

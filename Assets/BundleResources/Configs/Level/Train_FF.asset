@@ -10,13 +10,12 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 084bae7acf2bdc9408d4177a934c3408, type: 3}
-  m_Name: Chapter_1
+  m_Name: Train_FF
   m_EditorClassIdentifier: 
   chapterName: "\u8E0F\u4E0A\u65C5\u9014"
   levelConfigs:
   - {fileID: 11400000, guid: 9f31ad8c4a6bff44b89adaa8493ef4f8, type: 2}
   - {fileID: 11400000, guid: ecb237af480158345b2983f8d797a7cc, type: 2}
   - {fileID: 11400000, guid: 6b25b777ab02ee845872d6f85ced3a03, type: 2}
-  - {fileID: 11400000, guid: 133f3341786ee4dfd99d904252c90dd9, type: 2}
-  - {fileID: 11400000, guid: defa05442800671429c8c793efec8bc2, type: 2}
-  - {fileID: 11400000, guid: c900c11237d7736428c9c0e3a1b26df1, type: 2}
+  - {fileID: 11400000, guid: 25c104750247e40a8bcb3af245093719, type: 2}
+  - {fileID: 11400000, guid: b28125ac0c9854ac39e2592d49d5e839, type: 2}

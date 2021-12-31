@@ -21,9 +21,13 @@ namespace Vani.UI
 
         private const string DateInfoKey = "LoginDate";
 
+        private const string ConditionInforKey = "Condition";
+
         // Start is called before the first frame update
         void Start()
         {
+            // System.Random rnd = new System.Random();
+            // conditionIndex = rnd.Next(1,5);
             conditionIndex = 1;
             m_loginDate = DateTime.Now.ToString("yyyyMMdd");
         }

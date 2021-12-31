@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: d89480c865cec184f8fa3de2fe038e45, type: 3}
-  m_Name: GameConfig
+  m_Name: GameConfig_FF
   m_EditorClassIdentifier: 
   entityConfigs:
   - {fileID: 11400000, guid: 443cf6ec5ba4c4246af9f31f6de05b0d, type: 2}
@@ -69,7 +69,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: c761b7331e3e990439f0c5bfb8cc0270, type: 2}
   chapterConfigs:
   - {fileID: 11400000, guid: 84f5bb5a682a5974d90165621d583699, type: 2}
-  - {fileID: 11400000, guid: d6fc29671010c94458785a6fcf5ddece, type: 2}
+  - {fileID: 11400000, guid: 84f3bd6288fddc34795bab04682a5339, type: 2}
   - {fileID: 11400000, guid: 827f65e2f35b144a29f3c0f2d1b4870b, type: 2}
   backgroundPrefab: {fileID: 1798064068406830, guid: 81426acf110b12345a73a4c3088a969b,
     type: 3}
