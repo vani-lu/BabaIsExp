@@ -1,4 +1,5 @@
 using System;
+using System.IO;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -15,20 +16,17 @@ namespace Vani.UI
 
         private string m_loginDate;
 
-        private int conditionIndex;
+        private int m_conditionIndex;
 
         private const string UserInfoKey = "UserName";
 
         private const string DateInfoKey = "LoginDate";
 
-        private const string ConditionInforKey = "Condition";
+        private const string ConditionInfoKey = "Condition";
 
         // Start is called before the first frame update
         void Start()
         {
-            // System.Random rnd = new System.Random();
-            // conditionIndex = rnd.Next(1,5);
-            conditionIndex = 1;
             m_loginDate = DateTime.Now.ToString("yyyyMMdd");
         }
 
@@ -39,14 +37,38 @@ namespace Vani.UI
 
             if (!string.IsNullOrEmpty(m_userName)){
                 SaveUserInfo();
-                SceneManager.LoadScene(conditionIndex);
+                SceneManager.LoadScene(m_conditionIndex);
             }
         }
 
         private void SaveUserInfo()
         {
-            PlayerPrefs.SetString(UserInfoKey, m_userName);
-            PlayerPrefs.SetString(DateInfoKey, m_loginDate);
+            string lastUserName = PlayerPrefs.GetString(UserInfoKey);
+            string lastLoginDate = PlayerPrefs.GetString(DateInfoKey);
+            if (lastUserName == m_userName && lastLoginDate == m_loginDate){
+                // Continuing today's session?
+                m_conditionIndex = PlayerPrefs.GetInt(ConditionInfoKey);
+            }
+            else {
+                // A new user?
+                PlayerPrefs.SetString(UserInfoKey, m_userName);
+                PlayerPrefs.SetString(DateInfoKey, m_loginDate);
+                SetAndSaveCondition();
+                UpdatePlayerDatabase();
+            }
+            
+        }
+
+        private void SetAndSaveCondition()
+        {
+            System.Random rnd = new System.Random();
+            m_conditionIndex = rnd.Next(1,5);
+            PlayerPrefs.SetInt(ConditionInfoKey, m_conditionIndex);
+        }
+
+        private void UpdatePlayerDatabase(){
+            using StreamWriter file = new StreamWriter(Application.persistentDataPath + "/participants.csv", append: true);
+            file.WriteLine(string.Format("{0},{1},{2:d}", m_loginDate, m_userName, m_conditionIndex));
         }
     }
 }
