@@ -7,6 +7,8 @@ namespace Gfen.Game.UI
     {
         public Button pauseButton;
 
+        public Button quitButton;
+
         public GameObject quitGameObject;
 
         public GameObject joystickGameObject;
@@ -20,6 +22,7 @@ namespace Gfen.Game.UI
         private void Awake()
         {
             pauseButton.onClick.AddListener(OnPauseButtonClicked);
+            quitButton.onClick.AddListener(OnQuitButtonClicked);
         }
 
         private void OnEnable() 

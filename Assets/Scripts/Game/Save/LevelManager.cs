@@ -76,8 +76,6 @@ namespace Gfen.Game.Manager
 
             for (int i = chapterIndex - 1; i >= 0; i--){
                 if (!IsChapterPassed(i)){
-
-                    Debug.Log("Chapter" + i +  "Not Passed");
                     return false;
                 }
             }

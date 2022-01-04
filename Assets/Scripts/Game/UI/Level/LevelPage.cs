@@ -8,11 +8,17 @@ namespace Gfen.Game.UI
     {
         public Button backButton;
 
+        public Button quitButton;
+
         public Text chapterNameText;
         
         public Transform levelListRootTransform;
 
         public LevelCell templateLevelCell;
+
+        public GameObject bonusIntro;
+
+        public GameObject immatureQuit;
 
         private List<LevelCell> m_levelCells = new List<LevelCell>();
 
@@ -21,6 +27,7 @@ namespace Gfen.Game.UI
         private void Awake() 
         {
             backButton.onClick.AddListener(OnBackButtonClicked);
+            quitButton.onClick.AddListener(OnQuitButtonClicked);
         }
 
         public void SetContent(int chapterIndex)
@@ -49,11 +56,28 @@ namespace Gfen.Game.UI
             {
                 m_levelCells[i].Hide();
             }
+
+            // Toggle text discription
+            if (m_currentChapterIndex == 2){
+                bonusIntro.SetActive(true);
+                if (m_gameManager.LevelManager.IsLevelPassed(m_currentChapterIndex, 0)){
+                    immatureQuit.SetActive(true);
+                }
+            }
+            else {
+                 bonusIntro.SetActive(false);
+                 immatureQuit.SetActive(false);
+            }
         }
 
         private void OnBackButtonClicked()
         {
             m_gameManager.uiManager.HidePage();
+        }
+
+        public void OnQuitButtonClicked()
+        {
+            m_gameManager.uiManager.ShowPage<QuitConfirmPage>();
         }
     }
 }
