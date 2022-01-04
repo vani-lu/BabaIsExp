@@ -7,6 +7,7 @@ using Gfen.Game.UI;
 using Vani.Data;
 using UnityEngine;
 using UnityStandardAssets.CrossPlatformInput;
+using UnityEngine.SceneManagement;
 
 namespace Gfen.Game {
     public class GameManager : MonoBehaviour 
@@ -52,7 +53,7 @@ namespace Gfen.Game {
         private string m_date;
         public string Date { get { return m_date; } }
 
-        private string m_dataPath = Application.persistentDataPath;
+        private string m_dataPath;
         public string DataPath { get { return m_dataPath; } }
         private string m_dataFile;
 
@@ -67,6 +68,7 @@ namespace Gfen.Game {
             // Set data path
             m_user = PlayerPrefs.GetString(UserInfoKey, "");
             m_date = PlayerPrefs.GetString(DateInfoKey, "");
+            m_dataPath = Application.persistentDataPath;
             m_dataFile = "/data_" + m_date + "_" + m_user + ".csv";
             // Debug.Log(m_dataPath + m_dataFile);
 
@@ -397,6 +399,18 @@ namespace Gfen.Game {
             m_isResumeWithUndo = true;
             
             uiManager.HidePage();
+        }
+
+        public void QuitGame()
+        {
+            int bonus = m_levelManager.CountBonus();
+            var ts = Time.unscaledTime;
+
+            PlayerPrefs.SetInt("ExpTime", (int)Math.Round(ts/60));
+            PlayerPrefs.SetInt("Bonus", bonus);
+            Debug.Log("Bonus: " + bonus);
+
+            SceneManager.LoadScene(5);
         }
 
         private void OnGameEnd(bool success)

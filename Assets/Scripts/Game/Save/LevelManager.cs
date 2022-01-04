@@ -136,5 +136,15 @@ namespace Gfen.Game.Manager
 
             SaveInfo();
         }
+
+        public int CountBonus(){
+            if (IsLevelPassed(2,1)){
+                return 2;
+            }
+            else if (IsLevelPassed(2,2)){
+                return 3;
+            }
+            return 1;
+        }
     }
 }

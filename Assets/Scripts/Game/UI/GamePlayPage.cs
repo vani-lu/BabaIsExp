@@ -7,6 +7,8 @@ namespace Gfen.Game.UI
     {
         public Button pauseButton;
 
+        public GameObject quitGameObject;
+
         public GameObject joystickGameObject;
 
         public GameObject waitGameObject;
@@ -33,11 +35,24 @@ namespace Gfen.Game.UI
             undoGameObject.SetActive(false);
             redoGameObject.SetActive(false);
 #endif
+            if (m_gameManager.CurrentChapterIndex == 2 && m_gameManager.CurrentLevelIndex > 0){
+                quitGameObject.SetActive(true);
+            }
+            else {
+                quitGameObject.SetActive(false);
+            }
         }
 
         private void OnPauseButtonClicked()
         {
             m_gameManager.PauseGame();
+        }
+
+        public void OnQuitButtonClicked()
+        {
+            m_gameManager.PauseGame();
+            m_gameManager.uiManager.HidePage();
+            m_gameManager.uiManager.ShowPage<InGameQuitPage>();
         }
     }
 }
