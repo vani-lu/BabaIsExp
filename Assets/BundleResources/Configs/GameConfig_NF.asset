@@ -69,7 +69,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: c761b7331e3e990439f0c5bfb8cc0270, type: 2}
   chapterConfigs:
   - {fileID: 11400000, guid: 84f5bb5a682a5974d90165621d583699, type: 2}
-  - {fileID: 11400000, guid: 1f27baa980a4b47f4b5c62bd8af358f8, type: 2}
+  - {fileID: 11400000, guid: ad7d4e0887ccc4d688dac7322de70c5a, type: 2}
   - {fileID: 11400000, guid: 827f65e2f35b144a29f3c0f2d1b4870b, type: 2}
   backgroundPrefab: {fileID: 1798064068406830, guid: 81426acf110b12345a73a4c3088a969b,
     type: 3}

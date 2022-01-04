@@ -57,8 +57,6 @@ namespace Vani.Data
             int chapterIndex = m_gameManager.CurrentChapterIndex;
             int levelIndex = m_gameManager.CurrentLevelIndex;
 
-            Debug.Log("Chapter: " + chapterIndex);
-
             int volcanoChapterIndex = 2;
 
             // Skip other chapters
@@ -75,7 +73,7 @@ namespace Vani.Data
 
             foreach (SolutionData item in solutionInfo.sList){
                 if (item.chapterIndex == volcanoChapterIndex && item.levelIndex < 2){
-                    Debug.Log("Check recorded rule set");
+                    // Check recorded rule set;
                     // If the solution indicator is true, it remains to be true
                     isBagPush = isBagPush || item.ruleInfoDict.GetOrSet(8,()=> new AttributeSet()).attributeList.Contains(4);
                     isBagHotMelt = isBagHotMelt || item.ruleInfoDict.GetOrSet(8,()=> new AttributeSet()).attributeList.Contains(8);

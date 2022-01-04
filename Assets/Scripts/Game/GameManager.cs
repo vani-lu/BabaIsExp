@@ -52,7 +52,7 @@ namespace Gfen.Game {
         private string m_date;
         public string Date { get { return m_date; } }
 
-        private string m_dataPath;
+        private string m_dataPath = Application.persistentDataPath;
         public string DataPath { get { return m_dataPath; } }
         private string m_dataFile;
 
@@ -67,9 +67,8 @@ namespace Gfen.Game {
             // Set data path
             m_user = PlayerPrefs.GetString(UserInfoKey, "");
             m_date = PlayerPrefs.GetString(DateInfoKey, "");
-            m_dataPath = Application.persistentDataPath;
             m_dataFile = "/data_" + m_date + "_" + m_user + ".csv";
-            Debug.Log(m_dataPath + m_dataFile);
+            // Debug.Log(m_dataPath + m_dataFile);
 
             // Create data path and initialize the file
             var createTask = FrameDataUtility.SetColNamesAsync(m_dataPath + m_dataFile);
@@ -154,9 +153,9 @@ namespace Gfen.Game {
                                                 gameControlInput,
                                                 operationInput,
                                                 numCommandsOutput);
-                Debug.Log(string.Format("{0},{1:d},{2:d},{3:g},{4:g},{5:d}", 
-                                        fData.frameTime, fData.chapter, fData.level, 
-                                        fData.gameControl, fData.operation, fData.numCommands));
+                // Debug.Log(string.Format("{0},{1:d},{2:d},{3:g},{4:g},{5:d}", 
+                //                         fData.frameTime, fData.chapter, fData.level, 
+                //                         fData.gameControl, fData.operation, fData.numCommands));
                 var writeTask =  FrameDataUtility.AppendOneFrameAsync(m_dataPath + m_dataFile, fData);
                 await writeTask;
             }
@@ -332,10 +331,10 @@ namespace Gfen.Game {
             // Show in game UI
             uiManager.ShowPage<GamePlayPage>();
 
-            //Take Screenshot
-            string capturePath = m_dataPath + "/Chap" + chapterIndex + "_Level_" +  levelIndex + ".png";
-            ScreenCapture.CaptureScreenshot(capturePath, 0);
-            Debug.Log(capturePath);
+            // //Take Screenshot
+            // string capturePath = m_dataPath + "/Chap" + chapterIndex + "_Level_" +  levelIndex + ".png";
+            // ScreenCapture.CaptureScreenshot(capturePath, 0);
+            // Debug.Log(capturePath);
         }
 
         public void StopGame()

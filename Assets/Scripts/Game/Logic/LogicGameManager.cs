@@ -190,11 +190,6 @@ namespace Gfen.Game.Logic
             if (gameResult == GameResult.Success)
             {
                 var saveTask = m_gameManager.SolutionDataManager.SaveSuccessRuleset();
-                
-                //Take Screenshot
-                string capturePath = m_gameManager.DataPath + "/Chap" + m_gameManager.CurrentChapterIndex + "_Level_" +  m_gameManager.CurrentLevelIndex + "_win.png";
-                ScreenCapture.CaptureScreenshot(capturePath, 0);
-                Debug.Log(capturePath);
 
                 GameEnd?.Invoke(true);
                 await saveTask;

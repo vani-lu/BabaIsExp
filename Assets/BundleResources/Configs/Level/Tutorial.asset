@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 084bae7acf2bdc9408d4177a934c3408, type: 3}
-  m_Name: Tutorial_Same
+  m_Name: Tutorial
   m_EditorClassIdentifier: 
   chapterName: "\u65B0\u624B\u6559\u7A0B"
   levelConfigs:
