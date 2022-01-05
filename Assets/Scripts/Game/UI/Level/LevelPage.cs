@@ -30,6 +30,13 @@ namespace Gfen.Game.UI
             quitButton.onClick.AddListener(OnQuitButtonClicked);
         }
 
+        private void OnEnable()
+        {
+            if (m_currentChapterIndex == 2 && m_gameManager.LevelManager.IsLevelPassed(2, 2)){
+                m_gameManager.QuitGame();
+            }
+        }
+
         public void SetContent(int chapterIndex)
         {
             m_currentChapterIndex = chapterIndex;

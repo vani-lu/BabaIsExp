@@ -69,6 +69,7 @@ namespace Gfen.Game {
             m_user = PlayerPrefs.GetString(UserInfoKey, "");
             m_date = PlayerPrefs.GetString(DateInfoKey, "");
             m_dataPath = Application.persistentDataPath;
+            PlayerPrefs.SetString("Path", m_dataPath);
             m_dataFile = "/data_" + m_date + "_" + m_user + ".csv";
             // Debug.Log(m_dataPath + m_dataFile);
 
@@ -100,7 +101,7 @@ namespace Gfen.Game {
 
             var stayChapterIndex = m_levelManager.GetStayChapterIndex();
 
-            // Show Chapter Selection Page 
+            // Show Chapter Selection Page or Level Selection Page if the user has record
             uiManager.ShowPage<ChapterPage>();
             if (stayChapterIndex >= 0)
             {

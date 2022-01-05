@@ -136,11 +136,11 @@ namespace Gfen.Game.Manager
         }
 
         public int CountBonus(){
-            if (IsLevelPassed(2,1)){
-                return 2;
-            }
-            else if (IsLevelPassed(2,2)){
+            if (IsLevelPassed(2,2)){
                 return 3;
+            }
+            else if (IsLevelPassed(2,1)){
+                return 2;
             }
             return 1;
         }
