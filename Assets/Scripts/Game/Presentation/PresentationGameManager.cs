@@ -59,7 +59,9 @@ namespace Gfen.Game.Presentation
                 }
             }
 
-            // Camera: Adapt to display size
+            // Camera: Adapt to display size (Fit to screen size)
+            // always leave for blank indent at the left or right border of the viewing camera
+            // take at most 77% percent of the screen
             var screenRatio = Screen.width*0.77f/Screen.height;
             var mapRatio = ((float)mapXLength)/mapYLength;
             if (screenRatio > mapRatio)
