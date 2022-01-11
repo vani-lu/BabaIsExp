@@ -22,7 +22,7 @@ namespace Gfen.Game.UI
 
         private void OnQuitGameButtonClicked()
         {
-            m_gameManager.QuitGame();
+            m_gameManager.ExitGame();
         }
         
     }

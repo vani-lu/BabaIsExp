@@ -9,6 +9,8 @@ namespace Gfen.Game.Manager{
         public int lastStayChapterIndex = -1;
 
         public SerializableDictionaryOfIntAndChapterInfo chapterInfoDict = new SerializableDictionaryOfIntAndChapterInfo();
+
+        public SerializableDictionaryOfIntAndChapterTimerInfo chapterTimerInfoDict = new SerializableDictionaryOfIntAndChapterTimerInfo();
     }
 
     // Key: Chapter Index
@@ -16,6 +18,8 @@ namespace Gfen.Game.Manager{
     [Serializable]
     public class SerializableDictionaryOfIntAndChapterInfo : SerializableDictionary<int, ChapterInfo> { }
 
+    [Serializable]
+    public  class SerializableDictionaryOfIntAndChapterTimerInfo : SerializableDictionary<int, ChapterTimerInfo> { }
 
     [Serializable]
     public class ChapterInfo
@@ -23,5 +27,13 @@ namespace Gfen.Game.Manager{
         // Key: Level Index
         // Value: Level Passed
         public SerializableDictionaryOfIntAndInt levelInfoDict = new SerializableDictionaryOfIntAndInt();
+    }
+
+    [Serializable]
+    public class ChapterTimerInfo
+    {
+        // Key: Level Index
+        // Value: Time remaining
+        public SerializableDictionaryOfIntAndFloat levelTimerInfoDict = new SerializableDictionaryOfIntAndFloat();
     }
 }

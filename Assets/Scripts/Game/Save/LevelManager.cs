@@ -144,5 +144,17 @@ namespace Gfen.Game.Manager
             }
             return 1;
         }
+
+        public float GetTimeSpent(int chapterIndex, int levelIndex)
+        {
+            var chapterTimerInfo = m_managerInfo.chapterTimerInfoDict.GetOrSet(chapterIndex, () => new ChapterTimerInfo());
+            return chapterTimerInfo.levelTimerInfoDict.GetOrSet(levelIndex, () => 0f);
+        }
+
+        public void SetTimeSpent(int chapterIndex, int levelIndex, float t)
+        {
+            var chapterTimerInfo = m_managerInfo.chapterTimerInfoDict.GetOrSet(chapterIndex, () => new ChapterTimerInfo());
+            chapterTimerInfo.levelTimerInfoDict[levelIndex] = t;
+        }
     }
 }

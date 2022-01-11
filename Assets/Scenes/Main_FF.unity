@@ -5750,6 +5750,7 @@ MonoBehaviour:
   gameConfig: {fileID: 11400000, guid: 53dca9dfa47744276bdc7b63ef935f59, type: 2}
   gameCamera: {fileID: 519420031}
   uiManager: {fileID: 1552675557}
+  bonusChapterIndex: 2
 --- !u!4 &1552675556
 Transform:
   m_ObjectHideFlags: 0

@@ -25,8 +25,8 @@ namespace Gfen.Game.UI
 
         private void OnEnable()
         {
-            if (m_currentChapterIndex == 2 && m_gameManager.LevelManager.IsLevelPassed(2, 2)){
-                m_gameManager.QuitGame();
+            if (m_currentChapterIndex == m_gameManager.bonusChapterIndex && m_gameManager.LevelManager.IsChapterPassed(m_gameManager.bonusChapterIndex)){
+                m_gameManager.ExitGame();
             }
         }
 

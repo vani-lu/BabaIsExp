@@ -37,4 +37,7 @@ namespace Gfen.Game.Common
 
     [Serializable]
     public class SerializableDictionaryOfIntAndInt : SerializableDictionary<int, int> { }
+
+    [Serializable]
+    public class SerializableDictionaryOfIntAndFloat : SerializableDictionary<int, float> { }
 }

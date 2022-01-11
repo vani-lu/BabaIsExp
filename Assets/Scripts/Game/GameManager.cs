@@ -18,6 +18,8 @@ namespace Gfen.Game {
 
         public UIManager uiManager;
 
+        public int bonusChapterIndex;
+
         private LevelManager m_levelManager;
         public LevelManager LevelManager { get { return m_levelManager; } }
 
@@ -46,6 +48,7 @@ namespace Gfen.Game {
         private int m_currentLevelIndex;
         public int CurrentLevelIndex {get { return m_currentLevelIndex;}}
         private float m_lastInputTime;
+        private float m_elapsedTime;
 
         // Record frame data in a list
         private string m_user;
@@ -58,7 +61,6 @@ namespace Gfen.Game {
         private string m_dataFile;
 
         private const string UserInfoKey = "UserName";
-
         private const string DateInfoKey = "LoginDate";
 
         private async void Start() 
@@ -116,6 +118,8 @@ namespace Gfen.Game {
         private async void Update() 
         {
             float FrameTime = Time.unscaledTime;
+
+            // Initialize frame data
             GameControlType gameControlInput = GameControlType.None;
             OperationType operationInput = OperationType.None;
             int numCommandsOutput = -1;
@@ -131,10 +135,10 @@ namespace Gfen.Game {
                 }
                 else
                 {
-                    HandleInput(out gameControlInput,
-                                out operationInput,
-                                out numCommandsOutput); 
+                    HandleInput(ref gameControlInput, ref operationInput, ref numCommandsOutput); 
                 }
+                // increment level timer
+                m_elapsedTime += Time.deltaTime;
             }
             else {
                 if (m_isSuccess) {
@@ -164,7 +168,7 @@ namespace Gfen.Game {
             }
         }
 
-        private void HandleInput(out GameControlType gameControlType, out OperationType operationType, out int numOfCommands)
+        private void HandleInput(ref GameControlType gameControlType, ref OperationType operationType, ref int numOfCommands)
         {
             /* Handle cross-platform inputs:
             r   -   Restart
@@ -172,11 +176,6 @@ namespace Gfen.Game {
             z   -   Undo
             y   -   Redo
             Key Bindings can be modified in Project settings */
-
-            // Default output
-            gameControlType = GameControlType.None;
-            operationType = OperationType.None;
-            numOfCommands = -1;
 
             // Wait for key press time
             var isWithinInputDelay = (Time.unscaledTime - m_lastInputTime) < gameConfig.inputRepeatDelay;
@@ -321,6 +320,8 @@ namespace Gfen.Game {
             m_currentChapterIndex = chapterIndex;
             m_currentLevelIndex = levelIndex;
             
+            m_elapsedTime = m_levelManager.GetTimeSpent(chapterIndex, levelIndex);
+
             uiManager.HideAllPages();
 
             m_logicGameManager.StartGame(gameConfig.chapterConfigs[chapterIndex].levelConfigs[levelIndex].map);
@@ -346,6 +347,8 @@ namespace Gfen.Game {
 
             m_presentationGameManager.StopPresent();
             m_logicGameManager.StopGame();
+            m_levelManager.SetTimeSpent(m_currentChapterIndex, m_currentLevelIndex, m_elapsedTime);
+
             UpdateGameStatus();
             m_isInGame = false;
             m_isPause = false;
@@ -402,7 +405,7 @@ namespace Gfen.Game {
             uiManager.HidePage();
         }
 
-        public void QuitGame()
+        public void ExitGame()
         {
             int bonus = m_levelManager.CountBonus();
             var ts = Time.unscaledTime;

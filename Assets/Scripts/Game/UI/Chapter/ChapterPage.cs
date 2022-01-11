@@ -11,8 +11,6 @@ namespace Gfen.Game.UI
 
         private List<ChapterCell> m_chapterCells = new List<ChapterCell>();
 
-        private int targetChapterIndex;
-
         protected override void OnShow()
         {
             base.OnShow();
