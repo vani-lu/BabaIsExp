@@ -84,11 +84,11 @@ namespace Vani.Data
             if (isBagPush && isBagHotMelt){
                 Debug.Log("Bag is Push");
                 Debug.Log("Bag is Hot And Melt");
-                m_logicGameManager.AddBlock(new Block(4, new Vector2Int(11,8), Direction.Up));
                 m_logicGameManager.AddBlock(new Block(4, new Vector2Int(11,7), Direction.Up));
-                m_logicGameManager.AddBlock(new Block(4, new Vector2Int(12,7), Direction.Up));
+                m_logicGameManager.AddBlock(new Block(4, new Vector2Int(11,6), Direction.Up));
+                m_logicGameManager.AddBlock(new Block(4, new Vector2Int(12,6), Direction.Up));
+                m_logicGameManager.AddBlock(new Block(4, new Vector2Int(13,6), Direction.Up));
                 m_logicGameManager.AddBlock(new Block(4, new Vector2Int(13,7), Direction.Up));
-                m_logicGameManager.AddBlock(new Block(4, new Vector2Int(13,8), Direction.Up));
                 return;
             }
 
@@ -120,7 +120,7 @@ namespace Vani.Data
 
             if (isBagHotMelt){
                 Debug.Log("Bag is Hot And Melt");
-                m_logicGameManager.AddBlock(new Block(4, new Vector2Int(10,7), Direction.Up));
+                m_logicGameManager.AddBlock(new Block(4, new Vector2Int(10,6), Direction.Up));
             }
 
             if (isPumpkinPush){

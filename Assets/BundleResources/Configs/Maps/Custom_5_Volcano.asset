@@ -518,29 +518,11 @@ MonoBehaviour:
   - entityType: 8
     position: {x: 2, y: 8}
     direction: 0
-  - entityType: 10008
-    position: {x: 12, y: 8}
-    direction: 0
   - entityType: 4
     position: {x: 7, y: 3}
     direction: 0
   - entityType: 4
     position: {x: 7, y: 4}
-    direction: 0
-  - entityType: 4
-    position: {x: 7, y: 5}
-    direction: 0
-  - entityType: 4
-    position: {x: 7, y: 6}
-    direction: 0
-  - entityType: 4
-    position: {x: 8, y: 3}
-    direction: 0
-  - entityType: 4
-    position: {x: 9, y: 3}
-    direction: 0
-  - entityType: 4
-    position: {x: 10, y: 3}
     direction: 0
   - entityType: 4
     position: {x: 11, y: 3}
@@ -549,35 +531,53 @@ MonoBehaviour:
     position: {x: 11, y: 4}
     direction: 0
   - entityType: 4
-    position: {x: 11, y: 5}
+    position: {x: 7, y: 2}
     direction: 0
   - entityType: 4
-    position: {x: 11, y: 6}
-    direction: 0
-  - entityType: 4
-    position: {x: 8, y: 5}
-    direction: 0
-  - entityType: 4
-    position: {x: 9, y: 5}
-    direction: 0
-  - entityType: 4
-    position: {x: 10, y: 5}
-    direction: 0
-  - entityType: 10001
-    position: {x: 8, y: 6}
+    position: {x: 11, y: 2}
     direction: 0
   - entityType: 10008
-    position: {x: 8, y: 4}
+    position: {x: 12, y: 7}
+    direction: 0
+  - entityType: 4
+    position: {x: 7, y: 5}
+    direction: 0
+  - entityType: 4
+    position: {x: 11, y: 5}
+    direction: 0
+  - entityType: 10001
+    position: {x: 8, y: 5}
     direction: 0
   - entityType: 40001
-    position: {x: 9, y: 6}
+    position: {x: 9, y: 5}
     direction: 0
   - entityType: 40001
-    position: {x: 9, y: 4}
-    direction: 0
-  - entityType: 30008
-    position: {x: 10, y: 6}
+    position: {x: 9, y: 3}
     direction: 0
   - entityType: 30009
+    position: {x: 10, y: 3}
+    direction: 0
+  - entityType: 30008
+    position: {x: 10, y: 5}
+    direction: 0
+  - entityType: 10008
+    position: {x: 8, y: 3}
+    direction: 0
+  - entityType: 4
+    position: {x: 8, y: 4}
+    direction: 0
+  - entityType: 4
+    position: {x: 9, y: 4}
+    direction: 0
+  - entityType: 4
     position: {x: 10, y: 4}
+    direction: 0
+  - entityType: 4
+    position: {x: 8, y: 2}
+    direction: 0
+  - entityType: 4
+    position: {x: 9, y: 2}
+    direction: 0
+  - entityType: 4
+    position: {x: 10, y: 2}
     direction: 0

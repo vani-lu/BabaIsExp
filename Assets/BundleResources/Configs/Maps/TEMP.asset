@@ -13,25 +13,4 @@ MonoBehaviour:
   m_Name: TEMP
   m_EditorClassIdentifier: 
   size: {x: 28, y: 18}
-  blocks:
-  - entityType: 4
-    position: {x: 6, y: 8}
-    direction: 0
-  - entityType: 4
-    position: {x: 6, y: 7}
-    direction: 0
-  - entityType: 4
-    position: {x: 7, y: 7}
-    direction: 0
-  - entityType: 4
-    position: {x: 8, y: 7}
-    direction: 0
-  - entityType: 4
-    position: {x: 8, y: 8}
-    direction: 0
-  - entityType: 8
-    position: {x: 0, y: 16}
-    direction: 0
-  - entityType: 1
-    position: {x: 5, y: 6}
-    direction: 0
+  blocks: []
