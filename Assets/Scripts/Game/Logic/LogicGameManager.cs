@@ -78,7 +78,7 @@ namespace Gfen.Game.Logic
                 AddBlock(new Block(mapBlockConfig.entityType, mapBlockConfig.position, mapBlockConfig.direction));
             }
 
-            m_gameManager.SolutionDataManager.HandleVolcanoMap();
+            m_gameManager.SolutionDataManager.HandleBonusMap();
 
             m_attributeHandler.RefreshAttributes();
 

@@ -7,6 +7,8 @@ namespace Gfen.Game.UI
     {
         public Button pauseButton;
 
+        public GameObject hintGameObject;
+
         public GameObject joystickGameObject;
 
         public GameObject waitGameObject;
@@ -22,6 +24,7 @@ namespace Gfen.Game.UI
 
         private void OnEnable() 
         {
+            hintGameObject.SetActive(false);
 #if MOBILE_INPUT
 		    joystickGameObject.SetActive(true);
             waitGameObject.SetActive(true);
@@ -35,9 +38,20 @@ namespace Gfen.Game.UI
 #endif
         }
 
+        private void LateUpdate(){
+            if (gameObject.activeSelf) {
+                if (!hintGameObject.activeSelf){
+                    if (m_gameManager.LevelManager.IsCurrentLevelTimeUp()){
+                        hintGameObject.SetActive(true);
+                    }
+                }
+            }
+        }
+
         private void OnPauseButtonClicked()
         {
             m_gameManager.PauseGame();
         }
     }
+
 }

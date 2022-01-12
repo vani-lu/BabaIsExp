@@ -6,8 +6,6 @@ namespace Gfen.Game.Manager{
     [Serializable]
     public class LevelManagerInfo
     {
-        public int lastStayChapterIndex = -1;
-
         public SerializableDictionaryOfIntAndChapterInfo chapterInfoDict = new SerializableDictionaryOfIntAndChapterInfo();
 
         public SerializableDictionaryOfIntAndChapterTimerInfo chapterTimerInfoDict = new SerializableDictionaryOfIntAndChapterTimerInfo();

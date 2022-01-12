@@ -52,15 +52,15 @@ namespace Vani.Data
 
         }
 
-        public void HandleVolcanoMap(){
+        public void HandleBonusMap(){
 
             int chapterIndex = m_gameManager.CurrentChapterIndex;
             int levelIndex = m_gameManager.CurrentLevelIndex;
 
-            int volcanoChapterIndex = 2;
+            int bonusChapterIndex = m_gameManager.bonusChapterIndex;
 
             // Skip other chapters
-            if (chapterIndex != volcanoChapterIndex) {
+            if (chapterIndex != bonusChapterIndex) {
                 return;
             }
             if (levelIndex == 0) {
@@ -72,7 +72,7 @@ namespace Vani.Data
             bool isPumpkinPush = false; // Pumpkin Is Push
 
             foreach (SolutionData item in solutionInfo.sList){
-                if (item.chapterIndex == volcanoChapterIndex && item.levelIndex < 2){
+                if (item.chapterIndex == bonusChapterIndex && item.levelIndex < 2){
                     // Check recorded rule set;
                     // If the solution indicator is true, it remains to be true
                     isBagPush = isBagPush || item.ruleInfoDict.GetOrSet(8,()=> new AttributeSet()).attributeList.Contains(4);

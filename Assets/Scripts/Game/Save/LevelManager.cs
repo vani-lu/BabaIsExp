@@ -1,4 +1,5 @@
 using System.IO;
+using System.Linq;
 using Gfen.Game.Utility;
 using UnityEngine;
 
@@ -7,10 +8,6 @@ namespace Gfen.Game.Manager
     public class LevelManager
     {
         private const string InfoKey = "LevelManagerInfo";
-
-        private const string UserInfoKey = "UserName";
-
-        private const string DateInfoKey = "LoginDate";
 
         private GameManager m_gameManager;
 
@@ -29,6 +26,7 @@ namespace Gfen.Game.Manager
                 LoadInfo();
             }
             else {
+                SetStayChapterIndex(-1);
                 SaveInfo();
             }
 
@@ -44,6 +42,8 @@ namespace Gfen.Game.Manager
         {
             var content = JsonUtility.ToJson(m_managerInfo, true);
             File.WriteAllText(m_levelInfoPath, content);
+
+            Debug.Log("Save Info to Disk");
         }
 
         public bool IsChapterPassed(int chapterIndex)
@@ -117,14 +117,12 @@ namespace Gfen.Game.Manager
 
         public void SetStayChapterIndex(int chapterIndex)
         {
-            m_managerInfo.lastStayChapterIndex = chapterIndex;
-
-            SaveInfo();
+            PlayerPrefs.SetInt("LastStayChapterIndex", chapterIndex);
         }
 
         public int GetStayChapterIndex()
         {
-            return m_managerInfo.lastStayChapterIndex;
+            return PlayerPrefs.GetInt("LastStayChapterIndex", -1);
         }
 
         public void PassLevel(int chapterIndex, int levelIndex)
@@ -151,10 +149,51 @@ namespace Gfen.Game.Manager
             return chapterTimerInfo.levelTimerInfoDict.GetOrSet(levelIndex, () => 0f);
         }
 
-        public void SetTimeSpent(int chapterIndex, int levelIndex, float t)
-        {
+        public void SetTimeSpent()
+        {   
+            int chapterIndex = m_gameManager.CurrentChapterIndex;
+            int levelIndex = m_gameManager.CurrentLevelIndex;
+            float t = m_gameManager.CurrentLevelElapsedTime;
+
             var chapterTimerInfo = m_managerInfo.chapterTimerInfoDict.GetOrSet(chapterIndex, () => new ChapterTimerInfo());
             chapterTimerInfo.levelTimerInfoDict[levelIndex] = t;
+
+            SaveInfo();
         }
+
+        public bool IsCurrentLevelTimeUp()
+        {
+            float t = m_gameManager.CurrentLevelElapsedTime;
+            int chapterIndex = m_gameManager.CurrentChapterIndex;
+
+            Debug.Log("Time Spent in Current Level: " + t);
+
+            if (chapterIndex == m_gameManager.bonusChapterIndex){
+                return false;
+            }
+
+            float[ ] levelLimits = {30f, 60f};
+
+            return t > levelLimits[chapterIndex];
+        }
+
+        public bool IsBonusChapterTimeUp(){
+
+            int chapterIndex = m_gameManager.CurrentChapterIndex;
+
+            if (chapterIndex < m_gameManager.bonusChapterIndex){
+                return false;
+            }
+
+            int levelIndex = m_gameManager.CurrentLevelIndex;
+
+            var chapterTimerInfo = m_managerInfo.chapterTimerInfoDict[chapterIndex];
+            float sumT = chapterTimerInfo.levelTimerInfoDict.Where(x => x.Key != levelIndex).Sum(x => x.Value);
+            sumT += m_gameManager.CurrentLevelElapsedTime;
+
+            float chapterLimit = 30f;
+            return sumT > chapterLimit;
+
+        }        
     }
 }

@@ -4,6 +4,8 @@ namespace Gfen.Game.Logic
     {
         None = 0,
 
+        Login,
+
         Start,
 
         Restart,
@@ -20,6 +22,8 @@ namespace Gfen.Game.Logic
 
         Success,
 
-        Defeat
+        Defeat,
+
+        Logout
     }
 }
