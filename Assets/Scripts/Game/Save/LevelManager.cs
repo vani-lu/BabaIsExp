@@ -172,7 +172,7 @@ namespace Gfen.Game.Manager
                 return false;
             }
 
-            float[ ] levelLimits = {30f, 60f};
+            float[ ] levelLimits = {5f, 10f};
 
             return t > levelLimits[chapterIndex];
         }

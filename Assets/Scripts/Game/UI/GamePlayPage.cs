@@ -7,7 +7,13 @@ namespace Gfen.Game.UI
     {
         public Button pauseButton;
 
-        public GameObject hintGameObject;
+        public Button hintButton;
+
+        public GameObject hintPanel;
+
+        public GameObject hintNote;
+
+        public Text hintText;
 
         public GameObject joystickGameObject;
 
@@ -17,14 +23,20 @@ namespace Gfen.Game.UI
 
         public GameObject redoGameObject;
 
+        private string m_levelHintText;
+
         private void Awake()
         {
             pauseButton.onClick.AddListener(OnPauseButtonClicked);
+            hintButton.onClick.AddListener(OnHintButtonClicked);
         }
 
         private void OnEnable() 
         {
-            hintGameObject.SetActive(false);
+            hintButton.gameObject.SetActive(false);
+            hintPanel.SetActive(false);
+            hintNote.SetActive(false);
+
 #if MOBILE_INPUT
 		    joystickGameObject.SetActive(true);
             waitGameObject.SetActive(true);
@@ -36,21 +48,38 @@ namespace Gfen.Game.UI
             undoGameObject.SetActive(false);
             redoGameObject.SetActive(false);
 #endif
+
+            SetHintContent();
         }
 
         private void LateUpdate(){
             if (gameObject.activeSelf) {
-                if (!hintGameObject.activeSelf){
+                if (!hintButton.gameObject.activeSelf){
                     if (m_gameManager.LevelManager.IsCurrentLevelTimeUp()){
-                        hintGameObject.SetActive(true);
+                        hintButton.gameObject.SetActive(true);
+                        hintNote.SetActive(true);
+                        hintText.text = m_levelHintText;
                     }
                 }
             }
         }
 
+        private void SetHintContent(){
+            int chapterIndex = m_gameManager.CurrentChapterIndex;
+            int levelIndex = m_gameManager.CurrentLevelIndex;
+            var levelConfig = m_gameManager.gameConfig.chapterConfigs[chapterIndex].levelConfigs[levelIndex];
+            m_levelHintText = levelConfig.hintText;
+        }
+
         private void OnPauseButtonClicked()
         {
             m_gameManager.PauseGame();
+        }
+
+        private void OnHintButtonClicked()
+        {
+            hintPanel.SetActive(!hintPanel.activeSelf);
+            hintNote.SetActive(!hintNote.activeSelf);
         }
     }
 
