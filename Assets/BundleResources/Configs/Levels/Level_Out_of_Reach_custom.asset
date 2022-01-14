@@ -1,0 +1,17 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6a4d8b05ac873f448881b5cabf0f0ef0, type: 3}
+  m_Name: Level_Out_of_Reach_custom
+  m_EditorClassIdentifier: 
+  levelName: "\u591F\u4E0D\u7740"
+  hintText: "\u5EFA\u7ACB\u89C4\u5219\u201C\u9AB0\u5B50\u662F\u80DC\u5229\u201D\u3002"
+  map: {fileID: 11400000, guid: 02014a812775413478fba65b4864cfff, type: 2}

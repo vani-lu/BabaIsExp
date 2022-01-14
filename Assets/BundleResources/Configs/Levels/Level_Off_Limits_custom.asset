@@ -10,8 +10,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 6a4d8b05ac873f448881b5cabf0f0ef0, type: 3}
-  m_Name: Level_Off_Limits_HotMelt
+  m_Name: Level_Off_Limits_custom
   m_EditorClassIdentifier: 
   levelName: "\u7981\u6B62\u5165\u5185"
-  hintText: "\u5DF4\u5DF4\u662F\u4F60\u662F\u4E00\u6B3E\u5177\u6709\u98A0\u8986\u6027\u521B\u610F\u7684\u6E38\u620F\uFF0C\u6838\u5FC3\u73A9\u6CD5\u5C31\u662F\u901A\u8FC7\u6539\u53D8\u573A\u666F\u7684\u89C4\u5219\u6765\u8FC7\u5173\u3002"
-  map: {fileID: 11400000, guid: be0934d9166884b6f9afe8b3fed33a69, type: 2}
+  hintText: "\u7834\u574F\u89C4\u5219\u201C\u955C\u5B50\u662F\u505C\u6B62\u201D\uFF0C\n\u5EFA\u7ACB\u89C4\u5219\u201C\u955C\u5B50\u662F\u4F60\u201D\u3002"
+  map: {fileID: 11400000, guid: 3e408d92f7866426c9b7749661e78a58, type: 2}

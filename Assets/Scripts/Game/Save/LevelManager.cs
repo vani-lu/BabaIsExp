@@ -177,23 +177,27 @@ namespace Gfen.Game.Manager
             return t > levelLimits[chapterIndex];
         }
 
-        public bool IsBonusChapterTimeUp(){
+        public void BonusChapterTimeLeft(out int tLeft, out bool isInBonusLevel){
+
+            tLeft = 5;
+            isInBonusLevel = false;
+            float chapterLimit = (float)tLeft * 60f;
 
             int chapterIndex = m_gameManager.CurrentChapterIndex;
-
-            if (chapterIndex < m_gameManager.bonusChapterIndex){
-                return false;
-            }
-
             int levelIndex = m_gameManager.CurrentLevelIndex;
 
-            var chapterTimerInfo = m_managerInfo.chapterTimerInfoDict[chapterIndex];
-            float sumT = chapterTimerInfo.levelTimerInfoDict.Where(x => x.Key != levelIndex).Sum(x => x.Value);
-            sumT += m_gameManager.CurrentLevelElapsedTime;
+            var chapterTimerInfo = m_managerInfo.chapterTimerInfoDict.GetOrSet(chapterIndex, () => new ChapterTimerInfo());
+            float sumT;
+            if (chapterIndex == m_gameManager.bonusChapterIndex){
+                isInBonusLevel = true;
+                sumT = chapterTimerInfo.levelTimerInfoDict.Where(x => x.Key != levelIndex).Sum(x => x.Value);
+                sumT += m_gameManager.CurrentLevelElapsedTime;
+            }
+            else{
+                sumT = chapterTimerInfo.levelTimerInfoDict.Sum(x => x.Value);
+            }
 
-            float chapterLimit = 30f;
-            return sumT > chapterLimit;
-
+            tLeft -= Mathf.FloorToInt(sumT);
         }        
     }
 }

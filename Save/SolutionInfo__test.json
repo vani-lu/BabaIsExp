@@ -1,0 +1,303 @@
+{
+    "sList": [
+        {
+            "chapterIndex": 0,
+            "levelIndex": 0,
+            "ruleInfoDict": {
+                "m_keys": [
+                    3,
+                    4,
+                    2,
+                    1
+                ],
+                "m_values": [
+                    {
+                        "attributeList": [
+                            4
+                        ]
+                    },
+                    {
+                        "attributeList": [
+                            0
+                        ]
+                    },
+                    {
+                        "attributeList": [
+                            1
+                        ]
+                    },
+                    {
+                        "attributeList": [
+                            6
+                        ]
+                    }
+                ]
+            }
+        },
+        {
+            "chapterIndex": 0,
+            "levelIndex": 1,
+            "ruleInfoDict": {
+                "m_keys": [
+                    4,
+                    3,
+                    1
+                ],
+                "m_values": [
+                    {
+                        "attributeList": [
+                            0
+                        ]
+                    },
+                    {
+                        "attributeList": [
+                            1
+                        ]
+                    },
+                    {
+                        "attributeList": [
+                            6
+                        ]
+                    }
+                ]
+            }
+        },
+        {
+            "chapterIndex": 0,
+            "levelIndex": 2,
+            "ruleInfoDict": {
+                "m_keys": [
+                    3,
+                    2,
+                    1,
+                    4
+                ],
+                "m_values": [
+                    {
+                        "attributeList": [
+                            4
+                        ]
+                    },
+                    {
+                        "attributeList": [
+                            1
+                        ]
+                    },
+                    {
+                        "attributeList": [
+                            6
+                        ]
+                    },
+                    {
+                        "attributeList": [
+                            0
+                        ]
+                    }
+                ]
+            }
+        },
+        {
+            "chapterIndex": 0,
+            "levelIndex": 3,
+            "ruleInfoDict": {
+                "m_keys": [
+                    2,
+                    1,
+                    3,
+                    4
+                ],
+                "m_values": [
+                    {
+                        "attributeList": [
+                            4
+                        ]
+                    },
+                    {
+                        "attributeList": [
+                            0
+                        ]
+                    },
+                    {
+                        "attributeList": [
+                            1
+                        ]
+                    },
+                    {
+                        "attributeList": [
+                            6
+                        ]
+                    }
+                ]
+            }
+        },
+        {
+            "chapterIndex": 1,
+            "levelIndex": 0,
+            "ruleInfoDict": {
+                "m_keys": [
+                    17,
+                    16,
+                    9
+                ],
+                "m_values": [
+                    {
+                        "attributeList": [
+                            0
+                        ]
+                    },
+                    {
+                        "attributeList": [
+                            1
+                        ]
+                    },
+                    {
+                        "attributeList": [
+                            6
+                        ]
+                    }
+                ]
+            }
+        },
+        {
+            "chapterIndex": 1,
+            "levelIndex": 1,
+            "ruleInfoDict": {
+                "m_keys": [
+                    18,
+                    12
+                ],
+                "m_values": [
+                    {
+                        "attributeList": [
+                            1
+                        ]
+                    },
+                    {
+                        "attributeList": [
+                            0
+                        ]
+                    }
+                ]
+            }
+        },
+        {
+            "chapterIndex": 1,
+            "levelIndex": 2,
+            "ruleInfoDict": {
+                "m_keys": [
+                    11,
+                    18
+                ],
+                "m_values": [
+                    {
+                        "attributeList": [
+                            1,
+                            0
+                        ]
+                    },
+                    {
+                        "attributeList": [
+                            6
+                        ]
+                    }
+                ]
+            }
+        },
+        {
+            "chapterIndex": 1,
+            "levelIndex": 3,
+            "ruleInfoDict": {
+                "m_keys": [
+                    10,
+                    13,
+                    14
+                ],
+                "m_values": [
+                    {
+                        "attributeList": [
+                            0
+                        ]
+                    },
+                    {
+                        "attributeList": [
+                            1
+                        ]
+                    },
+                    {
+                        "attributeList": [
+                            4
+                        ]
+                    }
+                ]
+            }
+        },
+        {
+            "chapterIndex": 1,
+            "levelIndex": 4,
+            "ruleInfoDict": {
+                "m_keys": [
+                    15,
+                    16,
+                    4,
+                    19
+                ],
+                "m_values": [
+                    {
+                        "attributeList": [
+                            1
+                        ]
+                    },
+                    {
+                        "attributeList": [
+                            2
+                        ]
+                    },
+                    {
+                        "attributeList": [
+                            6
+                        ]
+                    },
+                    {
+                        "attributeList": [
+                            0
+                        ]
+                    }
+                ]
+            }
+        },
+        {
+            "chapterIndex": 1,
+            "levelIndex": 4,
+            "ruleInfoDict": {
+                "m_keys": [
+                    15,
+                    16,
+                    4,
+                    19
+                ],
+                "m_values": [
+                    {
+                        "attributeList": [
+                            1
+                        ]
+                    },
+                    {
+                        "attributeList": [
+                            2
+                        ]
+                    },
+                    {
+                        "attributeList": [
+                            6
+                        ]
+                    },
+                    {
+                        "attributeList": [
+                            0
+                        ]
+                    }
+                ]
+            }
+        }
+    ]
+}

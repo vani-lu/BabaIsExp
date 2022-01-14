@@ -12,11 +12,15 @@ namespace Vani.UI
 
         public InputField nameInputField;
 
+        private string m_dataPath;
+
         private string m_userName;
 
         private string m_loginDate;
 
         private int m_conditionIndex;
+
+        private const string PathInfoKey = "DataPath";
 
         private const string UserInfoKey = "UserName";
 
@@ -28,6 +32,7 @@ namespace Vani.UI
         void Start()
         {
             m_loginDate = DateTime.Now.ToString("yyyyMMdd");
+            m_dataPath = Application.persistentDataPath;
         }
 
         // Get user (participant's) name from input
@@ -53,6 +58,7 @@ namespace Vani.UI
                 // A new user?
                 PlayerPrefs.SetString(UserInfoKey, m_userName);
                 PlayerPrefs.SetString(DateInfoKey, m_loginDate);
+                PlayerPrefs.SetString(PathInfoKey, m_dataPath);
                 SetAndSaveCondition();
                 UpdatePlayerDatabase();
             }
@@ -67,7 +73,7 @@ namespace Vani.UI
         }
 
         private void UpdatePlayerDatabase(){
-            using StreamWriter file = new StreamWriter(Application.persistentDataPath + "/participants.csv", append: true);
+            using StreamWriter file = new StreamWriter(m_dataPath + "/participants.csv", append: true);
             file.WriteLine(string.Format("{0},{1},{2:d}", m_loginDate, m_userName, m_conditionIndex));
         }
     }

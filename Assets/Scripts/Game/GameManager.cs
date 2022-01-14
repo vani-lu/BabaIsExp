@@ -61,6 +61,7 @@ namespace Gfen.Game {
         public string DataPath { get { return m_dataPath; } }
         private string m_dataFile;
 
+        private const string PathInfoKey = "DataPath";
         private const string UserInfoKey = "UserName";
         private const string DateInfoKey = "LoginDate";
 
@@ -69,9 +70,10 @@ namespace Gfen.Game {
             gameConfig.Init();
 
             // Set data path
-            m_user = PlayerPrefs.GetString(UserInfoKey, "");
+            m_user = PlayerPrefs.GetString(UserInfoKey, "test");
             m_date = PlayerPrefs.GetString(DateInfoKey, "");
-            m_dataPath = Application.persistentDataPath;
+            //Directory.CreateDirectory("Save");
+            m_dataPath = PlayerPrefs.GetString(PathInfoKey, "./Save");
             PlayerPrefs.SetString("Path", m_dataPath);
             m_dataFile = "/data_" + m_date + "_" + m_user + ".csv";
             // Debug.Log(m_dataPath + m_dataFile);
@@ -175,22 +177,22 @@ namespace Gfen.Game {
         private void HandleInput(ref GameControlType gameControlType, ref OperationType operationType, ref int numOfCommands)
         {
             /* Handle cross-platform inputs:
-            r   -   Restart
-            esc -   Pause
+            Disabled: r   -   Restart
+            Disabled: esc -   Pause
             z   -   Undo
             y   -   Redo
             Key Bindings can be modified in Project settings */
 
-            // Keypress Restart
-            var restart = CrossPlatformInputManager.GetButton("Restart");
-            if (restart)
-            {
-                m_lastInputTime = Time.unscaledTime;
-                RestartGame();
-                gameControlType = GameControlType.Restart;
-                m_isRestart = false;
-                return;
-            }
+            // // Keypress Restart
+            // var restart = CrossPlatformInputManager.GetButton("Restart");
+            // if (restart)
+            // {
+            //     m_lastInputTime = Time.unscaledTime;
+            //     RestartGame();
+            //     gameControlType = GameControlType.Restart;
+            //     m_isRestart = false;
+            //     return;
+            // }
 
             // Do not listen to inputs when in pause
             if (m_isPause)
@@ -231,16 +233,16 @@ namespace Gfen.Game {
                 }
             }   
 
-            // Keypress Pause
-            var pause = CrossPlatformInputManager.GetButton("Pause");
-            if (pause)
-            {
-                m_lastInputTime = Time.unscaledTime;
-                gameControlType = GameControlType.Pause;
-                PauseGame();
-                UpdateGameStatus();
-                return;
-            }
+            // // Keypress Pause
+            // var pause = CrossPlatformInputManager.GetButton("Pause");
+            // if (pause)
+            // {
+            //     m_lastInputTime = Time.unscaledTime;
+            //     gameControlType = GameControlType.Pause;
+            //     PauseGame();
+            //     UpdateGameStatus();
+            //     return;
+            // }
 
             // Keypress Undo or Redo
             var undo = CrossPlatformInputManager.GetButton("Undo");

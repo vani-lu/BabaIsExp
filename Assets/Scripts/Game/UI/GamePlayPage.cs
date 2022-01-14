@@ -15,6 +15,8 @@ namespace Gfen.Game.UI
 
         public Text hintText;
 
+        public Text countDown;
+
         public GameObject joystickGameObject;
 
         public GameObject waitGameObject;
@@ -54,6 +56,7 @@ namespace Gfen.Game.UI
 
         private void LateUpdate(){
             if (gameObject.activeSelf) {
+                // If in gameplay
                 if (!hintButton.gameObject.activeSelf){
                     if (m_gameManager.LevelManager.IsCurrentLevelTimeUp()){
                         hintButton.gameObject.SetActive(true);
@@ -65,10 +68,20 @@ namespace Gfen.Game.UI
         }
 
         private void SetHintContent(){
+
+            //Hint Content
             int chapterIndex = m_gameManager.CurrentChapterIndex;
             int levelIndex = m_gameManager.CurrentLevelIndex;
             var levelConfig = m_gameManager.gameConfig.chapterConfigs[chapterIndex].levelConfigs[levelIndex];
             m_levelHintText = levelConfig.hintText;
+
+            //Size
+            RectTransform rt = hintPanel.GetComponent<RectTransform>();
+            rt.sizeDelta = new Vector2(300, 80);
+        }
+
+        private void UpdateCountdownTimer(){
+            
         }
 
         private void OnPauseButtonClicked()
