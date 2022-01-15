@@ -170,14 +170,14 @@ namespace Gfen.Game.Manager
                 return false;
             }
 
-            float[ ] levelLimits = {5f, 10f}; // seconds
+            float[ ] levelLimits = {5f * 60f, 10f * 60f}; // seconds
 
             return t > levelLimits[chapterIndex];
         }
 
         public int BonusChapterTimeLeft(){
 
-            int tLimit = 3; //minutes
+            int tLimit = 30; //minutes
 
             int chapterIndex = m_gameManager.CurrentChapterIndex;
             int levelIndex = m_gameManager.CurrentLevelIndex;
