@@ -82,8 +82,6 @@ namespace Vani.Data
             }
 
             if (isBagPush && isBagHotMelt){
-                Debug.Log("Bag is Push");
-                Debug.Log("Bag is Hot And Melt");
                 m_logicGameManager.AddBlock(new Block(4, new Vector2Int(11,7), Direction.Up));
                 m_logicGameManager.AddBlock(new Block(4, new Vector2Int(11,6), Direction.Up));
                 m_logicGameManager.AddBlock(new Block(4, new Vector2Int(12,6), Direction.Up));
@@ -93,8 +91,6 @@ namespace Vani.Data
             }
 
             if (isBagPush && isPumpkinPush){
-                Debug.Log("Bag is Push");
-                Debug.Log("Pumpkin is Push");
                 m_logicGameManager.AddBlock(new Block(4, new Vector2Int(6,9), Direction.Up));
                 m_logicGameManager.AddBlock(new Block(4, new Vector2Int(6,8), Direction.Up));
                 m_logicGameManager.AddBlock(new Block(4, new Vector2Int(7,8), Direction.Up));
@@ -104,7 +100,6 @@ namespace Vani.Data
             }
 
             if (isBagPush){
-                Debug.Log("Bag is Push");
                 int xStartPoint = 17;
                 for (var i = xStartPoint; i < m_logicGameManager.Map.GetLength(0); i++)
                 {
@@ -119,12 +114,10 @@ namespace Vani.Data
             }
 
             if (isBagHotMelt){
-                Debug.Log("Bag is Hot And Melt");
                 m_logicGameManager.AddBlock(new Block(4, new Vector2Int(10,6), Direction.Up));
             }
 
             if (isPumpkinPush){
-                Debug.Log("Pumpkin is Push");
                 m_logicGameManager.AddBlock(new Block(4, new Vector2Int(1,10), Direction.Up));
             }
 

@@ -1,28 +1,26 @@
 using UnityEngine.UI;
-using UnityEngine;
+using UnityStandardAssets.CrossPlatformInput;
 
 namespace Gfen.Game.UI
 {
     public class QuitConfirmPage : UIPage
     {
-        public Button closeButton;
-
         public Button confirmQuitButton;
 
         private void Awake() 
         {
-            closeButton.onClick.AddListener(OnCloseButtonClicked);
             confirmQuitButton.onClick.AddListener(OnQuitGameButtonClicked);
         }
-        
-        private void OnCloseButtonClicked()
-        {
-            m_gameManager.uiManager.HidePage();
+
+        private void Update(){
+            if (CrossPlatformInputManager.GetButton("Submit")){
+                OnQuitGameButtonClicked();
+            }
         }
 
         private void OnQuitGameButtonClicked()
         {
-            m_gameManager.ExitGame();
+            m_gameManager.ExitApp();
         }
         
     }

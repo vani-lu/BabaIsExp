@@ -1,4 +1,4 @@
-﻿using System;
+﻿using System.IO;
 using Gfen.Game.Config;
 using Gfen.Game.Logic;
 using Gfen.Game.Manager;
@@ -60,6 +60,7 @@ namespace Gfen.Game {
         private string m_dataPath;
         public string DataPath { get { return m_dataPath; } }
         private string m_dataFile;
+        public string DataFile { get { return m_dataFile; } }
 
         private const string PathInfoKey = "DataPath";
         private const string UserInfoKey = "UserName";
@@ -71,15 +72,17 @@ namespace Gfen.Game {
 
             // Set data path
             m_user = PlayerPrefs.GetString(UserInfoKey, "test");
-            m_date = PlayerPrefs.GetString(DateInfoKey, "");
-            //Directory.CreateDirectory("Save");
+            m_date = PlayerPrefs.GetString(DateInfoKey, "00000000");
+            
+            if (!Directory.Exists("./Save")){
+                 Directory.CreateDirectory("./Save");
+            }
             m_dataPath = PlayerPrefs.GetString(PathInfoKey, "./Save");
             PlayerPrefs.SetString("Path", m_dataPath);
             m_dataFile = "/data_" + m_date + "_" + m_user + ".csv";
-            // Debug.Log(m_dataPath + m_dataFile);
 
             // Create data path and initialize the file
-            var createTask = FrameDataUtility.SetColNamesAsync(m_dataPath + m_dataFile);
+            var createTask = FrameDataUtility.InitFrameData(m_dataPath + m_dataFile);
 
             // Initialize level and UI managers with the current Game Manager 
             m_levelManager = new LevelManager();
@@ -116,6 +119,8 @@ namespace Gfen.Game {
 
             // Complete data file initialzation
             await createTask;
+            var loginTask = FrameDataUtility.MarkLogin(m_dataPath + m_dataFile);
+            await loginTask;
         }
 
         private async void Update() 
@@ -166,10 +171,8 @@ namespace Gfen.Game {
                                                 gameControlInput,
                                                 operationInput,
                                                 numCommandsOutput);
-                // Debug.Log(string.Format("{0},{1:d},{2:d},{3:g},{4:g},{5:d}", 
-                //                         fData.frameTime, fData.chapter, fData.level, 
-                //                         fData.gameControl, fData.operation, fData.numCommands));
                 var writeTask =  FrameDataUtility.AppendOneFrameAsync(m_dataPath + m_dataFile, fData);
+                Debug.Log(string.Format("{0}, {1}", gameControlInput, operationInput));
                 await writeTask;
             }
         }
@@ -314,6 +317,10 @@ namespace Gfen.Game {
             return operationType;
         }
 
+        public bool IsInBonusChapter(){
+            return m_currentChapterIndex == bonusChapterIndex;
+        }
+        
         public void StartGame(int chapterIndex, int levelIndex)
         {
             m_currentChapterIndex = chapterIndex;
@@ -333,11 +340,6 @@ namespace Gfen.Game {
 
             // Show in game UI
             uiManager.ShowPage<GamePlayPage>();
-
-            // //Take Screenshot
-            // string capturePath = m_dataPath + "/Chap" + chapterIndex + "_Level_" +  levelIndex + ".png";
-            // ScreenCapture.CaptureScreenshot(capturePath, 0);
-            // Debug.Log(capturePath);
         }
 
         public void StopGame()
@@ -404,15 +406,19 @@ namespace Gfen.Game {
             uiManager.HidePage();
         }
 
-        public void ExitGame()
+        public async void ExitApp()
         {
+            var logoutTask = FrameDataUtility.MarkLogout(m_dataPath + m_dataFile);
+
             int bonus = m_levelManager.CountBonus();
             var ts = Time.unscaledTime;
 
-            PlayerPrefs.SetInt("ExpTime", (int)Math.Round(ts/60));
-            PlayerPrefs.SetInt("Bonus", bonus);
-            Debug.Log("Bonus: " + bonus);
+            m_levelManager.SetTimeSpent();
 
+            PlayerPrefs.SetInt("ExpTime", Mathf.CeilToInt(ts/60f));
+            PlayerPrefs.SetInt("Bonus", bonus);
+
+            await logoutTask;
             SceneManager.LoadScene(5);
         }
 

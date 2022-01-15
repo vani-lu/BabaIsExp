@@ -20,6 +20,10 @@ namespace Gfen.Game.Logic
         
         Stop,
 
+        EnableHint, 
+
+        ToggleHint,
+
         Success,
 
         Defeat,

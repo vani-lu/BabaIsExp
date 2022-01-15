@@ -131,6 +131,34 @@
             }
         },
         {
+            "chapterIndex": 0,
+            "levelIndex": 2,
+            "ruleInfoDict": {
+                "m_keys": [
+                    3,
+                    2,
+                    4
+                ],
+                "m_values": [
+                    {
+                        "attributeList": [
+                            4
+                        ]
+                    },
+                    {
+                        "attributeList": [
+                            1
+                        ]
+                    },
+                    {
+                        "attributeList": [
+                            0
+                        ]
+                    }
+                ]
+            }
+        },
+        {
             "chapterIndex": 1,
             "levelIndex": 0,
             "ruleInfoDict": {
@@ -163,7 +191,7 @@
             "levelIndex": 1,
             "ruleInfoDict": {
                 "m_keys": [
-                    18,
+                    11,
                     12
                 ],
                 "m_values": [
@@ -215,6 +243,7 @@
                 "m_values": [
                     {
                         "attributeList": [
+                            8,
                             0
                         ]
                     },
@@ -237,6 +266,7 @@
             "ruleInfoDict": {
                 "m_keys": [
                     15,
+                    1,
                     16,
                     4,
                     19
@@ -249,41 +279,12 @@
                     },
                     {
                         "attributeList": [
-                            2
+                            8
                         ]
                     },
                     {
                         "attributeList": [
-                            6
-                        ]
-                    },
-                    {
-                        "attributeList": [
-                            0
-                        ]
-                    }
-                ]
-            }
-        },
-        {
-            "chapterIndex": 1,
-            "levelIndex": 4,
-            "ruleInfoDict": {
-                "m_keys": [
-                    15,
-                    16,
-                    4,
-                    19
-                ],
-                "m_values": [
-                    {
-                        "attributeList": [
-                            1
-                        ]
-                    },
-                    {
-                        "attributeList": [
-                            2
+                            9
                         ]
                     },
                     {

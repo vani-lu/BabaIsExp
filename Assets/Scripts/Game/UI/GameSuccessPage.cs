@@ -1,4 +1,5 @@
 using UnityEngine.UI;
+using UnityStandardAssets.CrossPlatformInput;
 
 namespace Gfen.Game.UI
 {
@@ -9,6 +10,12 @@ namespace Gfen.Game.UI
         private void Awake() 
         {
             okButton.onClick.AddListener(OnOkButtonClicked);
+        }
+
+        private void Update(){
+            if (CrossPlatformInputManager.GetButton("Submit")){
+                OnOkButtonClicked();
+            }
         }
         
         private void OnOkButtonClicked()

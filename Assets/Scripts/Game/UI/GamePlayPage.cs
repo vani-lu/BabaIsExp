@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.UI;
+using Vani.Data;
 
 namespace Gfen.Game.UI
 {
@@ -25,7 +26,9 @@ namespace Gfen.Game.UI
 
         public GameObject redoGameObject;
 
-        private string m_levelHintText;
+        private int m_chapterIndex;
+
+        private int m_levelIndex;
 
         private void Awake()
         {
@@ -36,6 +39,14 @@ namespace Gfen.Game.UI
         private void OnEnable() 
         {
             hintButton.gameObject.SetActive(false);
+            if (m_gameManager.IsInBonusChapter()){
+                countDown.gameObject.SetActive(true);
+                countDown.text = "30";
+            }
+            else {
+                countDown.gameObject.SetActive(false);
+            }
+            
             hintPanel.SetActive(false);
             hintNote.SetActive(false);
 
@@ -54,14 +65,22 @@ namespace Gfen.Game.UI
             SetHintContent();
         }
 
-        private void LateUpdate(){
+        private async void LateUpdate(){
             if (gameObject.activeSelf) {
-                // If in gameplay
+                // in gameplay
                 if (!hintButton.gameObject.activeSelf){
                     if (m_gameManager.LevelManager.IsCurrentLevelTimeUp()){
+                        var writeTask = FrameDataUtility.MarkEnableHint(m_gameManager.DataPath + m_gameManager.DataFile, m_chapterIndex, m_levelIndex);
                         hintButton.gameObject.SetActive(true);
                         hintNote.SetActive(true);
-                        hintText.text = m_levelHintText;
+                        await writeTask;
+                    }
+                }
+                if (countDown.gameObject.activeSelf){
+                    int t = m_gameManager.LevelManager.BonusChapterTimeLeft();
+                    countDown.text = t.ToString("D2");
+                    if (t <= 0){
+                        m_gameManager.uiManager.ShowPage<QuitConfirmPage>();
                     }
                 }
             }
@@ -70,10 +89,10 @@ namespace Gfen.Game.UI
         private void SetHintContent(){
 
             //Hint Content
-            int chapterIndex = m_gameManager.CurrentChapterIndex;
-            int levelIndex = m_gameManager.CurrentLevelIndex;
-            var levelConfig = m_gameManager.gameConfig.chapterConfigs[chapterIndex].levelConfigs[levelIndex];
-            m_levelHintText = levelConfig.hintText;
+            m_chapterIndex = m_gameManager.CurrentChapterIndex;
+            m_levelIndex = m_gameManager.CurrentLevelIndex;
+            var levelConfig = m_gameManager.gameConfig.chapterConfigs[m_chapterIndex].levelConfigs[m_levelIndex];
+            hintText.text = levelConfig.hintText;
 
             //Size
             RectTransform rt = hintPanel.GetComponent<RectTransform>();
@@ -89,10 +108,14 @@ namespace Gfen.Game.UI
             m_gameManager.PauseGame();
         }
 
-        private void OnHintButtonClicked()
+        private async void OnHintButtonClicked()
         {
+            var writeTask = FrameDataUtility.MarkToggleHint(m_gameManager.DataPath + m_gameManager.DataFile, m_chapterIndex, m_levelIndex);
+
             hintPanel.SetActive(!hintPanel.activeSelf);
             hintNote.SetActive(!hintNote.activeSelf);
+
+            await writeTask;
         }
     }
 

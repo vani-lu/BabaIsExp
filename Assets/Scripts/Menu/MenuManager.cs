@@ -32,7 +32,11 @@ namespace Vani.UI
         void Start()
         {
             m_loginDate = DateTime.Now.ToString("yyyyMMdd");
-            m_dataPath = Application.persistentDataPath;
+            // m_dataPath = Application.persistentDataPath;
+            if (!Directory.Exists("./Save")){
+                 Directory.CreateDirectory("./Save");
+            }
+            m_dataPath = "./Save";
         }
 
         // Get user (participant's) name from input
