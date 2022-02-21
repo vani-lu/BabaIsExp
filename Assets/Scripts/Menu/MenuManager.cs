@@ -12,6 +12,8 @@ namespace Vani.UI
 
         public InputField nameInputField;
 
+        public InputField conditionInputField;
+
         private string m_dataPath;
 
         private string m_userName;
@@ -33,18 +35,20 @@ namespace Vani.UI
         {
             m_loginDate = DateTime.Now.ToString("yyyyMMdd");
             // m_dataPath = Application.persistentDataPath;
-            if (!Directory.Exists("./Save")){
-                 Directory.CreateDirectory("./Save");
-            }
             m_dataPath = "./Save";
+            if (!Directory.Exists(m_dataPath)){
+                 Directory.CreateDirectory(m_dataPath);
+            }
         }
 
-        // Get user (participant's) name from input
         public void PlayGame()
         {
+            // Get user (participant's) name from input
             m_userName = nameInputField.text;
+            string str = conditionInputField.text;
+            bool convertible = Int32.TryParse(str, out m_conditionIndex);
 
-            if (!string.IsNullOrEmpty(m_userName)){
+            if (!string.IsNullOrEmpty(m_userName) && convertible){
                 SaveUserInfo();
                 SceneManager.LoadScene(m_conditionIndex);
             }
@@ -55,7 +59,7 @@ namespace Vani.UI
             string lastUserName = PlayerPrefs.GetString(UserInfoKey);
             string lastLoginDate = PlayerPrefs.GetString(DateInfoKey);
             if (lastUserName == m_userName && lastLoginDate == m_loginDate){
-                // Continuing today's session?
+                // Continuing last session?
                 m_conditionIndex = PlayerPrefs.GetInt(ConditionInfoKey);
             }
             else {
@@ -63,7 +67,8 @@ namespace Vani.UI
                 PlayerPrefs.SetString(UserInfoKey, m_userName);
                 PlayerPrefs.SetString(DateInfoKey, m_loginDate);
                 PlayerPrefs.SetString(PathInfoKey, m_dataPath);
-                SetAndSaveCondition();
+                PlayerPrefs.SetInt(ConditionInfoKey, m_conditionIndex);
+                // SetAndSaveCondition();
                 UpdatePlayerDatabase();
             }
             
