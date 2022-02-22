@@ -299,6 +299,147 @@
                     }
                 ]
             }
+        },
+        {
+            "chapterIndex": 2,
+            "levelIndex": 0,
+            "ruleInfoDict": {
+                "m_keys": [
+                    8,
+                    1,
+                    2,
+                    4
+                ],
+                "m_values": [
+                    {
+                        "attributeList": [
+                            4,
+                            9
+                        ]
+                    },
+                    {
+                        "attributeList": [
+                            0,
+                            8
+                        ]
+                    },
+                    {
+                        "attributeList": [
+                            1
+                        ]
+                    },
+                    {
+                        "attributeList": [
+                            6
+                        ]
+                    }
+                ]
+            }
+        },
+        {
+            "chapterIndex": 2,
+            "levelIndex": 1,
+            "ruleInfoDict": {
+                "m_keys": [
+                    1,
+                    2,
+                    4
+                ],
+                "m_values": [
+                    {
+                        "attributeList": [
+                            8,
+                            0
+                        ]
+                    },
+                    {
+                        "attributeList": [
+                            1
+                        ]
+                    },
+                    {
+                        "attributeList": [
+                            6
+                        ]
+                    }
+                ]
+            }
+        },
+        {
+            "chapterIndex": 1,
+            "levelIndex": 4,
+            "ruleInfoDict": {
+                "m_keys": [
+                    15,
+                    1,
+                    16,
+                    4,
+                    19
+                ],
+                "m_values": [
+                    {
+                        "attributeList": [
+                            1
+                        ]
+                    },
+                    {
+                        "attributeList": [
+                            8
+                        ]
+                    },
+                    {
+                        "attributeList": [
+                            9
+                        ]
+                    },
+                    {
+                        "attributeList": [
+                            6
+                        ]
+                    },
+                    {
+                        "attributeList": [
+                            0
+                        ]
+                    }
+                ]
+            }
+        },
+        {
+            "chapterIndex": 2,
+            "levelIndex": 0,
+            "ruleInfoDict": {
+                "m_keys": [
+                    8,
+                    1,
+                    2,
+                    4
+                ],
+                "m_values": [
+                    {
+                        "attributeList": [
+                            4,
+                            9
+                        ]
+                    },
+                    {
+                        "attributeList": [
+                            0,
+                            8
+                        ]
+                    },
+                    {
+                        "attributeList": [
+                            1
+                        ]
+                    },
+                    {
+                        "attributeList": [
+                            6
+                        ]
+                    }
+                ]
+            }
         }
     ]
 }

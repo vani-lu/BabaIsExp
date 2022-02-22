@@ -103,6 +103,15 @@ namespace Gfen.Game.Manager
                 return true;
             }
 
+            // first level of each chapter is unlocked 
+            // when the previous chapter is passed
+            if (chapterIndex > 0 && levelIndex == 0){
+                if (IsChapterPassed(chapterIndex - 1)){
+                    return true;
+                }
+                return false;
+            }
+
             for (int i = levelIndex - 1; i >= 0; i--){
                 if (!IsLevelPassed(chapterIndex, i)){
                     return false;
