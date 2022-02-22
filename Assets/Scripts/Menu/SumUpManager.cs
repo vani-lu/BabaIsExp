@@ -20,7 +20,7 @@ namespace Vani.UI {
             m_time = PlayerPrefs.GetInt("ExpTime");
             m_bonus = PlayerPrefs.GetInt("Bonus");
             timeText.text = string.Format("{0}", m_time);
-            bonusText.text = string.Format("{0}", m_bonus * 10);
+            bonusText.text = string.Format("{0}", m_bonus);
         }
 
     }
