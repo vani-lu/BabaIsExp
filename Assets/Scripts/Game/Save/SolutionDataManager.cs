@@ -67,17 +67,36 @@ namespace Vani.Data
                 return;
             }
 
+            // Three solutions
             bool isBagPush = false; // Bag Is Push
             bool isBagHotMelt = false; // Bag Is Melt
             bool isPumpkinPush = false; // Pumpkin Is Push
 
             foreach (SolutionData item in solutionInfo.sList){
                 if (item.chapterIndex == bonusChapterIndex && item.levelIndex < 2){
-                    // Check recorded rule set;
+                    // Classify the solution in past levels
+
+                    // Record specific "entity is attribute" rule status in each past level
+                    bool isBagMelt = item.ruleInfoDict.GetOrSet(8,()=> new AttributeSet()).attributeList.Contains(8);
+                    bool isBagHot = item.ruleInfoDict.GetOrSet(8,()=> new AttributeSet()).attributeList.Contains(9);
+                    bool isCloudMelt = item.ruleInfoDict.GetOrSet(1,()=> new AttributeSet()).attributeList.Contains(8);
+                    bool isCloudYou = item.ruleInfoDict.GetOrSet(1,()=> new AttributeSet()).attributeList.Contains(0);
+                    bool isDicePush = item.ruleInfoDict.GetOrSet(3,()=> new AttributeSet()).attributeList.Contains(4);
+
+                    bool useBagIsPush = item.ruleInfoDict.GetOrSet(8,()=> new AttributeSet()).attributeList.Contains(4);
+                    bool useBagIsHotMelt = isBagMelt && isBagHot;
+                    bool usePumpkinIsPush = !isBagHot || !isCloudMelt || !isCloudYou;
+
+                    if (!useBagIsPush && !useBagIsHotMelt && !usePumpkinIsPush && !isDicePush){
+                        // Nothing changes despite Dice Is Push
+                        // The player may break "Bag is melt" after forming simultaneously "Bag is melt" and "Bag is hot"
+                        useBagIsHotMelt = true;
+                    }
+
                     // If the solution indicator is true, it remains to be true
-                    isBagPush = isBagPush || item.ruleInfoDict.GetOrSet(8,()=> new AttributeSet()).attributeList.Contains(4);
-                    isBagHotMelt = isBagHotMelt || item.ruleInfoDict.GetOrSet(8,()=> new AttributeSet()).attributeList.Contains(8);
-                    isPumpkinPush = isPumpkinPush || item.ruleInfoDict.GetOrSet(4,()=> new AttributeSet()).attributeList.Contains(4);
+                    isBagPush = isBagPush || useBagIsPush; 
+                    isBagHotMelt = isBagHotMelt || useBagIsHotMelt;
+                    isPumpkinPush = isPumpkinPush || usePumpkinIsPush;
                 }
             }
 

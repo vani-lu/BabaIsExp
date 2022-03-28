@@ -200,7 +200,7 @@ namespace Gfen.Game.Logic
                     }
                 }
 
-                break; // stop the nearest position, delete this break if enable AND keyword
+                break; // stop at the nearest position, delete this break if enable AND keyword
 
                 { // Loop for AND
             

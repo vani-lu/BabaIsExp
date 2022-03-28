@@ -100,7 +100,7 @@ namespace Gfen.Game.Logic
         {
             Clear();
 
-            // Inherent Rule, Base Rules, Default Rules 
+            // Set Inherent Rule, Base Rules, Default Rules 
             foreach (var entityCategoryConfig in m_logicGameManager.GameManager.gameConfig.entityCategoryConfigs)
             {
                 foreach (var attributeCategory in entityCategoryConfig.inherentAttributeCategories)
