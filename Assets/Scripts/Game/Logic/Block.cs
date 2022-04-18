@@ -1,7 +1,9 @@
 using UnityEngine;
+using System;
 
 namespace Gfen.Game.Logic
 {
+    [Serializable]
     public class Block
     {
         public int entityType;
