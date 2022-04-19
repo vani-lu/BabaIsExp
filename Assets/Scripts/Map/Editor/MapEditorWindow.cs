@@ -23,7 +23,7 @@ namespace Gfen.Game.Map
 
         private GameConfig m_config;
 
-        [MenuItem("babaisyou/MapWindow")]
+        [MenuItem("babaisyou/MapEditor")]
         private static void ShowWindow() 
         {
             var window = GetWindow<MapEditorWindow>();

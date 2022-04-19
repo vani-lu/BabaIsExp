@@ -1,5 +1,5 @@
 using System.IO;
-using System.Threading.Tasks;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
 using Gfen.Game.Config;
@@ -16,9 +16,9 @@ namespace Gfen.Game.Map
 
         private string m_configPath;
 
-        private int m_chapter;
+        private int m_chapter = 0;
 
-        private int m_level;
+        private int m_level = 0;
 
         private bool m_isParsable;
 
@@ -75,10 +75,14 @@ namespace Gfen.Game.Map
             m_isParsable = false;
             m_isParsable = int.TryParse(EditorGUILayout.TextField(m_chapter.ToString()), out m_chapter);
             m_isParsable = m_isParsable && int.TryParse(EditorGUILayout.TextField(m_level.ToString()), out m_level);
-            GUILayout.EndHorizontal();
 
             if (m_isParsable){
-                GUI.enabled = true;
+                if (m_chapter > 0 && m_level > 0){
+                    GUI.enabled = true;
+                }
+                else{
+                    ShowTip("请输入正整数");
+                }
             }
             else {
                 ShowTip("请输入正整数");
@@ -90,7 +94,13 @@ namespace Gfen.Game.Map
                 m_mapconfig = m_gameconfig.chapterConfigs[m_chapter-1].levelConfigs[m_level-1].map;
                 ExportMap();
             }
+            GUILayout.EndHorizontal();
 
+            EditorGUILayout.Separator();
+
+            if (GUILayout.Button("TestFlattenArray", GUILayout.Width(150))){
+                FlattenArray();
+            }
 
         }
 
@@ -109,10 +119,46 @@ namespace Gfen.Game.Map
             file.WriteLine(content);
         }
 
+        private void FlattenArray()
+        {
+            List<int> a1 = new List<int>(){ 1, 2, 3};
+            List<int> a2 = new List<int>(){ 2, 2, 3};
+            List<int> a3 = new List<int>(){ 3, 2, 3};
+
+            List<int> b1 = new List<int>(){ 4, 5, 6};
+            List<int> b2 = new List<int>(){ 5, 5, 6};
+            List<int> b3 = new List<int>(){ 6, 5, 6};
+
+            List<int>[,] arbmap = new List<int>[2,3]{
+                {a1, a2, a3},
+                {b1, b2, b3}
+            };
+
+            List<List<int>> listOfLists = Array2List<int>(arbmap);
+            // 通过array的宽高可以复原出array
+            //List<int> flattenedList = listOfLists.SelectMany(d => d).ToList();
+        }
+        
         // 错误处理
         private void ShowTip(string tip)
         {
             ShowNotification(new GUIContent(tip));
         }
+
+        public static List<List<T>> Array2List<T>(List<T>[,] array)
+        {
+            int width = array.GetLength(0);
+            int height = array.GetLength(1);
+            List<List<T>> ret = new List<List<T>>(width * height);
+            for (int i = 0; i < width; i++)
+            {
+                for (int j = 0; j < height; j++)
+                {
+                    ret.Add(array[i, j]);
+                }
+            }
+            return ret;
+        }
+
     }
 }
