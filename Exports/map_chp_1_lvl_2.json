@@ -1,0 +1,304 @@
+{
+    "size": {
+        "x": 17,
+        "y": 13
+    },
+    "blocks": [
+        {
+            "entityType": 3,
+            "position": {
+                "x": 8,
+                "y": 6
+            },
+            "direction": 0
+        },
+        {
+            "entityType": 3,
+            "position": {
+                "x": 8,
+                "y": 7
+            },
+            "direction": 0
+        },
+        {
+            "entityType": 3,
+            "position": {
+                "x": 8,
+                "y": 5
+            },
+            "direction": 0
+        },
+        {
+            "entityType": 1,
+            "position": {
+                "x": 3,
+                "y": 8
+            },
+            "direction": 0
+        },
+        {
+            "entityType": 1,
+            "position": {
+                "x": 4,
+                "y": 8
+            },
+            "direction": 0
+        },
+        {
+            "entityType": 1,
+            "position": {
+                "x": 5,
+                "y": 8
+            },
+            "direction": 0
+        },
+        {
+            "entityType": 1,
+            "position": {
+                "x": 6,
+                "y": 8
+            },
+            "direction": 0
+        },
+        {
+            "entityType": 1,
+            "position": {
+                "x": 7,
+                "y": 8
+            },
+            "direction": 0
+        },
+        {
+            "entityType": 1,
+            "position": {
+                "x": 8,
+                "y": 8
+            },
+            "direction": 0
+        },
+        {
+            "entityType": 1,
+            "position": {
+                "x": 9,
+                "y": 8
+            },
+            "direction": 0
+        },
+        {
+            "entityType": 1,
+            "position": {
+                "x": 10,
+                "y": 8
+            },
+            "direction": 0
+        },
+        {
+            "entityType": 1,
+            "position": {
+                "x": 11,
+                "y": 8
+            },
+            "direction": 0
+        },
+        {
+            "entityType": 1,
+            "position": {
+                "x": 12,
+                "y": 8
+            },
+            "direction": 0
+        },
+        {
+            "entityType": 1,
+            "position": {
+                "x": 13,
+                "y": 8
+            },
+            "direction": 0
+        },
+        {
+            "entityType": 1,
+            "position": {
+                "x": 3,
+                "y": 4
+            },
+            "direction": 0
+        },
+        {
+            "entityType": 1,
+            "position": {
+                "x": 4,
+                "y": 4
+            },
+            "direction": 0
+        },
+        {
+            "entityType": 1,
+            "position": {
+                "x": 5,
+                "y": 4
+            },
+            "direction": 0
+        },
+        {
+            "entityType": 1,
+            "position": {
+                "x": 6,
+                "y": 4
+            },
+            "direction": 0
+        },
+        {
+            "entityType": 1,
+            "position": {
+                "x": 7,
+                "y": 4
+            },
+            "direction": 0
+        },
+        {
+            "entityType": 1,
+            "position": {
+                "x": 8,
+                "y": 4
+            },
+            "direction": 0
+        },
+        {
+            "entityType": 1,
+            "position": {
+                "x": 9,
+                "y": 4
+            },
+            "direction": 0
+        },
+        {
+            "entityType": 1,
+            "position": {
+                "x": 10,
+                "y": 4
+            },
+            "direction": 0
+        },
+        {
+            "entityType": 1,
+            "position": {
+                "x": 11,
+                "y": 4
+            },
+            "direction": 0
+        },
+        {
+            "entityType": 1,
+            "position": {
+                "x": 12,
+                "y": 4
+            },
+            "direction": 0
+        },
+        {
+            "entityType": 1,
+            "position": {
+                "x": 13,
+                "y": 4
+            },
+            "direction": 0
+        },
+        {
+            "entityType": 4,
+            "position": {
+                "x": 5,
+                "y": 6
+            },
+            "direction": 0
+        },
+        {
+            "entityType": 2,
+            "position": {
+                "x": 11,
+                "y": 6
+            },
+            "direction": 0
+        },
+        {
+            "entityType": 10004,
+            "position": {
+                "x": 3,
+                "y": 9
+            },
+            "direction": 0
+        },
+        {
+            "entityType": 10001,
+            "position": {
+                "x": 11,
+                "y": 9
+            },
+            "direction": 0
+        },
+        {
+            "entityType": 10003,
+            "position": {
+                "x": 3,
+                "y": 3
+            },
+            "direction": 0
+        },
+        {
+            "entityType": 40001,
+            "position": {
+                "x": 4,
+                "y": 9
+            },
+            "direction": 0
+        },
+        {
+            "entityType": 40001,
+            "position": {
+                "x": 12,
+                "y": 9
+            },
+            "direction": 0
+        },
+        {
+            "entityType": 30004,
+            "position": {
+                "x": 13,
+                "y": 9
+            },
+            "direction": 0
+        },
+        {
+            "entityType": 30002,
+            "position": {
+                "x": 5,
+                "y": 9
+            },
+            "direction": 0
+        },
+        {
+            "entityType": 40001,
+            "position": {
+                "x": 5,
+                "y": 3
+            },
+            "direction": 0
+        },
+        {
+            "entityType": 30003,
+            "position": {
+                "x": 11,
+                "y": 3
+            },
+            "direction": 0
+        },
+        {
+            "entityType": 10002,
+            "position": {
+                "x": 13,
+                "y": 3
+            },
+            "direction": 0
+        }
+    ]
+}
