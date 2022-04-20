@@ -9,12 +9,6 @@ namespace Gfen.Game.Logic
     {
         public Action<bool> GameEnd;
 
-        public Action<Block> BlockMoved;
-
-        public Action<Block> BlockTeleported;
-
-        public Action<Block> BlockDestroyed;
-
         private GameManager m_gameManager;
 
         public GameManager GameManager { get { return m_gameManager; } }

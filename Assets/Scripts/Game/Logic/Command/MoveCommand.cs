@@ -33,11 +33,7 @@ namespace Gfen.Game.Logic
 
             m_logicGameManager.MoveBlock(m_block, m_block.position + displacement);
             m_block.direction = m_targetDirection;
-
-            if (m_logicGameManager.BlockMoved != null)
-            {
-                m_logicGameManager.BlockMoved(m_block);
-            }
+            
         }
 
         protected override void OnUndo()
