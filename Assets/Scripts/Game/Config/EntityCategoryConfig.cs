@@ -10,6 +10,7 @@ namespace Gfen.Game.Config
     {
         public EntityCategory entityCategory;
 
+        // default attributes, default properties
         public AttributeCategory[] inherentAttributeCategories;
     }
 }

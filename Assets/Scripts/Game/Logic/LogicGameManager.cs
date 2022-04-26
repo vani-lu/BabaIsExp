@@ -1,5 +1,7 @@
 using System;
 using System.Collections.Generic;
+using System.IO;
+using System.Threading.Tasks;
 using Gfen.Game.Config;
 using UnityEngine;
 
@@ -19,6 +21,8 @@ namespace Gfen.Game.Logic
 
         public AttirbuteHandler AttributeHandler { get { return m_attributeHandler; } }
 
+        private string m_mapPath;
+
         private MapConfig m_mapConfig;
 
         private List<Block>[,] m_map;
@@ -35,6 +39,16 @@ namespace Gfen.Game.Logic
 
             m_ruleAnalyzer = new RuleAnalyzer(this);
             m_attributeHandler = new AttirbuteHandler(this);
+
+            if (!Directory.Exists("./Exports")){
+                 Directory.CreateDirectory("./Exports");
+            }
+
+            m_mapPath = "./Exports/" + "map_" + m_gameManager.Date + "_" + m_gameManager.User + ".json";
+
+            if (!File.Exists(m_mapPath)){
+                File.Create(m_mapPath).Dispose();
+            }
 
         }
     
@@ -73,10 +87,9 @@ namespace Gfen.Game.Logic
             }
 
             m_gameManager.SolutionDataManager.HandleBonusMap();
-
             m_attributeHandler.RefreshAttributes();
-
             m_ruleAnalyzer.Apply(null);
+
         }
 
         private void StopGameCore()
@@ -287,6 +300,32 @@ namespace Gfen.Game.Logic
             }
 
             return false;
+        }
+
+        public async void BlockListMap2BlockList()
+        {
+            var blockList = new BlockListWrapper(){
+                blocks = new List<Block>()
+            };
+
+            var mapXLength = m_map.GetLength(0);
+            var mapYLength = m_map.GetLength(1);
+
+            for (var i = 0; i < mapXLength; i++)
+            {
+                for (var j = 0; j < mapYLength; j++)
+                {
+                    var mapblockList = m_map[i, j];
+                    if (mapblockList.Count > 0)
+                    {
+                        blockList.blocks.AddRange(mapblockList);
+                    }
+                }
+            }
+
+            var saveTask = blockList.Save(m_mapPath);
+            await saveTask;
+            
         }
 
     }

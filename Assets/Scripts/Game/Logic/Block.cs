@@ -1,5 +1,8 @@
 using UnityEngine;
 using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Threading.Tasks;
 
 namespace Gfen.Game.Logic
 {
@@ -20,4 +23,21 @@ namespace Gfen.Game.Logic
             
         }
     }
+
+    [Serializable]
+    public class BlockListWrapper
+    {
+        public List<Block> blocks;
+
+        public async Task Save(string path)
+        {
+            var json = JsonUtility.ToJson(this, true);
+            using (StreamWriter file = new StreamWriter(path, append: true))
+            {
+                await file.WriteLineAsync(json);
+            }
+            
+        }
+    }
+
 }
