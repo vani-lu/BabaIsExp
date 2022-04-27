@@ -31,7 +31,7 @@ namespace Gfen.Game.Logic
 
         public async Task Save(string path)
         {
-            var json = JsonUtility.ToJson(this, true);
+            var json = JsonUtility.ToJson(this, false);
             using (StreamWriter file = new StreamWriter(path, append: true))
             {
                 await file.WriteLineAsync(json);

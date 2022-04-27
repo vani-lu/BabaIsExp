@@ -1,7 +1,6 @@
 ﻿using System.IO;
 using Gfen.Game.Config;
 using Gfen.Game.Logic;
-using Gfen.Game.Manager;
 using Gfen.Game.Presentation;
 using Gfen.Game.UI;
 using Vani.Data;
@@ -17,6 +16,8 @@ namespace Gfen.Game {
         public Camera gameCamera;
 
         public UIManager uiManager;
+
+        public ReplayManager replayManager;
 
         public int bonusChapterIndex;
 
@@ -93,6 +94,8 @@ namespace Gfen.Game {
             m_logicGameManager = new LogicGameManager(this);
 
             m_presentationGameManager = new PresentationGameManager(this, m_logicGameManager);
+
+            replayManager.Init(this, m_logicGameManager, m_presentationGameManager);
 
             m_solutionDataManager = new SolutionDataManager();
             m_solutionDataManager.Init(this, m_logicGameManager);

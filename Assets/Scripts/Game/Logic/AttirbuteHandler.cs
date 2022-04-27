@@ -105,7 +105,7 @@ namespace Gfen.Game.Logic
             {
                 foreach (var attributeCategory in entityCategoryConfig.inherentAttributeCategories)
                 {
-                    // Text Is Push, Rule Entity is Push
+                    // Text Is Push (Rule Entity is Push)
                     SetAttributeForEntityCategory(entityCategoryConfig.entityCategory, attributeCategory);
                 }
             }

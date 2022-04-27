@@ -3,7 +3,7 @@ using System.Linq;
 using Gfen.Game.Utility;
 using UnityEngine;
 
-namespace Gfen.Game.Manager
+namespace Gfen.Game.Logic
 {
     public class LevelManager
     {
