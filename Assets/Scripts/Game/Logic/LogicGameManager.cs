@@ -303,12 +303,13 @@ namespace Gfen.Game.Logic
 
         public async void BlockListMap2BlockList()
         {
-            var blockList = new BlockListWrapper(){
-                blocks = new List<Block>()
-            };
-
             var mapXLength = m_map.GetLength(0);
             var mapYLength = m_map.GetLength(1);
+
+            var blockList = new BlockListWrapper(){
+                size = new Vector2Int(mapXLength, mapYLength),
+                blocks = new List<Block>()
+            };
 
             for (var i = 0; i < mapXLength; i++)
             {

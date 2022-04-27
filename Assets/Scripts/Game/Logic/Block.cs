@@ -27,6 +27,7 @@ namespace Gfen.Game.Logic
     [Serializable]
     public class BlockListWrapper
     {
+        public Vector2Int size;
         public List<Block> blocks;
 
         public async Task Save(string path)
