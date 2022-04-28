@@ -177,8 +177,9 @@ namespace Gfen.Game {
                 var writeTask =  FrameDataUtility.AppendOneFrameAsync(m_dataPath + m_dataFile, fData);
                 Debug.Log(string.Format("{0}, {1}", gameControlInput, operationInput));
                 await writeTask;
-
-                m_logicGameManager.BlockListMap2BlockList();
+                if (!Application.isEditor){
+                    m_logicGameManager.BlockListMap2BlockList();
+                }
             }
         }
 

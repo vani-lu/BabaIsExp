@@ -303,22 +303,26 @@ namespace Gfen.Game.Logic
 
         public async void BlockListMap2BlockList()
         {
-            var mapXLength = m_map.GetLength(0);
-            var mapYLength = m_map.GetLength(1);
-
             var blockList = new BlockListWrapper(){
-                size = new Vector2Int(mapXLength, mapYLength),
+                size = new Vector2Int(0, 0),
                 blocks = new List<Block>()
             };
 
-            for (var i = 0; i < mapXLength; i++)
+            if (m_map != null)
             {
-                for (var j = 0; j < mapYLength; j++)
+                var mapXLength = m_map.GetLength(0);
+                var mapYLength = m_map.GetLength(1);
+                blockList.size = new Vector2Int(mapXLength, mapYLength);
+
+                for (var i = 0; i < mapXLength; i++)
                 {
-                    var mapblockList = m_map[i, j];
-                    if (mapblockList.Count > 0)
+                    for (var j = 0; j < mapYLength; j++)
                     {
-                        blockList.blocks.AddRange(mapblockList);
+                        var mapblockList = m_map[i, j];
+                        if (mapblockList.Count > 0)
+                        {
+                            blockList.blocks.AddRange(mapblockList);
+                        }
                     }
                 }
             }
