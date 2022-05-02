@@ -37,7 +37,6 @@ namespace Gfen.Game.Logic
             {
                 await file.WriteLineAsync(json);
             }
-            Debug.Log("Saved block list to " + path);
         }
     }
 

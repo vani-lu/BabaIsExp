@@ -60,7 +60,7 @@ namespace Gfen.Game {
         void Update(){
             if(m_isActive){
                 float currentFrameTime = Time.unscaledTime;
-                if (currentFrameTime - m_lastInputTime > 0.3f)
+                if (currentFrameTime - m_lastInputTime > 0.15f)
                 {
                     string line = m_streamReader.ReadLine();
                     if (line != null)
