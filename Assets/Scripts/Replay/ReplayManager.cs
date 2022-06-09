@@ -44,7 +44,7 @@ namespace Gfen.Game {
                 if (File.Exists(path))
                 {
                     Debug.Log(path);
-                    Debug.Log("Old user replay data found!");
+                    Debug.Log("Importing replay data found!");
                     m_dataPath = path;
                     m_isActive = true;
                     m_streamReader = new StreamReader(m_dataPath);

@@ -69,6 +69,7 @@ namespace Gfen.Game {
 
         private async void Start() 
         {
+            Debug.Log(Application.isEditor);
             gameConfig.Init();
 
             // Set data path
@@ -165,7 +166,10 @@ namespace Gfen.Game {
                     m_isPreviouslyInGame = false;
                 }
             }
-            // DebugLog
+            if (Application.isEditor)
+            {
+                return;
+            }
             if (gameControlInput != GameControlType.None || operationInput != OperationType.None)
             {
                 FrameData fData = new FrameData(frameTimeStamp,
@@ -177,9 +181,7 @@ namespace Gfen.Game {
                 var writeTask =  FrameDataUtility.AppendOneFrameAsync(m_dataPath + m_dataFile, fData);
                 Debug.Log(string.Format("{0}, {1}", gameControlInput, operationInput));
                 await writeTask;
-                if (!Application.isEditor){
-                    m_logicGameManager.BlockListMap2BlockList();
-                }
+                m_logicGameManager.BlockListMap2BlockList();
             }
         }
 
