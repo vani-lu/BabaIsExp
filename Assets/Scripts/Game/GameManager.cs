@@ -69,7 +69,6 @@ namespace Gfen.Game {
 
         private async void Start() 
         {
-            Debug.Log(Application.isEditor);
             gameConfig.Init();
 
             // Set data path
@@ -181,7 +180,7 @@ namespace Gfen.Game {
                 var writeTask =  FrameDataUtility.AppendOneFrameAsync(m_dataPath + m_dataFile, fData);
                 Debug.Log(string.Format("{0}, {1}", gameControlInput, operationInput));
                 await writeTask;
-                m_logicGameManager.BlockListMap2BlockList();
+                m_logicGameManager.BlockListMap2BlockList(FrameData.count);
             }
         }
 
@@ -427,7 +426,13 @@ namespace Gfen.Game {
             PlayerPrefs.SetInt("Bonus", bonus);
 
             await logoutTask;
-            SceneManager.LoadScene(5);
+
+            if (Application.isEditor) {
+                Debug.Log(string.Format("Bonus: {0}", bonus));
+            }
+            else{
+                SceneManager.LoadScene(5);
+            }
         }
 
         private void OnGameEnd(bool success)

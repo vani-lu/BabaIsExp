@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEditor;
 using UnityEditor.SceneManagement;
+using System.IO;
 
 namespace Gfen.Game
 {
@@ -56,20 +57,25 @@ namespace Gfen.Game
                 switch(m_condition){
                     case 1:
                         m_scenePath = "Assets/Scenes/Main_NN.unity";
+                        SaveParticipant(m_user, m_date, m_condition);
                         break;
                     case 2:
                         m_scenePath = "Assets/Scenes/Main_NF.unity";
+                        SaveParticipant(m_user, m_date, m_condition);
                         break;
                     case 3:
                         m_scenePath = "Assets/Scenes/Main_FN.unity";
+                        SaveParticipant(m_user, m_date, m_condition);
                         break;
                     case 4:
                         m_scenePath = "Assets/Scenes/Main_FF.unity";
+                        SaveParticipant(m_user, m_date, m_condition);
                         break;
                     default:
                         ShowTip("请输入1-4");
                         break;
                 }
+
             }
 
             if (GUILayout.Button("Start", GUILayout.Width(100)))
@@ -85,6 +91,17 @@ namespace Gfen.Game
         private void ShowTip(string tip)
         {
             ShowNotification(new GUIContent(tip));
+        }
+
+        private void SaveParticipant(string date, string user, int condition)
+        {
+            // create file if not exist
+            string path = "./Exports/participants.csv";
+            if (!File.Exists(path)){
+                File.Create(path).Close();
+            }
+            using StreamWriter file = new StreamWriter(path, append: true);
+            file.WriteLine(string.Format("{0},{1},{2:d}", date, user, condition));
         }
 
     }

@@ -68,6 +68,8 @@ namespace Gfen.Game.UI
         private async void LateUpdate(){
             if (gameObject.activeSelf) {
                 // in gameplay
+
+                // show hint button if reach time limit
                 if (!hintButton.gameObject.activeSelf){
                     if (m_gameManager.LevelManager.IsCurrentLevelTimeUp()){
                         var writeTask = FrameDataUtility.MarkEnableHint(m_gameManager.DataPath + m_gameManager.DataFile, m_chapterIndex, m_levelIndex);
@@ -76,6 +78,8 @@ namespace Gfen.Game.UI
                         await writeTask;
                     }
                 }
+
+                // show time countdown if in bonus chapter
                 if (countDown.gameObject.activeSelf){
                     int t = m_gameManager.LevelManager.BonusChapterTimeLeft();
                     countDown.text = t.ToString("D2");

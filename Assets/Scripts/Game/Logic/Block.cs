@@ -27,6 +27,7 @@ namespace Gfen.Game.Logic
     [Serializable]
     public class BlockListWrapper
     {
+        public int timestamp = 0;
         public Vector2Int size;
         public List<Block> blocks;
 

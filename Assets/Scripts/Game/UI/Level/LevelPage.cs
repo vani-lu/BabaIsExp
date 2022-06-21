@@ -31,6 +31,7 @@ namespace Gfen.Game.UI
 
         private void OnEnable()
         {
+            // auto quit if bonus chapter is passed
             if (m_gameManager.LevelManager.IsChapterPassed(m_gameManager.bonusChapterIndex)){
                 m_gameManager.ExitApp();
             }

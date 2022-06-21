@@ -46,7 +46,7 @@ namespace Gfen.Game.Logic
             m_mapPath = "./Exports/" + "map_" + m_gameManager.Date + "_" + m_gameManager.User + ".json";
 
             if (!File.Exists(m_mapPath)){
-                File.Create(m_mapPath).Dispose();
+                File.Create(m_mapPath).Close();
             }
 
         }
@@ -301,9 +301,10 @@ namespace Gfen.Game.Logic
             return false;
         }
 
-        public async void BlockListMap2BlockList()
+        public async void BlockListMap2BlockList(int frameNo)
         {
             var blockList = new BlockListWrapper(){
+                timestamp = frameNo,
                 size = new Vector2Int(0, 0),
                 blocks = new List<Block>()
             };
