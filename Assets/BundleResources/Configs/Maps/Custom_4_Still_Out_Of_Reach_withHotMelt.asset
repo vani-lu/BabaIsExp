@@ -191,23 +191,11 @@ MonoBehaviour:
   - entityType: 10
     position: {x: 6, y: 1}
     direction: 0
-  - entityType: 10
-    position: {x: 6, y: 1}
-    direction: 0
-  - entityType: 10
-    position: {x: 6, y: 1}
-    direction: 0
   - entityType: 10010
     position: {x: 0, y: 12}
     direction: 0
   - entityType: 13
     position: {x: 18, y: 4}
-    direction: 0
-  - entityType: 10013
-    position: {x: 0, y: 13}
-    direction: 0
-  - entityType: 10013
-    position: {x: 0, y: 13}
     direction: 0
   - entityType: 10013
     position: {x: 0, y: 13}

@@ -372,12 +372,6 @@ MonoBehaviour:
     position: {x: 14, y: 5}
     direction: 0
   - entityType: 8
-    position: {x: 14, y: 5}
-    direction: 0
-  - entityType: 8
-    position: {x: 13, y: 3}
-    direction: 0
-  - entityType: 8
     position: {x: 13, y: 3}
     direction: 0
   - entityType: 2
@@ -392,9 +386,6 @@ MonoBehaviour:
   - entityType: 30003
     position: {x: 25, y: 3}
     direction: 0
-  - entityType: 30003
-    position: {x: 25, y: 3}
-    direction: 0
   - entityType: 1
     position: {x: 14, y: 17}
     direction: 0
@@ -403,9 +394,6 @@ MonoBehaviour:
     direction: 0
   - entityType: 4
     position: {x: 7, y: 14}
-    direction: 0
-  - entityType: 4
-    position: {x: 11, y: 14}
     direction: 0
   - entityType: 4
     position: {x: 11, y: 14}
@@ -424,9 +412,6 @@ MonoBehaviour:
     direction: 0
   - entityType: 40001
     position: {x: 9, y: 15}
-    direction: 0
-  - entityType: 30002
-    position: {x: 10, y: 15}
     direction: 0
   - entityType: 30002
     position: {x: 10, y: 15}
@@ -460,12 +445,6 @@ MonoBehaviour:
     direction: 0
   - entityType: 10003
     position: {x: 7, y: 11}
-    direction: 0
-  - entityType: 10003
-    position: {x: 7, y: 11}
-    direction: 0
-  - entityType: 40001
-    position: {x: 7, y: 10}
     direction: 0
   - entityType: 40001
     position: {x: 7, y: 10}
