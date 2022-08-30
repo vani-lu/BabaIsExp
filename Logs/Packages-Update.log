@@ -59,3 +59,21 @@ Update Mode: updateDependencies
 The following packages were updated:
   com.unity.collab-proxy from version 1.11.2 to 1.13.5
   com.unity.purchasing from version 3.2.2 to 4.0.3
+
+=== Mon Aug 29 17:09:15 2022
+
+Packages were changed.
+Update Mode: resetToDefaultDependencies
+
+The following packages were added:
+  com.unity.ide.rider@2.0.7
+  com.unity.ide.visualstudio@2.0.11
+  com.unity.timeline@1.4.8
+The following packages were updated:
+  com.unity.ide.vscode from version 1.2.5 to 1.2.4
+  com.unity.test-framework from version 1.1.33 to 1.1.29
+The following packages were removed:
+  com.unity.2d.sprite@1.0.0
+  com.unity.2d.tilemap@1.0.0
+  com.unity.analytics@3.6.12
+  com.unity.xr.legacyinputhelpers@2.1.10
