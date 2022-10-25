@@ -196,9 +196,9 @@ namespace Gfen.Game.Logic
 
             var impactBlocks = DictionaryPool<Block, int>.Get(); // get from the dictionary pool
 
+            // Scans for You and Handle Push
             for (var position = negativeEndPosition + displacement; position != positiveEndPosition; position += displacement)
             {
-                // Scans for You
                 var hasYou = false;
                 {
                     var blocks = m_logicGameManager.Map[position.x, position.y];
@@ -257,8 +257,8 @@ namespace Gfen.Game.Logic
             // Handle Open and Shut
             HandlePreMove(impactBlocks, displacement, tickCommands);
 
+            // Entities cannot move outside of border: disable impact
             {
-                // Entities cannot move outside of border: disable impact
                 var stopPosition = positiveEndPosition - displacement;
                 {
                     var blocks = m_logicGameManager.Map[stopPosition.x, stopPosition.y];
