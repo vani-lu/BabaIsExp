@@ -18,9 +18,8 @@ namespace Gfen.Game
         private int m_condition;
 
         private string m_scenePath;
-
+        
         private ReplayManager m_replayManager;
-
 
         [MenuItem("babaisyou/ReplayWindow")]
         private static void ShowWindow() 

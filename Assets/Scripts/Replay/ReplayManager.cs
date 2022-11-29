@@ -36,6 +36,7 @@ namespace Gfen.Game {
         }
 
         void Start(){
+#if UNITY_EDITOR
             if (Application.isEditor)
             {
                 print("We are running this from inside of the editor!");
@@ -56,6 +57,7 @@ namespace Gfen.Game {
                     Debug.Log("New user! " + date + "_" + user);
                 }
             }
+#endif
         }
 
         void Update(){

@@ -17,7 +17,9 @@ namespace Gfen.Game {
 
         public UIManager uiManager;
 
+#if UNITY_EDITOR
         public ReplayManager replayManager;
+#endif
 
         public int bonusChapterIndex;
 
@@ -95,7 +97,9 @@ namespace Gfen.Game {
 
             m_presentationGameManager = new PresentationGameManager(this, m_logicGameManager);
 
+#if UNITY_EDITOR
             replayManager.Init(this, m_logicGameManager, m_presentationGameManager);
+#endif
 
             m_solutionDataManager = new SolutionDataManager();
             m_solutionDataManager.Init(this, m_logicGameManager);
@@ -165,10 +169,12 @@ namespace Gfen.Game {
                     m_isPreviouslyInGame = false;
                 }
             }
+#if UNITY_EDITOR
             if (Application.isEditor)
             {
                 return;
             }
+#endif
             if (gameControlInput != GameControlType.None || operationInput != OperationType.None)
             {
                 FrameData fData = new FrameData(frameTimeStamp,
