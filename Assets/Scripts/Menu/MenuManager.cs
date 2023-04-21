@@ -12,15 +12,11 @@ namespace Vani.UI
 
         public InputField nameInputField;
 
-        public InputField conditionInputField;
-
         private string m_dataPath;
 
         private string m_userName;
 
         private string m_loginDate;
-
-        private int m_conditionIndex;
 
         private const string PathInfoKey = "DataPath";
 
@@ -28,12 +24,10 @@ namespace Vani.UI
 
         private const string DateInfoKey = "LoginDate";
 
-        private const string ConditionInfoKey = "Condition";
-
         // Start is called before the first frame update
         void Start()
         {
-            m_loginDate = DateTime.Now.ToString("yyyyMMdd");
+            m_loginDate = DateTime.Now.ToString("yyyyMMddHHmm");
             // m_dataPath = Application.persistentDataPath;
             m_dataPath = "./Save";
             if (!Directory.Exists(m_dataPath)){
@@ -45,45 +39,26 @@ namespace Vani.UI
         {
             // Get user (participant's) name from input
             m_userName = nameInputField.text;
-            string str = conditionInputField.text;
-            bool convertible = Int32.TryParse(str, out m_conditionIndex);
 
-            if (!string.IsNullOrEmpty(m_userName) && convertible){
+            // Check if user name is empty and longer than 1 character
+            if (!string.IsNullOrEmpty(m_userName) && m_userName.Length > 1){
                 SaveUserInfo();
-                SceneManager.LoadScene(m_conditionIndex);
+                SceneManager.LoadScene("Main");
             }
         }
 
         private void SaveUserInfo()
         {
-            string lastUserName = PlayerPrefs.GetString(UserInfoKey);
-            string lastLoginDate = PlayerPrefs.GetString(DateInfoKey);
-            if (lastUserName == m_userName && lastLoginDate == m_loginDate){
-                // Continuing last session?
-                m_conditionIndex = PlayerPrefs.GetInt(ConditionInfoKey);
-            }
-            else {
-                // A new user?
                 PlayerPrefs.SetString(UserInfoKey, m_userName);
                 PlayerPrefs.SetString(DateInfoKey, m_loginDate);
                 PlayerPrefs.SetString(PathInfoKey, m_dataPath);
-                PlayerPrefs.SetInt(ConditionInfoKey, m_conditionIndex);
-                // SetAndSaveCondition();
                 UpdatePlayerDatabase();
-            }
             
-        }
-
-        private void SetAndSaveCondition()
-        {
-            System.Random rnd = new System.Random();
-            m_conditionIndex = rnd.Next(1,5);
-            PlayerPrefs.SetInt(ConditionInfoKey, m_conditionIndex);
         }
 
         private void UpdatePlayerDatabase(){
             using StreamWriter file = new StreamWriter(m_dataPath + "/participants.csv", append: true);
-            file.WriteLine(string.Format("{0},{1},{2:d}", m_loginDate, m_userName, m_conditionIndex));
+            file.WriteLine(string.Format("{0},{1}", m_loginDate, m_userName));
         }
     }
 }

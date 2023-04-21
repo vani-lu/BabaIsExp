@@ -85,7 +85,6 @@ namespace Gfen.Game.Logic
                 AddBlock(new Block(mapBlockConfig.entityType, mapBlockConfig.position, mapBlockConfig.direction));
             }
 
-            m_gameManager.SolutionDataManager.HandleBonusMap();
             m_attributeHandler.RefreshAttributes();
             m_ruleAnalyzer.Apply(null);
 
@@ -190,15 +189,12 @@ namespace Gfen.Game.Logic
             return numCommands;
         }
 
-        private async void CheckGameResult()
+        private void CheckGameResult()
         {
             var gameResult = GetGameResult();
             if (gameResult == GameResult.Success)
             {
-                var saveTask = m_gameManager.SolutionDataManager.SaveSuccessRuleset();
-
                 GameEnd?.Invoke(true);
-                await saveTask;
             }
             else if (gameResult == GameResult.Defeat)
             {

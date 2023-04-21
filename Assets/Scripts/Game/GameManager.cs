@@ -21,13 +21,8 @@ namespace Gfen.Game {
         public ReplayManager replayManager;
 #endif
 
-        public int bonusChapterIndex;
-
         private LevelManager m_levelManager;
         public LevelManager LevelManager { get { return m_levelManager; } }
-
-        private SolutionDataManager m_solutionDataManager;
-        public SolutionDataManager SolutionDataManager { get { return m_solutionDataManager; } }
 
         private LogicGameManager m_logicGameManager;
 
@@ -101,9 +96,6 @@ namespace Gfen.Game {
             replayManager.Init(this, m_logicGameManager, m_presentationGameManager);
 #endif
 
-            m_solutionDataManager = new SolutionDataManager();
-            m_solutionDataManager.Init(this, m_logicGameManager);
-
             // Initialize indicator variables 
             m_isInGame = false;
             m_isPause = false;
@@ -169,12 +161,7 @@ namespace Gfen.Game {
                     m_isPreviouslyInGame = false;
                 }
             }
-#if UNITY_EDITOR
-            if (Application.isEditor)
-            {
-                return;
-            }
-#endif
+
             if (gameControlInput != GameControlType.None || operationInput != OperationType.None)
             {
                 FrameData fData = new FrameData(frameTimeStamp,
@@ -329,10 +316,6 @@ namespace Gfen.Game {
 
             return operationType;
         }
-
-        public bool IsInBonusChapter(){
-            return m_currentChapterIndex == bonusChapterIndex;
-        }
         
         public void StartGame(int chapterIndex, int levelIndex)
         {
@@ -423,22 +406,15 @@ namespace Gfen.Game {
         {
             var logoutTask = FrameDataUtility.MarkLogout(m_dataPath + m_dataFile);
 
-            int bonus = m_levelManager.CountBonus();
             var ts = Time.unscaledTime;
 
             m_levelManager.SetTimeSpent();
-
             PlayerPrefs.SetInt("ExpTime", Mathf.CeilToInt(ts/60f));
-            PlayerPrefs.SetInt("Bonus", bonus);
 
             await logoutTask;
 
-            if (Application.isEditor) {
-                Debug.Log(string.Format("Bonus: {0}", bonus));
-            }
-            else{
-                SceneManager.LoadScene(5);
-            }
+            SceneManager.LoadScene("End");
+
         }
 
         private void OnGameEnd(bool success)

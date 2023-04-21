@@ -13,8 +13,6 @@ namespace Gfen.Game.UI
         public GameObject tutorialIntro;
 
         public GameObject trainingIntro;
-
-        public GameObject bonusIntro;
         
         public Transform levelListRootTransform;
 
@@ -30,15 +28,9 @@ namespace Gfen.Game.UI
         }
 
         private void OnEnable()
-        {
-            // auto quit if bonus chapter is passed
-            if (m_gameManager.LevelManager.IsChapterPassed(m_gameManager.bonusChapterIndex)){
-                m_gameManager.ExitApp();
-            }
-            
+        {            
             tutorialIntro.SetActive(false);
             trainingIntro.SetActive(false);
-            bonusIntro.SetActive(false);
         }
 
         public void SetContent(int chapterIndex)
@@ -70,10 +62,7 @@ namespace Gfen.Game.UI
             }
 
             // Toggle text discription
-            if (m_currentChapterIndex == m_gameManager.bonusChapterIndex){
-                bonusIntro.SetActive(true);
-            }
-            else if (m_currentChapterIndex == 0){
+            if (m_currentChapterIndex == 0){
                 tutorialIntro.SetActive(true);
             }
             else if (m_currentChapterIndex == 1){

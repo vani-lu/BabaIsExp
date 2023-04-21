@@ -16,8 +16,6 @@ namespace Gfen.Game.UI
 
         public Text hintText;
 
-        public Text countDown;
-
         public GameObject joystickGameObject;
 
         public GameObject waitGameObject;
@@ -39,13 +37,6 @@ namespace Gfen.Game.UI
         private void OnEnable() 
         {
             hintButton.gameObject.SetActive(false);
-            if (m_gameManager.IsInBonusChapter()){
-                countDown.gameObject.SetActive(true);
-                countDown.text = "30";
-            }
-            else {
-                countDown.gameObject.SetActive(false);
-            }
             
             hintPanel.SetActive(false);
             hintNote.SetActive(false);
@@ -78,15 +69,6 @@ namespace Gfen.Game.UI
                         await writeTask;
                     }
                 }
-
-                // show time countdown if in bonus chapter
-                if (countDown.gameObject.activeSelf){
-                    int t = m_gameManager.LevelManager.BonusChapterTimeLeft();
-                    countDown.text = t.ToString("D2");
-                    if (t <= 0){
-                        m_gameManager.uiManager.ShowPage<QuitConfirmPage>();
-                    }
-                }
             }
         }
 
@@ -101,10 +83,6 @@ namespace Gfen.Game.UI
             //Size
             RectTransform rt = hintPanel.GetComponent<RectTransform>();
             rt.sizeDelta = new Vector2(300, 80);
-        }
-
-        private void UpdateCountdownTimer(){
-            
         }
 
         private void OnPauseButtonClicked()

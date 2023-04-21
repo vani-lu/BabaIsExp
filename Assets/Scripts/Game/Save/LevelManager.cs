@@ -139,19 +139,6 @@ namespace Gfen.Game.Logic
             SaveInfo();
         }
 
-        public int CountBonus(){
-            if (IsLevelPassed(2,2)){
-                return 3;
-            }
-            else if (IsLevelPassed(2,1)){
-                return 2;
-            }
-            else if (IsLevelPassed(2,0)){
-                return 1;
-            }
-            return 0;
-        }
-
         public float GetTimeSpent(int chapterIndex, int levelIndex)
         {
             var chapterTimerInfo = m_managerInfo.chapterTimerInfoDict.GetOrSet(chapterIndex, () => new ChapterTimerInfo());
@@ -175,33 +162,9 @@ namespace Gfen.Game.Logic
             float t = m_gameManager.CurrentLevelElapsedTime;
             int chapterIndex = m_gameManager.CurrentChapterIndex;
 
-            if (chapterIndex == m_gameManager.bonusChapterIndex){
-                return false;
-            }
-
             float[ ] levelLimits = {5f * 60f, 10f * 60f}; // seconds
 
             return t > levelLimits[chapterIndex];
         }
-
-        public int BonusChapterTimeLeft(){
-
-            int tLimit = 30; //minutes
-
-            int chapterIndex = m_gameManager.CurrentChapterIndex;
-            int levelIndex = m_gameManager.CurrentLevelIndex;
-
-            var chapterTimerInfo = m_managerInfo.chapterTimerInfoDict.GetOrSet(chapterIndex, () => new ChapterTimerInfo());
-            float sumT;
-            if (chapterIndex == m_gameManager.bonusChapterIndex){
-                sumT = chapterTimerInfo.levelTimerInfoDict.Where(x => x.Key != levelIndex).Sum(x => x.Value);
-                sumT += m_gameManager.CurrentLevelElapsedTime;
-            }
-            else{
-                sumT = chapterTimerInfo.levelTimerInfoDict.Sum(x => x.Value);
-            }
-
-            return tLimit - Mathf.FloorToInt(sumT/60f);
-        }        
     }
 }
